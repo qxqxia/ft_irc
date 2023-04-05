@@ -13,7 +13,9 @@ month_name = [
 
 
 weekday_name = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    'Monday', 'Tuesday', 'Wednesday', 
+    'Thursday', 'Friday', 'Saturday', 'Sunday']
+
 
 doomsdays = [
     10, 14, 14, 4, 9, 6,
@@ -28,10 +30,6 @@ while True:
     M = random.randint(0, 11)
     D = random.randint(1, month[M]) #month[M])
 
-    # if D > doomsdays[M]:
-    #     real_answer = D % doomsdays[M] + doomsdays[M]
-    # else:
-    #     real_answer = doomsdays[M] % D + doomsdays[M]
     if D > doomsdays[M]:
         real_answer = (D - doomsdays[M]) % 7 + 2 # 2 is the doomsday_of_2023
     else:
