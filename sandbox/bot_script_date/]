@@ -43,13 +43,14 @@ while True:
         real_answer = 2 + 7 - (doomsdays[M] - D)
     """
 
-    # trying a new way
+    # trying this way
     real_answer = doomsday_of_2023 - (doomsdays[M] - D) % 7
-    real_answer += 0 if real_answer > 0 else 7
+    real_answer += (real_answer < 0) ? 7 : 0
 
-    guess = input(f'guess the weekday of this day: \n\n{month_name[M]} {D} \n')
-
+    guess = int(input(f'guess the weekday of this day: \n\n{month_name[M]} {D} \n'))
+    
     print(f'real: {real_answer}')
+
 
     if guess == real_answer:
         print(f'{color.green}correct! {color.reset}' + \
