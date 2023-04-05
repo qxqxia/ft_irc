@@ -1,6 +1,8 @@
+#pragma once
 #ifndef __USER_HPP__
 # define __USER_HPP__
 
+# include ""
 using	namespace std;
 
 class	User
