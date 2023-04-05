@@ -26,12 +26,16 @@ doomsday_of_2023 = 2
 
 while True:
     M = random.randint(0, 11)
-    D = random.randint(1, 6) #month[M])
+    D = random.randint(1, month[M]) #month[M])
 
     # if D > doomsdays[M]:
     #     real_answer = D % doomsdays[M] + doomsdays[M]
     # else:
     #     real_answer = doomsdays[M] % D + doomsdays[M]
+    if D > doomsdays[M]:
+        real_answer = (D - doomsdays[M]) % 7 + 2 # 2 is the doomsday_of_2023
+    else:
+        real_answer = 2 + 7 - (doomsdays[M] - D)
 
     guess = int(input(f'guess the weekday of this day: \n\n{month_name[M]} {D} \n'))
     
