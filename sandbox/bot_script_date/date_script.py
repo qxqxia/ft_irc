@@ -32,8 +32,10 @@ doomsday_of_2023 = 2
 
 
 while True:
+
     M = random.randint(0, 11)
     D = random.randint(1, month[M]) # month[M])
+
 
     # qxia's soln
     """
@@ -43,13 +45,24 @@ while True:
         real_answer = 2 + 7 - (doomsdays[M] - D)
     """
 
+
     # trying a new way
     real_answer = doomsday_of_2023 - (doomsdays[M] - D) % 7
     real_answer += 0 if real_answer > 0 else 7
 
+
     guess = input(f'guess the weekday of this day: \n\n{month_name[M]} {D} \n')
 
+
+    if guess.lower() in ['exit', 'quit', 'end', 'part', 'kill']:
+        exit()
+    if not guess.isalnum():
+        exit()
+    guess = int(guess)
+
+
     print(f'real: {real_answer}')
+
 
     if guess == real_answer:
         print(f'{color.green}correct! {color.reset}' + \
