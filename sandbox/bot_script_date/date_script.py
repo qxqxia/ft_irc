@@ -17,10 +17,8 @@ weekday_name = [
     'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 
-doomsdays = [
-    10, 14, 14, 4, 9, 6,
-    11, 8, 5, 10, 7, 12
-]
+doomsdays = [n + 28 for n in [10, 14, 14, 4, 9, 6, 11, 8, 5, 10, 7, 12 ]]
+# doomsdays = [10, 14, 14, 4, 9, 6, 11, 8, 5, 10, 7, 12 ] # depr.
 
 
 doomsday_of_2023 = 2
@@ -28,7 +26,7 @@ doomsday_of_2023 = 2
 
 while True:
     M = random.randint(0, 11)
-    D = random.randint(1, month[M]) #month[M])
+    D = random.randint(1, month[M]) # month[M])
 
     # qxia's soln
     """
@@ -38,7 +36,8 @@ while True:
         real_answer = 2 + 7 - (doomsdays[M] - D)
     """
 
-    # 
+    # trying this way
+    # ...
 
     guess = int(input(f'guess the weekday of this day: \n\n{month_name[M]} {D} \n'))
     
