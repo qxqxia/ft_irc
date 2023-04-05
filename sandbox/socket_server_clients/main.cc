@@ -12,6 +12,7 @@
 #include "sys/time.h" // FD_SET fn series
 
 #define Backlog_Len 3
+
 #define msg "ECHO Daemon v1.0 \r\n"
 
 #define	PORT 6669
@@ -81,6 +82,7 @@ int	main()
 		SOCK_STREAM,
 		0
 	);
+
 	if (Server_fd < 0)
 	{
 		return (perror("socket failed"), 1);
@@ -98,6 +100,7 @@ int	main()
 		(char *) & opt, /* const void *optVal */
 		sizeof(opt)
 	);
+
 	if (ret < 0)
 	{
 		return (perror("setsockopt failed"), 1);
@@ -122,6 +125,7 @@ int	main()
 		(struct sockaddr *) & address,
 		sizeof(address)
 	);
+
 	if (ret < 0)
 	{
 		return (perror("bind failed"), 1);
@@ -149,6 +153,7 @@ int	main()
 		Server_fd,
 		Backlog_Len /* 3 */
 	);
+
 	if (ret < 0)
 	{
 		return (perror("listen"), 1);
@@ -215,6 +220,7 @@ int	main()
 			NULL,
 			NULL,NULL
 		);
+
 		if ( (activity < 0) && (errno != EINTR) )
 		{
 			std::cout << "select error \n" << std::endl;
@@ -232,6 +238,7 @@ int	main()
 			Server_fd,
 			& readfds
 		);
+
 		if (ret)
 		{
 			
@@ -296,6 +303,7 @@ int	main()
 		{
 			sd = client_socket[i];
 			ret = FD_ISSET( sd, & readfds );
+
 			if (ret)
 			{
 				// check if it was for closing

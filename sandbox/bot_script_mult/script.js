@@ -5,7 +5,7 @@ while (1) {
 	let b = parseInt(Math.random() * 10) + 1
 
 	console.log('Can you solve this:', a, 'x', b)
-	
+
 	let res = a * b
 
 	let guess = prompt('Can you gimme the answer? ');
