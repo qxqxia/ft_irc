@@ -1,3 +1,6 @@
+#ifndef __USER_HPP__
+# define __USER_HPP__
+
 using	namespace std;
 
 class	User
@@ -10,14 +13,14 @@ private:
 	string	m_realname;
 	string	m_mode;
 
-	set<string> m_channels;
+	std::set<string>	m_channels;
 
 public:
 	User(
-		string nick,
-		string user,
-		string hostname,
-		string realname
+		string	nick,
+		string	user,
+		string	hostname,
+		string	realname
 	);
 
 	~User();
@@ -27,14 +30,19 @@ public:
 	string	get_hostname() const;
 	string	get_realname() const;
 
-	set<string>	& get_channels();
+	std::set<string>	& get_channels();
 
 	string	get_mode() const;
+	size_t		get_channels_size() const;
+
+	void	set_nick(string nick );
+	void	set_mode(string mode );
+
+	void	add_channel(string channel_name );
 
 };
 
 
 #endif
-
 
 
