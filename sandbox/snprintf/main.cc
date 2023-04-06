@@ -1,5 +1,7 @@
 #include "iostream"
 
+// `sn` means "size and null"
+
 int	main()
 {
 	{
