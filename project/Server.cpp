@@ -1,18 +1,10 @@
 #include "Freenode.hpp"
 
 int		g_server_client_socket[ MAX_CLIENTS ];
-bool		g_server_is_alive = true;
+bool	g_server_is_alive = true;
 
 
-Server::Server(
-	const string & port,
-	const string & password
-) : 
-	m_port(port),
-	m_pass(password),
-	m_server_name(),
-	m_is_restarting(false)
-{
+Server::Server(const string &port, const string &password) : m_port(port), m_pass(password), m_server_name(), m_is_restarting(false){
 	this->m_commands["NICK"] = & nick;
 	this->m_commands["JOIN"] = & join;
 	this->m_commands["PRIVMSG"] = & privmsg;
@@ -35,7 +27,10 @@ Server::Server(
 }
 
 
-Server::~Server() { this->m_commands.clear(); }
+Server::~Server()
+{
+	this->m_commands.clear();
+}
 
 
 void	Server::XCQ(int socket_fd, string buf)
@@ -62,12 +57,11 @@ void	Server::XCQ(int socket_fd, string buf)
 void    handle_sigint(int signum)
 {
 	(void) signum;
-
 	g_server_is_alive = false;
 }
 
 
-int	Server::new_socket()
+int Server::new_socket()
 {
 	// Stages for server
 	//  1. Create socket
@@ -117,7 +111,7 @@ int	Server::new_socket()
 }
 
 
-void	Server::connect_to_server()
+void Server::connect_to_server()
 {
 	fd_set		readfds;
 	int		socket_fd, activity;
@@ -269,8 +263,7 @@ void Server::new_connection(void)
 	string nick = "", user = "", host = "", serverName = "", realname = "", pass = "";
 
 	ret = this->receive_msg(this->m_sock_coming);
-	if (((ret.find("CAP LS") != string::npos 
-		&& ret.find("PASS ") == string::npos) || (ret.find("CAP LS") != string::npos && ret.find("PASS ") == string::npos && ret.find("NICK ") != string::npos)) && ret.find("USER ") == string::npos)
+	if (((ret.find("CAP LS") != string::npos && ret.find("PASS ") == string::npos) || (ret.find("CAP LS") != string::npos && ret.find("PASS ") == string::npos && ret.find("NICK ") != string::npos)) && ret.find("USER ") == string::npos)
 		ret = this->receive_msg(this->m_sock_coming);
 	if ((occurrence = ret.find("PASS ")) != string::npos)
 	{
@@ -399,12 +392,10 @@ void Server::new_connection(void)
 		User *newUser = new User(nick, user, host, realname);
 		this->set_users(this->m_sock_coming, newUser);
 		cout << "Number of user connected on the server: " << this->m_users.size() << endl;
-
 		forward_message(forward_RPL(001, this, newUser, "", ""), this->m_sock_coming);
 		forward_message(forward_RPL(002, this, newUser, "", ""), this->m_sock_coming);
 		forward_message(forward_RPL(003, this, newUser, "", ""), this->m_sock_coming);
 		forward_message(forward_RPL(004, this, newUser, "", ""), this->m_sock_coming);
-
 		forward_MOTD(this->m_sock_coming);
 
 		//add new socket to array of sockets
@@ -490,23 +481,23 @@ void Server::set_is_restarting()
 
 int Server::search_user_by_nickname(string nickname)
 {
-	map<int, User *>::iterator	it;
+	map<int, User*>::iterator it;
 
 	it = this->m_users.begin();
-	while (it != this->m_users.end())
-	{
-		if (nickname == it->second->get_nickname())
-			return it->first;
+    while (it != this->m_users.end())
+    {
+        if (nickname == it->second->get_nickname())
+            return it->first;
 		++it;
-	}
-	return (-1);
+    }
+    return (-1);
 }
 
 
 ostream	& operator << (ostream &stdout, map<string, Channel*> &channels)
 {
 	map<string, Channel*>::iterator	it;
-	int				i;
+	int											i;
 
 	i = 0;
 	it = channels.begin();
@@ -523,7 +514,7 @@ ostream	& operator << (ostream &stdout, map<string, Channel*> &channels)
 ostream	& operator << (ostream &stdout, map<int, User*> &users)
 {
 	map<int, User*>::iterator	it;
-	int				i;
+    int								i;
 
 	it = users.begin();
 	i = 0;
@@ -537,29 +528,29 @@ ostream	& operator << (ostream &stdout, map<int, User*> &users)
 }
 
 
-ostream	& operator << (ostream & stdout, User &user)
+ostream	& operator << (ostream &stdout, User &user)
 {
 	set<string>			channels;
 	set<string>::iterator	it;
-	int		i;
+    int								i;
 
 	channels = user.get_channels();
 	it = channels.begin();
 	i = 0;
-	while (it != channels.end())
-	{
-		stdout << "Channel " << i << " of User " << user.get_nickname() << " is called " << *it << endl;
+    while (it != channels.end())
+    {
+        stdout << "Channel " << i << " of User " << user.get_nickname() << " is called " << *it << endl;
 		++it;
 		++i;
 	}
-	return (stdout);
+    return (stdout);
 }
 
 
-void	Server::clear_all()
+void Server::clear_all()
 {
-	map<string, Channel *>::iterator	cit;
-	map<int, User *>::iterator		uit;
+	map<string, Channel*>::iterator	cit;
+	map<int, User*>::iterator				uit;
 
 	uit = this->m_users.begin();
 	while (++uit != this->m_users.end())
@@ -712,5 +703,3 @@ void Server::forward_MOTD_Doh(int socket_fd)
 }
 
 // end
-
-
