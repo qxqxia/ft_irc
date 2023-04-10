@@ -2,7 +2,7 @@
 #ifndef __USER_HPP__
 # define __USER_HPP__
 
-# include ""
+# include "Freenode.hpp"
 using	namespace std;
 
 class	User
@@ -15,7 +15,7 @@ private:
 	string	m_realname;
 	string	m_mode;
 
-	std::set<string>	m_channels;
+	set<string>	m_channels;
 
 public:
 	User(
@@ -32,15 +32,14 @@ public:
 	string	get_hostname() const;
 	string	get_realname() const;
 
-	std::set<string>	& get_channels();
+	set<string>	& get_channels();
 
 	string	get_mode() const;
 	size_t		get_channels_size() const;
 
-	void	set_nick(string nick );
-	void	set_mode(string mode );
-
-	void	add_channel(string channel_name );
+	void	set_nick(string nick);
+	void	set_mode(string mode);
+	void	add_channel(string channelname);
 
 };
 

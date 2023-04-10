@@ -5,18 +5,21 @@ User::User(
 	string	username,
 	string	hostname,
 	string	realname
-)
-	: m_nickname( nickname ),
+) :
+	m_nickname( nickname ),
 	m_username( username ),
 	m_hostname( hostname ),
-	m_realname( realname ) {
+	m_realname( realname ){
 }
 
 
-User::~User() { this->m_channels.clear(); }
+User::~User()
+{
+	this->m_channels.clear();
+}
 
 
-// Getters of names
+// Name getter
 
 string	User::get_nickname() const
 {
@@ -84,5 +87,4 @@ void	User::set_nick(string new_nick)
 {
 	this->m_nickname = new_nick;
 }
-
 

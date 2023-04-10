@@ -74,4 +74,3 @@ ostream & operator << (ostream &, User & user);
 #endif
 
 
-
