@@ -1,16 +1,16 @@
 #include "Freenode.hpp"
 
-int		g_server_client_socket[ MAX_CLIENTS ];
-bool	g_server_is_alive = true;
+int		g_Socket_Queue[ MAX_CLIENTS ];
+bool	g_Server_Alive = true;
 
 
-Server::Server(const string &port, const string &password) : m_port(port), m_pass(password), m_server_name(), m_is_restarting(false){
+Server::Server(const std::string &port, const std::string &password) : m_port(port), m_pass(password), m_server_name(), m_is_restarting(false){
 	this->m_commands["NICK"] = & nick;
 	this->m_commands["JOIN"] = & join;
 	this->m_commands["PRIVMSG"] = & privmsg;
-	this->m_commands["NOTICE"] = & privmsg;
-	this->m_commands["PING"] = & ping;
-	this->m_commands["PONG"] = & pong;
+	this->m_commands["NOTICE"] = & privmsg; // ??? why
+	// this->m_commands["PING"] = & ping;
+	// this->m_commands["PONG"] = & pong;
 	this->m_commands["PART"] = & part;
 	this->m_commands["TOPIC"] = & topic;
 	this->m_commands["KICK"] = & kick;
@@ -30,35 +30,36 @@ Server::Server(const string &port, const string &password) : m_port(port), m_pas
 Server::~Server()
 {
 	this->m_commands.clear();
+	
+	// /*IMPORTANT*/
+	// delete this->_bot;
 }
 
 
-void	Server::XCQ(int socket_fd, string buf)
+void	Server::XCQ(int socket_fd, std::string buf)
 {
-	string		cmd;
+	std::string		cmd;
 	size_t			ptr;
 
 	if (buf.empty())
+	{
 		return ;
-
+	}
 	cmd = buf;
-	cout << CYAN "COMMAND RECEIVED :" RESET << buf;	
+	std::cout << CYAN "COMMAND RECEIVED :" RESET << buf;	
 	ptr = buf.find_first_not_of(SEP_CHARSET, 0);
 	buf = cmd.substr(ptr, buf.length() - ptr);
+	std::cout << YELLOW "COMMAND PARSED 1 :" RESET << buf; // still contains ending lbreak
 	cmd = buf.substr(0, buf.find_first_of(SEP_CHARSET, 0));
+	std::cout << GREEN "COMMAND PARSED 2 :" RESET << cmd << nl2reset; // added 1 more lbreak for better view
 
 	if (m_commands.find(cmd) == m_commands.end())
+	{
 		return ;
-
+	}
 	(m_commands[cmd])(this, buf, socket_fd) ;;
 }
 
-
-void    handle_sigint(int signum)
-{
-	(void) signum;
-	g_server_is_alive = false;
-}
 
 
 int Server::new_socket()
@@ -71,137 +72,213 @@ int Server::new_socket()
 	//  5. accept
 
 	int	Server_fd;
-	int	opt = 1;
-	int	ret;
+	int	opt;
+	// int	ret;
 
 	Server_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (Server_fd < 0)
-		throw runtime_error("Error creating socket.\n");
-
-	ret = setsockopt(Server_fd, SOL_SOCKET, SO_REUSEADDR, & opt, sizeof(opt));
-	if (ret)
-		throw runtime_error("Error while setting up socket.\n");
+	{
+		throw std::runtime_error("Error creating server socket.\n");
+	}
+	opt = 1;
+	// ret = setsockopt(Server_fd, SOL_SOCKET, SO_REUSEADDR, & opt, sizeof(opt));
+	// if (ret)
+	if (setsockopt(Server_fd, SOL_SOCKET, SO_REUSEADDR, & opt, sizeof(opt)))
+	{
+		throw std::runtime_error("Error while setting up socket.\n");
 		// return (perror("setsockopt error"), -1);
-
+	}
 	if (fcntl(Server_fd, F_SETFL, O_NONBLOCK) == -1)
-		throw runtime_error("Error while setting socket NON-BLOCKING mode.\n");
-
+	{
+		throw std::runtime_error("Error while setting socket NON-BLOCKING mode.\n");
+	}
 
 	// BIND (1/2)
 
 	m_server.sin_addr.s_addr = INADDR_ANY;
 	m_server.sin_port = htons(
-			static_cast<unsigned short>(strtoul(this->m_port.c_str(), NULL, 0)));
+			static_cast<uint16_t>(strtoul(this->m_port.c_str(), NULL, 0)));
+			// static_cast<unsigned short>(strtoul(this->m_port.c_str(), NULL, 0)));
 	m_server.sin_family = AF_INET;
 
 
 	// BIND (2/2)
 
-	ret = bind(Server_fd, (const struct sockaddr *) & m_server, sizeof(m_server));
-	if (ret < 0)
-		throw runtime_error("Error binding socket.\n");
+	// ret = bind(Server_fd, (const struct sockaddr *) & m_server, sizeof(m_server));
+	// if (ret < 0)
+	if ( bind(Server_fd, (const struct sockaddr *) & m_server, sizeof(m_server)) < 0 )
+		throw std::runtime_error("Error binding socket.\n");
 		// return (perror("bind error"), -1);
 
-	ret = listen(Server_fd, 10);
-	if (ret < 0)
-		throw runtime_error("Error listening on socket.\n");
+
+	// listen() --- Prepare the server for incoming client requests
+	// 	* Requests from clients keep queueing up as we listen, accept() not needed here
+
+	// ret = listen(Server_fd, 10); // 2nd param is `backlog`, hereby set to MAX_CLIENTS
+	// ret = listen(Server_fd, MAX_CLIENTS); // MAX_CLIENTS
+	// if (ret < 0)
+
+	// if ( listen(Server_fd, 10) < 0 )
+	if ( listen(Server_fd, MAX_CLIENTS) < 0 )
+		throw std::runtime_error("Error listening on socket.\n");
 		// return (perror("listen failed"), -1);
-	//	cli requests queue up as we listen, accept() not needed here
+	
 	return (Server_fd);
 }
 
+void    handle_sigint(int signum)
+{
+	std::cout << signum << std::endl;
+	(void) signum;
+
+	// DBG
+	// std::cout << "is alive: " << g_Server_Alive << std::endl;
+	
+	g_Server_Alive = false;
+	
+	// DBG
+	// std::cout << "is alive: " << g_Server_Alive << std::endl;
+}
 
 void Server::connect_to_server()
 {
+	this->m_server_socket = /*Server::*/new_socket();
+
 	fd_set		readfds;
 	int		socket_fd, activity;
-	int		maximun_socket_fd /* not sure about the naming of this one */;
+	int		maximum_socket_fd /* not sure about the naming of this one */;
 	int		i;
 
-	this->m_server_socket = Server::new_socket();
+	// this->m_server_socket = Server::new_socket();
 
 	i = -1;
 	while (++i < MAX_CLIENTS)
-        g_server_client_socket[i] = 0;
-	cout << "listening..." << endl;
-	while ( !(this->m_is_restarting) && g_server_is_alive)
+        g_Socket_Queue[i] = 0;
+	std::cout << "listening..." << std::endl;
+	
+	// enter the great "listener while loop"
+	//	--- cf. cc5/[..]/socket_server_clients/_.cc
+	
+	// while ( g_Server_Alive == true && this->m_is_restarting == false)
+	while (this->m_is_restarting == false && g_Server_Alive == true)
 	{
-		// it can't be done. 
-		//	Signal handlers are too primitive a mechanism to support calling
-		//	of a member function on a particular instance of a class.
+		//  ~~~now the Handler is a member function ::~~~
+		// 	~~~you need a pointer to member in order to invoke it~~~
+		// 
+		// (?) it can't be done. 
+		// 	Signal handlers are too primitive a mechanism to support calling
+		// 	of a member function on a particular instance of a class.
 
-		signal(SIGINT, handle_sigint);
+		// DBG
+		// std::cout << "is alive: " << g_Server_Alive << std::endl;
 
-		//  now the Handler is a member function ::
-		//	you need a pointer to member in order to invoke it
+		/*std::*/signal(SIGINT, handle_sigint);
 
-		//clear the socket set
+		
+
+		// socket set cleanup
         FD_ZERO( & readfds);
 
-        //add master socket to set
+        // add master socket to set
         FD_SET(this->m_server_socket, & readfds);
-        maximun_socket_fd = this->m_server_socket; // retrieve master socket
+        maximum_socket_fd = this->m_server_socket; // retrieve master socket
 
-        //add child sockets to set
+        // add child sockets to set
 		i = -1;
 		while (++i < MAX_CLIENTS)
         {
-            //socket descriptor
+            // socket descriptor
 
-            socket_fd = g_server_client_socket[i];
+            socket_fd = g_Socket_Queue[i];
 
-            //if valid socket descriptor then add to read list
+			// * (at start -> 
+			//		i at : 3;
+			//		socket_fd at: 0)
 
+			//	DBG
+			// std::cout <<  GREEN "i at : " << i << "; socket_fd at: " YELLOW << socket_fd << nlreset;
+
+            // if valid socket descriptor then add to read list
+			//	return of 0 means socket() succeeded
+			//	return of non-negio
             if (socket_fd > 0)
                 FD_SET(socket_fd , & readfds);
 
-            // highest file descriptor number, need it for the select function
- 
-            if (socket_fd > maximun_socket_fd)
-                maximun_socket_fd = socket_fd;
+			// highest file descriptor number, need it for the select function
+			//	* FD_SETSIZE has a limit of 1024
+			//	* People have tried to increase the limit but experienced crashing
+			//	* If that many connections are need, use poll()
+            
+            if (socket_fd > maximum_socket_fd)
+                maximum_socket_fd = socket_fd;
         }
 
-        //wait for an activity on one of the sockets , timeout is NULL ,
-        //so wait indefinitely
+        // wait for an activity on one of the sockets , timeout is NULL ,
+        // wait indefinitely
 
-        activity = select(maximun_socket_fd + 1 , & readfds , NULL , NULL , NULL);
+        activity = select(maximum_socket_fd + 1 , & readfds , NULL , NULL , NULL);
         if ((activity < 0) && (errno != EINTR))
-            cerr << ("select error") << endl;
+            std::cerr << ("select error") << std::endl;
 			// perror("select error");  
 
-		//connect new user
+		// connect new user
 
-		if (FD_ISSET(this->m_server_socket, & readfds) && g_server_is_alive)
+		if (FD_ISSET(this->m_server_socket, & readfds) && g_Server_Alive)
             new_connection();
-		else if (g_server_is_alive)
+		else if (g_Server_Alive)
 		{
 			i = -1;
 			while (++i < MAX_CLIENTS)
 			{
-				socket_fd = g_server_client_socket[i];
-				if (FD_ISSET(socket_fd , &readfds))
+				socket_fd = g_Socket_Queue[i];
+
+				// if (FD_ISSET(socket_fd , &readfds))
+				// {
+				// 	std::string buf;
+
+				// 	// Check if it was for closing , and also read the
+				// 	// incoming message
+
+				// 	buf = receive_msg(socket_fd);
+				// 	if (!buf.empty())
+				// 	{
+				// 		XCQ(socket_fd, buf);
+
+				// 		/*std::cout << CYAN "COMMAND RECEIVED :" RESET << buf;
+				// 		std::string command(buf);
+				// 		int occurrence = buf.find_first_not_of(SEP_CHARSET, 0);
+				// 		buf = command.substr(occurrence, buf.length() - occurrence);
+				// 		command = buf.substr(0, buf.find_first_of(SEP_CHARSET, 0));
+				// 		if (m_commands.find(command) != m_commands.end())
+				// 			(m_commands[command])(this, buf, socket_fd);
+				// 		*/
+				// 		break;
+				// 	}
+				// }
+
+				if ( ! FD_ISSET(socket_fd , &readfds))
+					continue ;
+				std::string buf;
+
+				// Check if it was for closing , and also read the
+				// incoming message
+
+				buf = receive_msg(socket_fd);
+				if (!buf.empty())
 				{
-					string buf;
+					XCQ(socket_fd, buf);
 
-					//Check if it was for closing , and also read the
-					//incoming message
-
-					buf = receive_msg(socket_fd);
-					if (!buf.empty())
-					{
-						XCQ(socket_fd, buf);
-
-						/*cout << CYAN "COMMAND RECEIVED :" RESET << buf;
-						string command(buf);
-						int occurrence = buf.find_first_not_of(SEP_CHARSET, 0);
-						buf = command.substr(occurrence, buf.length() - occurrence);
-						command = buf.substr(0, buf.find_first_of(SEP_CHARSET, 0));
-						if (m_commands.find(command) != m_commands.end())
-							(m_commands[command])(this, buf, socket_fd);
-						*/
-						break;
-					}
+					/*std::cout << CYAN "COMMAND RECEIVED :" RESET << buf;
+					std::string command(buf);
+					int occurrence = buf.find_first_not_of(SEP_CHARSET, 0);
+					buf = command.substr(occurrence, buf.length() - occurrence);
+					command = buf.substr(0, buf.find_first_of(SEP_CHARSET, 0));
+					if (m_commands.find(command) != m_commands.end())
+						(m_commands[command])(this, buf, socket_fd);
+					*/
+					break;
 				}
+
 			}
 		}
 	}
@@ -211,17 +288,17 @@ void Server::connect_to_server()
 	i = -1;
 	while (++i < MAX_CLIENTS)
 	{
-		if (g_server_client_socket[i] != 0)
+		if (g_Socket_Queue[i] != 0)
 		{
-			close(g_server_client_socket[i]);
-			g_server_client_socket[i] = 0;
+			close(g_Socket_Queue[i]);
+			g_Socket_Queue[i] = 0;
 		}
 	}
 	close(this->m_server_socket);
-	if (this->m_is_restarting && g_server_is_alive)
+	if (this->m_is_restarting && g_Server_Alive)
 	{
 		this->m_is_restarting = false;
-		cout << "SERVER RESTARTING..." << endl;
+		std::cout << "SERVER RESTARTING..." << std::endl;
 		connect_to_server();
 	}
 }
@@ -243,12 +320,12 @@ void Server::new_connection(void)
 		exit(EXIT_FAILURE);
 	}
 
-	//inform user of socket number - used in send and receive commands
+	// inform user of socket number - used in send and receive commands
 
-	cout << "New connection , socket fd is " << this->m_sock_coming << " , ip is : " << inet_ntoa(m_server.sin_addr) << " , port : " <<  ntohs(m_server.sin_port) << endl;
-	string ret;
+	std::cout << "New connection , socket fd is " << this->m_sock_coming << " , ip is : " << inet_ntoa(m_server.sin_addr) << " , port : " <<  ntohs(m_server.sin_port) << std::endl;
+	std::string ret;
 
-	//send new connection greeting message
+	// send new connection greeting message
 
 	size_t	occurrence;
 	size_t	first_occurrence;
@@ -260,14 +337,16 @@ void Server::new_connection(void)
 	password_is_valid = false;
 	nick_is_valid = false;
 	user_is_valid = false;
-	string nick = "", user = "", host = "", serverName = "", realname = "", pass = "";
+	std::string nick = "", user = "", host = "", serverName = "", realname = "", pass = "";
 
 	ret = this->receive_msg(this->m_sock_coming);
-	if (((ret.find("CAP LS") != string::npos && ret.find("PASS ") == string::npos) || (ret.find("CAP LS") != string::npos && ret.find("PASS ") == string::npos && ret.find("NICK ") != string::npos)) && ret.find("USER ") == string::npos)
-		ret = this->receive_msg(this->m_sock_coming);
-	if ((occurrence = ret.find("PASS ")) != string::npos)
+	if (((ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos) || (ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos && ret.find("NICK ") != std::string::npos)) && ret.find("USER ") == std::string::npos)
 	{
-		if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occurrence + 5)) == string::npos)
+		ret = this->receive_msg(this->m_sock_coming);
+	}
+	if ((occurrence = ret.find("PASS ")) != std::string::npos)
+	{
+		if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occurrence + 5)) == std::string::npos)
 		{
 			forward_message(forward_RPL(461, this, NULL, "PASS", ""), this->m_sock_coming);
 			close(this->m_sock_coming);
@@ -275,20 +354,24 @@ void Server::new_connection(void)
 		else
 		{
 			i = -1;
-			while (ret[++i + first_occurrence] && SEP_CHARSET.find(ret[first_occurrence + i]) == string::npos)
+			while (ret[++i + first_occurrence] && SEP_CHARSET.find(ret[first_occurrence + i]) == std::string::npos)
+			{
 				pass += ret[first_occurrence + i];
+			}
 			if (pass.empty())
 			{
 				forward_message(forward_RPL(461, this, NULL, "PASS", ""), this->m_sock_coming);
 				close(this->m_sock_coming);
 			}
-			else if (pass == this->m_pass)
+			else if (pass != this->m_pass)
 			{
 				forward_message("WRONG PASSWORD", this->m_sock_coming);
 				close(this->m_sock_coming);
 			}
 			else
+			{
 				password_is_valid = true;
+			}
 		}
 	}
 	else
@@ -298,11 +381,13 @@ void Server::new_connection(void)
 	}
 	if (password_is_valid == true)
 	{
-		if (ret.find("NICK ") == string::npos)
-			ret = this->receive_msg(this->m_sock_coming);
-		if ((occurrence = ret.find("NICK ")) != string::npos)
+		if (ret.find("NICK ") == std::string::npos)
 		{
-			if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occurrence + 5)) == string::npos)
+			ret = this->receive_msg(this->m_sock_coming);
+		}
+		if ((occurrence = ret.find("NICK ")) != std::string::npos)
+		{
+			if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occurrence + 5)) == std::string::npos)
 			{
 				forward_message(forward_RPL(432, this, NULL, nick, ""), this->m_sock_coming);
 				close(this->m_sock_coming);
@@ -323,7 +408,9 @@ void Server::new_connection(void)
 					close(this->m_sock_coming);
 				}
 				else
+				{
 					nick_is_valid = true;
+				}
 			}
 		}
 		else
@@ -333,39 +420,41 @@ void Server::new_connection(void)
 		}
 		if (user_is_valid == false && nick_is_valid == true)
 		{
-			if (ret.find("USER ") == string::npos)
+			if (ret.find("USER ") == std::string::npos)
+			{
 				ret = this->receive_msg(this->m_sock_coming);
-			if ((occurrence = ret.find("USER ")) != string::npos)
+			}
+			if ((occurrence = ret.find("USER ")) != std::string::npos)
 			{
 				int i = 0;
 
-				//username
+				// username
 
-				if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occurrence + 5)) == string::npos)
+				if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occurrence + 5)) == std::string::npos)
 					forward_message(forward_RPL(461, this, NULL, "USER", ""), this->m_sock_coming);
 				else
 				{
 					user = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
 
-					//hostname
+					// hostname
 
-					if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == string::npos)
+					if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
 						forward_message(forward_RPL(461, this, NULL, "USER", ""), this->m_sock_coming);
 					else
 					{
 						host = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
 
-						//serverName
+						// serverName
 
-						if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == string::npos)
+						if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
 							forward_message(forward_RPL(461, this, NULL, "USER", ""), this->m_sock_coming);
 						else
 						{
 							serverName = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
 
-							//realname
+							// realname
 
-							if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == string::npos)
+							if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
 								forward_message(forward_RPL(461, this, NULL, "USER", ""), this->m_sock_coming);
 							else
 							{
@@ -385,71 +474,71 @@ void Server::new_connection(void)
 			close(this->m_sock_coming);
 		}
 	}
-	// if (password_is_valid == true && m_users.size() < 10 && nick_is_valid == true && user_is_valid == true && g_server_is_alive == true)
-	if (password_is_valid == true && m_users.size() < 4 && nick_is_valid == true && user_is_valid == true && g_server_is_alive == true)
+	// if (password_is_valid == true && m_users.size() < 10 && nick_is_valid == true && user_is_valid == true && g_Server_Alive == true)
+	if (password_is_valid == true && m_users.size() < 4 && nick_is_valid == true && user_is_valid == true && g_Server_Alive == true)
 	{
 		this->m_server_name = serverName;
 		User *newUser = new User(nick, user, host, realname);
 		this->set_users(this->m_sock_coming, newUser);
-		cout << "Number of user connected on the server: " << this->m_users.size() << endl;
+		std::cout << "Number of user connected on the server: " << this->m_users.size() << std::endl;
 		forward_message(forward_RPL(001, this, newUser, "", ""), this->m_sock_coming);
 		forward_message(forward_RPL(002, this, newUser, "", ""), this->m_sock_coming);
 		forward_message(forward_RPL(003, this, newUser, "", ""), this->m_sock_coming);
 		forward_message(forward_RPL(004, this, newUser, "", ""), this->m_sock_coming);
 		forward_MOTD(this->m_sock_coming);
 
-		//add new socket to array of sockets
+		// add new socket to array of sockets
 
 		i = -1;
 		while (++i < MAX_CLIENTS)
 		{
-			//if position is empty
+			// if position is empty
 
-			if (g_server_client_socket[i] == 0)
+			if (g_Socket_Queue[i] == 0)
 			{
-				g_server_client_socket[i] = this->m_sock_coming;
+				g_Socket_Queue[i] = this->m_sock_coming;
 				break;
 			}
 		}
 	}
-	else if (password_is_valid == true && nick_is_valid == true && g_server_is_alive == true && user_is_valid == true)
+	else if (password_is_valid == true && nick_is_valid == true && g_Server_Alive == true && user_is_valid == true)
 		forward_message(forward_RPL(005, this, NULL, nick, ""), this->m_sock_coming);
 }
 
 
-string Server::receive_msg(int socket_fd) const
+std::string Server::receive_msg(int socket_fd) const
 {
 	char buffer[1024];
-	string buf = "";
+	std::string buf = "";
 	memset(buffer, 0, 1024);
-	while ((buf += buffer).find('\n') == string::npos && g_server_is_alive == true)
+	while ((buf += buffer).find('\n') == std::string::npos && g_Server_Alive == true)
 	{
 		if (recv(socket_fd, buffer, 1024, 0) < 0)
-			throw runtime_error("Error receiving message");
+			throw std::runtime_error("Error receiving message");
 	}
 	return (buf);
 }
 
 
-string Server::get_server_name() const
+std::string Server::get_server_name() const
 {
 	return (this->m_server_name);
 }
 
 
-string Server::get_port() const
+std::string Server::get_port() const
 {
 	return (this->m_port);
 }
 
 
-map<string, Channel*> & Server::get_channels()
+std::map<std::string, Channel*> & Server::get_channels()
 {
 	return (this->m_channels);
 }
 
 
-map<int, User*> & Server::get_users()
+std::map<int, User*> & Server::get_users()
 {
 	return (this->m_users);
 }
@@ -461,15 +550,15 @@ struct sockaddr_in Server::get_server()
 }
 
 
-void Server::get_channels(string channel_name, Channel *chan)
+void Server::get_channels(std::string channel_name, Channel *chan)
 {
-	this->m_channels.insert(make_pair(channel_name, chan));
+	this->m_channels.insert(std::make_pair(channel_name, chan));
 }
 
 
 void Server::set_users(int socket_fd, User *user)
 {
-	this->m_users.insert(make_pair(socket_fd, user));
+	this->m_users.insert(std::make_pair(socket_fd, user));
 }
 
 
@@ -479,9 +568,9 @@ void Server::set_is_restarting()
 }
 
 
-int Server::search_user_by_nickname(string nickname)
+int Server::search_user_by_nickname(std::string nickname)
 {
-	map<int, User*>::iterator it;
+	std::map<int, User*>::iterator it;
 
 	it = this->m_users.begin();
     while (it != this->m_users.end())
@@ -494,16 +583,16 @@ int Server::search_user_by_nickname(string nickname)
 }
 
 
-ostream	& operator << (ostream &stdout, map<string, Channel*> &channels)
+std::ostream	& operator << (std::ostream &stdout, std::map<std::string, Channel*> &channels)
 {
-	map<string, Channel*>::iterator	it;
+	std::map<std::string, Channel*>::iterator	it;
 	int											i;
 
 	i = 0;
 	it = channels.begin();
 	while (it != channels.end())
 	{
-		stdout << "Channel " << i << " name is " << it->first << "." << endl;
+		stdout << "Channel " << i << " name is " << it->first << "." << std::endl;
 		++it;
 		++i;
 	}
@@ -511,16 +600,16 @@ ostream	& operator << (ostream &stdout, map<string, Channel*> &channels)
 }
 
 
-ostream	& operator << (ostream &stdout, map<int, User*> &users)
+std::ostream	& operator << (std::ostream &stdout, std::map<int, User*> &users)
 {
-	map<int, User*>::iterator	it;
+	std::map<int, User*>::iterator	it;
     int								i;
 
 	it = users.begin();
 	i = 0;
 	while (it != users.end())
 	{
-		stdout << "User " << i << " nick is " << it->second->get_nickname() << "." << endl;
+		stdout << "User " << i << " nick is " << it->second->get_nickname() << "." << std::endl;
 		++it;
 		++i;
 	}
@@ -528,10 +617,10 @@ ostream	& operator << (ostream &stdout, map<int, User*> &users)
 }
 
 
-ostream	& operator << (ostream &stdout, User &user)
+std::ostream	& operator << (std::ostream &stdout, User &user)
 {
-	set<string>			channels;
-	set<string>::iterator	it;
+	std::set<std::string>			channels;
+	std::set<std::string>::iterator	it;
     int								i;
 
 	channels = user.get_channels();
@@ -539,7 +628,7 @@ ostream	& operator << (ostream &stdout, User &user)
 	i = 0;
     while (it != channels.end())
     {
-        stdout << "Channel " << i << " of User " << user.get_nickname() << " is called " << *it << endl;
+        stdout << "Channel " << i << " of User " << user.get_nickname() << " is called " << *it << std::endl;
 		++it;
 		++i;
 	}
@@ -549,11 +638,11 @@ ostream	& operator << (ostream &stdout, User &user)
 
 void Server::clear_all()
 {
-	map<string, Channel*>::iterator	cit;
-	map<int, User*>::iterator				uit;
+	std::map<std::string, Channel*>::iterator	cit;
+	std::map<int, User*>::iterator				uit;
 
 	uit = this->m_users.begin();
-	while (++uit != this->m_users.end())
+	while (uit != this->m_users.end()) // Crucial fix
 	{
 		delete	(uit->second);
 
@@ -622,14 +711,14 @@ void Server::forward_MOTD_Slant_Relief(int socket_fd)
 	forward_message("                                                   ", socket_fd);
 	forward_message("                                                   ", socket_fd);
 	forward_message("__/\\\\\\\\\\\\\\\\\\\\\\____/\\\\\\\\\\\\\\\\\\____________/\\\\\\\\\\\\\\\\\\_        ", socket_fd);
-	forward_message(" _\\/////\\\\\\///___/\\\\\\///////\\\\\\_______/\\\\\\////////__       ", socket_fd);
+	forward_message(" _\\// // /\\\\\\// /___/\\\\\\// // // /\\\\\\_______/\\\\\\// // // // __       ", socket_fd);
 	forward_message("  _____\\/\\\\\\_____\\/\\\\\\_____\\/\\\\\\_____/\\\\\\/___________      ", socket_fd);
 	forward_message("   _____\\/\\\\\\_____\\/\\\\\\\\\\\\\\\\\\\\\\/_____/\\\\\\_____________     ", socket_fd);
-	forward_message("    _____\\/\\\\\\____\\/\\\\\\//////\\\\\\____\\/\\\\\\_____________    ", socket_fd);
-	forward_message("     _____\\/\\\\\\_____\\/\\\\\\____\\//\\\\\\___\\//\\\\\\____________   ", socket_fd);
-	forward_message("      _____\\/\\\\\\_____\\/\\\\\\_____\\//\\\\\\___\\///\\\\\\__________  ", socket_fd);
-	forward_message("       __/\\\\\\\\\\\\\\\\\\\\\\_\\/\\\\\\______\\//\\\\\\____\\////\\\\\\\\\\\\\\\\\\_ ", socket_fd);
-	forward_message("        _\\///////////__\\///________\\///________\\/////////__", socket_fd);
+	forward_message("    _____\\/\\\\\\____\\/\\\\\\// // // \\\\\\____\\/\\\\\\_____________    ", socket_fd);
+	forward_message("     _____\\/\\\\\\_____\\/\\\\\\____\\// \\\\\\___\\// \\\\\\____________   ", socket_fd);
+	forward_message("      _____\\/\\\\\\_____\\/\\\\\\_____\\// \\\\\\___\\// /\\\\\\__________  ", socket_fd);
+	forward_message("       __/\\\\\\\\\\\\\\\\\\\\\\_\\/\\\\\\______\\// \\\\\\____\\// // \\\\\\\\\\\\\\\\\\_ ", socket_fd);
+	forward_message("        _\\// // // // // /__\\// /________\\// /________\\// // // // /__", socket_fd);
 	forward_message("                                                   ", socket_fd);
 	forward_message("                                                   ", socket_fd);
 	forward_message("                                                   ", socket_fd);

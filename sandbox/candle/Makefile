@@ -1,26 +1,27 @@
-srcs	=	srcs/Freenode.cpp  \
-		srcs/User.cpp  \
-		srcs/Channel.cpp  \
-		srcs/Server.cpp   \
-		srcs/send_rpl_err.cpp   \
-		srcs/send_outputs.cpp   \
-		srcs/commands/restart.cpp  \
-		srcs/commands/privmsg.cpp  \
-		srcs/commands/join.cpp  \
-		srcs/commands/topic.cpp  \
-		srcs/commands/quit.cpp  \
-		srcs/commands/nick.cpp  \
-		srcs/commands/part.cpp  \
-		srcs/commands/ping.cpp  \
-		srcs/commands/pong.cpp  \
-		srcs/commands/mode.cpp  \
-		srcs/commands/kill.cpp  \
-		srcs/commands/kick.cpp  \
-		srcs/commands/oper.cpp
+srcs	=	Freenode.cpp  \
+		User.cpp  \
+		Channel.cpp  \
+		Server.cpp   \
+		forward_rpl.cpp   \
+		forward_out.cpp   \
+		cmds/restart.cpp  \
+		cmds/privmsg.cpp  \
+		cmds/join.cpp  \
+		cmds/topic.cpp  \
+		cmds/quit.cpp  \
+		cmds/nick.cpp  \
+		cmds/part.cpp  \
+		cmds/ping.cpp  \
+		cmds/pong.cpp  \
+		cmds/mode.cpp  \
+		cmds/kill.cpp  \
+		cmds/kick.cpp  \
+		cmds/oper.cpp
 
 obj	=	$(srcs:.cpp=.o)
 
 inc	=	-I includes
+inc	=	-I ./
 
 comp	=	c++ -Wall -Wextra -Werror -std=c++98 -g3
 
@@ -40,7 +41,7 @@ $(name)	:	$(obj)
 		@ $(comp) $(inc) $(obj) -o $(name)
 		@ printf "\n\n"
 		@ echo ""
-		@ printf "\t\"Are you using the right compiler? \n\n"
+		@ printf "\t\"Are you // using the right compiler? \n\n"
 		@ echo ""
 		@ echo ""
 		@ echo "[$@] is ready "
@@ -58,3 +59,4 @@ r	:	re
 re	:	fclean all
 
 .PHONY:		all clean fclean re
+

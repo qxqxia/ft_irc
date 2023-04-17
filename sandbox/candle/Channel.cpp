@@ -1,11 +1,11 @@
 #include "Freenode.hpp"
 
 Channel::Channel(
-    string channel_name
+    std::string channel_name
 ) : 
     m_channelname(channel_name),
     m_topic("") {
-    //m_last_joke_told(0) {
+    // m_last_joke_told(0) {
 }
 
 Channel::~Channel()
@@ -25,42 +25,42 @@ int Channel::get_user_number() const
     );
 }
 
-string Channel::get_topic() const
+std::string Channel::get_topic() const
 {
     return this->m_topic;
 }
 
-string Channel::get_channelname() const
+std::string Channel::get_channelname() const
 {
     return this->m_channelname;
 }
 
-map<int, User*> & Channel::get_users()
+std::map<int, User*> & Channel::get_users()
 {
     return this->m_users;
 }
 
-map<int, User*> & Channel::get_chanops()
+std::map<int, User*> & Channel::get_chanops()
 {
     return this->m_chanops;
 }
 
-map<int, User*> & Channel::get_voices()
+std::map<int, User*> & Channel::get_voices()
 {
     return this->m_voices;
 }
 
-map<string, string> & Channel::get_banlist()
+std::map<std::string, std::string> & Channel::get_banlist()
 {
     return this->m_banlist;
 }
 
-string Channel::get_mode() const
+std::string Channel::get_mode() const
 {
     return this->m_mode;
 }
 
-string Channel::get_key() const
+std::string Channel::get_key() const
 {
     return this->m_key;
 }
@@ -75,17 +75,17 @@ int Channel::get_maximum_users() const
 //     return this->m_last_joke_told;
 // }
 
-void Channel::set_topic(string topic)
+void Channel::set_topic(std::string topic)
 {
     this->m_topic = topic;
 }
 
-void Channel::set_mode(string mode)
+void Channel::set_mode(std::string mode)
 {
     this->m_mode = mode;
 }
 
-void Channel::set_key(string key)
+void Channel::set_key(std::string key)
 {
     this->m_key = key;
 }
@@ -102,22 +102,22 @@ void Channel::set_maximum_users(int maxUser)
 
 void Channel::add_user(int sd, User *user)
 {
-    this->m_users.insert(make_pair(sd, user));
+    this->m_users.insert(std::make_pair(sd, user));
 }
 
 void Channel::add_chanop(int sd, User *user)
 {
-    this->m_chanops.insert(make_pair(sd, user));
+    this->m_chanops.insert(std::make_pair(sd, user));
 }
 
 void Channel::add_voice(int sd, User *user)
 {
-    this->m_voices.insert(make_pair(sd, user));
+    this->m_voices.insert(std::make_pair(sd, user));
 }
 
 void Channel::left_user_of_what_use(int sd)
 {
-    map<int, User*>::iterator   it;
+    std::map<int, User*>::iterator   it;
 
     if ((it = this->m_users.find(sd)) != this->m_users.end())
         this->m_users.erase(it);
@@ -127,9 +127,9 @@ void Channel::left_user_of_what_use(int sd)
         this->m_voices.erase(it);
 }
 
-int Channel::search_user_by_nickname(string nickname)
+int Channel::search_user_by_nickname(std::string nickname)
 {
-    map<int, User*>::iterator   it;
+    std::map<int, User*>::iterator   it;
 
     it = this->m_users.begin();
     while (it != this->m_users.end())
@@ -155,10 +155,10 @@ int Channel::search_user_by_nickname(string nickname)
     return (-1);
 }
     
-string Channel::get_list_of_users_in_channel()
+std::string Channel::get_list_of_users_in_channel()
 {
-    map<int, User *>::iterator  it;
-    string                      res;
+    std::map<int, User *>::iterator  it;
+    std::string                      res;
 
     it = this->m_chanops.begin();
     while (it != this->m_chanops.end())
@@ -191,10 +191,10 @@ string Channel::get_list_of_users_in_channel()
     return (res);
 }
 
-string Channel::get_list_of_users_banned()
+std::string Channel::get_list_of_users_banned()
 {
-    map<string, string>::iterator   it;
-    string                          res;
+    std::map<std::string, std::string>::iterator   it;
+    std::string                          res;
 
     it = this->m_banlist.begin();
     while (it != this->m_banlist.end())
@@ -221,7 +221,7 @@ bool    Channel::is_voice(int sd)
     return (true);
 }
 
-bool Channel::is_banned(string nickname)
+bool Channel::is_banned(std::string nickname)
 {
     if (this->m_banlist.find(nickname) == this->m_banlist.end())
         return (false);
