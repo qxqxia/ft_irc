@@ -19,4 +19,3 @@
 # define CROSS	RED " ✘" RESET
 
 #endif
-

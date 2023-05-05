@@ -1,26 +1,26 @@
-srcs	=	srcs/Freenode.cpp  \
-		srcs/User.cpp  \
-		srcs/Channel.cpp  \
-		srcs/Server.cpp   \
-		srcs/send_rpl_err.cpp   \
-		srcs/send_outputs.cpp   \
-		srcs/commands/restart.cpp  \
-		srcs/commands/privmsg.cpp  \
-		srcs/commands/join.cpp  \
-		srcs/commands/topic.cpp  \
-		srcs/commands/quit.cpp  \
-		srcs/commands/nick.cpp  \
-		srcs/commands/part.cpp  \
-		srcs/commands/ping.cpp  \
-		srcs/commands/pong.cpp  \
-		srcs/commands/mode.cpp  \
-		srcs/commands/kill.cpp  \
-		srcs/commands/kick.cpp  \
-		srcs/commands/oper.cpp
+srcs	=	Freenode.cpp  \
+		User.cpp  \
+		Channel.cpp  \
+		Server.cpp   \
+		forward_rpl_err.cpp   \
+		forward_outputs.cpp   \
+		commands/restart.cpp  \
+		commands/privmsg.cpp  \
+		commands/join.cpp  \
+		commands/topic.cpp  \
+		commands/quit.cpp  \
+		commands/nick.cpp  \
+		commands/part.cpp  \
+		commands/ping.cpp  \
+		commands/mode.cpp  \
+		commands/kill.cpp  \
+		commands/kick.cpp  \
+		commands/oper.cpp
 
 obj	=	$(srcs:.cpp=.o)
 
 inc	=	-I includes
+inc	=	-I ./
 
 comp	=	c++ -Wall -Wextra -Werror -std=c++98 -g3
 
@@ -58,3 +58,4 @@ r	:	re
 re	:	fclean all
 
 .PHONY:		all clean fclean re
+

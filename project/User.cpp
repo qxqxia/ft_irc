@@ -1,89 +1,69 @@
 #include "Freenode.hpp"
 
 User::User(
-	string	nickname,
-	string	username,
-	string	hostname,
-	string	realname
+	std::string nickname,
+	std::string username,
+	std::string hostname,
+	std::string realname
 ) :
-	m_nickname( nickname ),
-	m_username( username ),
-	m_hostname( hostname ),
-	m_realname( realname ){
+	m_nickname(nickname),
+	m_username(username),
+	m_hostname(hostname),
+	m_realname(realname){
 }
-
 
 User::~User()
 {
 	this->m_channels.clear();
 }
 
-
-// Name getter
-
-string	User::get_nickname() const
+std::string	User::get_nickname() const
 {
 	return (this->m_nickname);
 }
 
-
-string	User::get_username() const
+std::string	User::get_username() const
 { 
 	return (this->m_username);
 }
 
-
-string	User::get_hostname() const
+std::string	User::get_hostname() const
 {
 	return (this->m_hostname);
 }
 
-
-string	User::get_realname() const
+std::string	User::get_realname() const
 {
 	return (this->m_realname);
 }
 
-
-// Channel
-
-set<string> & User::get_channels()
+std::set<std::string> & User::get_channels()
 {
 	return (this->m_channels);
 }
-
-
 
 size_t	User::get_channels_size() const
 {
 	return (this->m_channels.size());
 }
 
-
-void	User::add_channel(string channel_name)
-{
-	if (this->m_channels.find(channel_name) != this->m_channels.end())
-		return ;
-	this->m_channels.insert(channel_name);
-}
-
-
-// Mode
-
-string	User::get_mode() const
+std::string	User::get_mode() const
 {
 	return (this->m_mode);
 }
 
-
-void	User::set_mode(string mode)
+void	User::set_mode(std::string mode)
 {
 	this->m_mode = mode;
 }
 
+void	User::add_channel(std::string channel_name)
+{
+	if (this->m_channels.find(channel_name) == this->m_channels.end())
+		this->m_channels.insert(channel_name);
+}
 
-
-void	User::set_nick(string new_nick)
+void	User::set_nick(std::string new_nick)
 {
 	this->m_nickname = new_nick;
 }
