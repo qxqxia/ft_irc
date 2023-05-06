@@ -99,6 +99,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
             {
                 character = buffer.substr(j, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - j : buffer.length() - 1 - j);
             }
+            std::cout << CYAN "PMG : " RESET << character << nl;
         }
         else if ((user_to_send_socket_fd = serv->search_user_by_nickname(msgtarget)) == -1)
         {
