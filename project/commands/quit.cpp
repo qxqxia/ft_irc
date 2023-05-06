@@ -12,8 +12,6 @@ void disconnect_user(Server* serv, int sd)
 
     // erase user from each channel;
 
-    // for (std::set<std::string>::iterator it = user_channels.begin(); it != user_channels.end(); it++)
-
     std::set<std::string>::iterator     it;
     it = user_channels.begin();
     while (it != user_channels.end())
@@ -35,7 +33,7 @@ void disconnect_user(Server* serv, int sd)
 
     serv->get_users().erase(sd);
     std::cout << "Host disconnected , ip " << inet_ntoa(serv->get_server().sin_addr) << " , port " << ntohs(serv->get_server().sin_port) << " , number of users: " <<  serv->get_users().size() << std::endl;
-    // for (int i = 0; i < MAX_CLIENTS; i++)
+
     int i = -1;
     while (++i < MAX_CLIENTS)
     {

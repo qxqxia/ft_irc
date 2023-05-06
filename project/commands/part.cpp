@@ -11,7 +11,7 @@ void    part(Server *serv, std::string buffer, int sd)
         channelsName = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
     if (channelsName.empty())
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(461, serv, FIND_USER(sd), "PART", ""), sd);
+        Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "PART", ""), sd);
         return ;
     }
     std::string message = "";
@@ -26,16 +26,16 @@ void    part(Server *serv, std::string buffer, int sd)
 
     total_channels = 1 + std::count(channelsName.begin(), channelsName.end(), ',');
 
-    // for (int i = 0; i < total_channels; i++)
+
     i = -1;
     while (++i < (size_t) total_channels)
     {
         std::string channel_name = channelsName.substr(0, channelsName.find(","));
         channelsName.erase(0, channelsName.find(",") + 1);
         if (serv->get_channels().find(channel_name) == serv->get_channels().end())
-            ___Broadcast___(___Broadcast_RPL_ERR___(403, serv, FIND_USER(sd), channel_name, ""), sd);
+            Broadcast(get_RPL_ERR(403, serv, FIND_USER(sd), channel_name, ""), sd);
         else if (FIND_USER(sd)->get_channels().find(channel_name) == FIND_USER(sd)->get_channels().end())
-            ___Broadcast___(___Broadcast_RPL_ERR___(442, serv, FIND_USER(sd), channel_name, ""), sd);
+            Broadcast(get_RPL_ERR(442, serv, FIND_USER(sd), channel_name, ""), sd);
         else
         {
             std::string user_answer = user_output(FIND_USER(sd));
@@ -46,7 +46,7 @@ void    part(Server *serv, std::string buffer, int sd)
             }
             else
             {
-                ___Broadcast___(user_answer, sd);
+                Broadcast(user_answer, sd);
             }
             FIND_CHANNEL(channel_name)->left_user_of_what_use(sd);
             if (FIND_CHANNEL(channel_name)->get_user_number() == 0)

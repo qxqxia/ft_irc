@@ -27,21 +27,29 @@
 # include "netinet/in.h"
 # include "arpa/inet.h"
 
+# include "Bot.hpp" // Added
+
 # include "User.hpp"
 # include "Command.hpp"
 # include "Channel.hpp"
 # include "Server.hpp"
 # include "RPL_ERR.hpp"
 
-# define ver "7.0"
-# define OPER_PW "1007"
+
 
 # define SERVER_NAME "localhost"
-# define USER_MODE "roi"
-# define CHANNEL_MODE "maltvonkb" // "ovamntlkb"
+# define ver "7.0"
+# define OPER_PASS "1007"
 
-# define FIND_CHANNEL(channel_name) serv->get_channels().find(channel_name)->second
-# define FIND_USER(sd)	serv->get_users().find(sd)->second
+# define USER_MODE \
+				"roi"
+# define CHANNEL_MODE \
+				"maltvonkb" // "ovamntlkb"
+
+# define FIND_CHANNEL(channel_name) \
+		serv->get_channels().find(channel_name)->second
+# define FIND_USER(sd) \
+		serv->get_users().find(sd)->second
 
 /*
 # define CHECKUSERMODE(sd, mode) \
@@ -54,25 +62,34 @@
 
 # define BUFFER_ENDS std::string("\r\n")
 # define SEP_CHARSET std::string(" \t\r\n")
+
 # define MAX_CLIENTS 4
 // # define MAX_CLIENTS 10
 
 class	Server;
-class	User;
+
 class	Channel;
+class	User;
 
-std::string	user_output(User *Us);
-std::string	anonymous_output();
+class	Bot; // Added
 
-void	___Broadcast___(std::string msg, int sd);
+
+std::string		anonymous_output();
+std::string		user_output(User *Us);
+std::string		bot_output(std::string name); /// Added
+
+
+void	Broadcast(std::string msg, int sd);
 
 void	disconnect_user(Server *, int sd);
+
 void	send_everyone_in_channel(std::string msg, Channel *chan);
 void	send_everyone_in_channel_except_user(std::string msg, Channel *chan, int sd);
 void	send_everyone(std::string msg, std::map<int, User *> Umap);
+
 bool	nickname_is_in_use(Server *, std::string nick);
 bool	nickname_is_validated(std::string nick);
 
-time_t	get_time(void);
+time_t	get_time(void); // Added
 
 #endif

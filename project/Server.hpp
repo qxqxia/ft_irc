@@ -13,6 +13,9 @@ private:
 	int	m_server_socket;
 	int	m_sock_coming;
 
+	Bot		*m_bot; // Added
+	// Bot		*get_bot() const ; // Added // should be public
+
 	const std::string	m_port;
 	const std::string	m_pass;
 
@@ -30,7 +33,7 @@ private:
 
 
 public:
-	Server(const std::string & port, const std::string & pass);
+	Server(const std::string &, const std::string &);
 	~Server();
 
 	void	connect_to_server();
@@ -38,37 +41,37 @@ public:
 	std::map<std::string, Channel*>	& get_channels();
 	std::map<int, User*> & get_users() ;
 
-	std::string	get_input_from_client_sfd(int sd) const;
+	std::string	get_input_from_client_sfd(int socket_fd) const;
 	std::string	get_server_name() const;
 	std::string	get_port() const;
 
 	struct sockaddr_in	get_server();
 
-	void	get_channels(std::string channel_name, Channel *chan);
-	void	set_users(int sd, User *user);
+	void	get_channels(std::string channel_name, Channel *);
+	void	set_users(int sd, User *);
 	void	set_is_restarting();
 
-	int		search_user_by_nickname(std::string nickname);
+	Bot		*get_bot() const ; /// Added
+
+	int		search_user_by_nickname(std::string);
 
 	// from what i make out, these cannot be const 
 	// bc fn array dictates this->*
 
-	void	forward_MOTD(int socket_fd);
-	void	forward_MOTD_Slant_Relief(int socket_fd);
-	void	forward_MOTD_Dot_Matrix(int socket_fd);
-	void	forward_MOTD_Mahjong(int socket_fd);
-	void	forward_MOTD_Doh(int socket_fd);
-	void	forward_MOTD_la_nuit_mes_yeux(int socket_fd);
-	void	forward_MOTD_voir_un_univers(int socket_fd);
+	void	Forward_MOTD(int);
+	void	Forward_MOTD_Slant_Relief(int);
+	void	Forward_MOTD_Dot_Matrix(int);
+	void	Forward_MOTD_Mahjong(int);
+	void	Forward_MOTD_Doh(int);
+	void	Forward_MOTD_la_nuit_mes_yeux(int);
+	void	Forward_MOTD_voir_un_univers(int);
 
 	void	clear_all();
 
 };
 
-std::ostream & operator << (std::ostream &, std::map<std::string, Channel*> & chans);
-std::ostream & operator << (std::ostream &, std::map<int, User*> & users);
-std::ostream & operator << (std::ostream &, User & user);
+std::ostream & operator << (std::ostream &, std::map<std::string, Channel*> &);
+std::ostream & operator << (std::ostream &, std::map<int, User*> &);
+std::ostream & operator << (std::ostream &, User &);
 
 #endif
-
-

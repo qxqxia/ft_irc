@@ -4,7 +4,7 @@
 
 # include "Freenode.hpp"
 
-std::string ___Broadcast_RPL_ERR___(int code, Server *serv, User *user, std::string args, std::string args2);
+std::string get_RPL_ERR(int code, Server *serv, User *user, std::string args, std::string args2);
 
 //RPL
 
@@ -150,5 +150,11 @@ std::string ___Broadcast_RPL_ERR___(int code, Server *serv, User *user, std::str
     (": Unknown MODE flag")
     
 
-#endif
+// #endif
 
+
+//669 --- BOT CMD-NOT-FOUND ERR
+#define BOT_NOCOMMAMD(cmd) \
+    (cmd + " :No such command.")
+
+#endif
