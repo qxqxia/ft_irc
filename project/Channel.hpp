@@ -22,7 +22,8 @@ private:
 	std::map<std::string, std::string>	m_banlist;
 
 	int		m_maximum_users;
-	time_t		m_last_joke_told;
+
+	bool	m_bot_in_channel; // added
 
 
 public:
@@ -47,7 +48,6 @@ public:
 	int	get_user_number() const;
 	int	get_maximum_users() const;
 
-	time_t	get_last_joke_told() const;
 
 	bool	is_chanop(int sd);
 	bool	is_voice(int sd);
@@ -57,7 +57,6 @@ public:
 	void	set_mode(std::string mod);
 	void	set_key(std::string key);
 	void	set_maximum_users(int max);
-	void	set_last_joke_told();
 
 	void	add_user(int sd, User *u);
 	void	add_chanop(int sd, User *u);
@@ -65,6 +64,9 @@ public:
 
 	void	left_user_of_what_use(int sd);
 	int	search_user_by_nickname(std::string nick);
+
+	bool	get_bot() const ;
+	void	set_bot();
 
 };
 
