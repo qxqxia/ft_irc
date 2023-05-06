@@ -6,6 +6,9 @@
 - [ ] Weekday-guessing Bot
 - [ ] Date & Time Bot
 - [ ] Find all RPL
+- [:heavy_check_mark:] /notice|NOTICE
+  - `/notice #room hello, world`
+  - `/notice @n2 hello, world`
 - [:heavy_check_mark:] /dcc
   - `/dcc send ~@~<User> /mnt/nfs/homes/login/Downloads/Great.in`
   - `/dcc < list | get >`
