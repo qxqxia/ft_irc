@@ -13,18 +13,20 @@ class   Bot
 		std::map<std::string, command>  m_command_handler;
 
         std::string		m_name;
-		std::string		m_weekday_answer;
-		std::string		m_mulgame_answer;
+		// std::string		m_weekday_answer;
+		// std::string		m_mulgame_answer;
 
 	public:
 		Bot();
-		virtual ~Bot();
+		~Bot();
+		// virtual ~Bot();
+
 
 		std::string get_name() const;
 		void find_command(Server * serv, Channel *chan, int socket_fd, std::string cmd);
 
-		void play_weekday(Server *serv, std::string cmd, int socket_fd); // Added
-		void play_mulgame(Server *serv, std::string cmd, int socket_fd); // Added
+		// void play_mulgame(Server *serv, std::string cmd, int socket_fd); // Added
+		// void play_weekday(Server *serv, std::string cmd, int socket_fd); // Added
 } ;
 
 void    help(Server *serv, Channel *chan, int sd);

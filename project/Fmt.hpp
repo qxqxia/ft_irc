@@ -2,6 +2,7 @@
 #ifndef __FMT_HPP__
 # define __FMT_HPP__
 
+
 # define nl "\n"
 # define nl2 "\n\n"
 # define nlreset " \n" RESET
@@ -15,7 +16,9 @@
 # define RESET "\033[0;0m"
 # define ITAL "\033[3m"
 
+
 # define TICK	GREEN " ✓" RESET
 # define CROSS	RED " ✘" RESET
+
 
 #endif

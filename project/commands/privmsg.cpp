@@ -17,7 +17,9 @@ void privmsg(Server *serv, std::string buffer, int sd)
     std::string msgtarget = "";
 
     if ((i = buf.find_first_not_of(SEP_CHARSET, pos_following_command)) != std::string::npos)
+    {
         msgtarget = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
+    }
 
     std::string msg = "";
     size_t j;
@@ -36,6 +38,9 @@ void privmsg(Server *serv, std::string buffer, int sd)
 
     user_answer = user_output(FIND_USER(sd));
     user_answer += "PRIVMSG " + msgtarget + " " + msg;
+
+    std::cout << MAG "PRVMG 1 msgtarget: " RESET << msgtarget << nl;
+    std::cout << MAG "PRVMG 1 usranswer: " RESET << user_answer << nl;
 
     if (!msgtarget.empty() && channel_prefixes.find(msgtarget[0]) != std::string::npos)
     {
@@ -73,11 +78,12 @@ void privmsg(Server *serv, std::string buffer, int sd)
     }
     else
     {
-        if (msgtarget.compare(serv->get_bot()->get_name()) == 0)
+        if (msgtarget == serv->get_bot()->get_name())
         {
             int k = 0;
             int j = -1;
-            std::string character;
+
+            std::string     word;
 
             // for (j = 0; buffer[j] && k < 2; j++)
 
@@ -93,13 +99,13 @@ void privmsg(Server *serv, std::string buffer, int sd)
             }
             if (buffer[j] == ':')
             {
-                character = buffer.substr(j + 1, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - (j + 1) : buffer.length() - 1 - (j + 1));
+                word = buffer.substr(j + 1, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - (j + 1) : buffer.length() - 1 - (j + 1));
             }
             else
             {
-                character = buffer.substr(j, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - j : buffer.length() - 1 - j);
+                word = buffer.substr(j, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - j : buffer.length() - 1 - j);
             }
-            std::cout << CYAN "PMG : " RESET << character << nl;
+            std::cout << MAG "PRVMG 2 : " RESET << word << nl;
         }
         else if ((user_to_send_socket_fd = serv->search_user_by_nickname(msgtarget)) == -1)
         {
