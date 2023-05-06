@@ -4,7 +4,9 @@
 
 # include "Freenode.hpp"
 
+
 class	Server;
+
 
 void	privmsg(Server *, std::string, int);
 

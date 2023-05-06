@@ -6,4 +6,5 @@ void ping(Server *serv, std::string buffer, int sd)
 
     buffer[1] = 'O';
     Broadcast(buffer, sd);
+    Broadcast(buffer, sd);
 }
