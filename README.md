@@ -1,22 +1,12 @@
 ![](https://img.shields.io/badge/C++-Internet&nbsp;Relay&nbsp;Chat-red.svg?style=flat&logo=c%2B%2B)
 
 
-# Now checking
+Now checking
 - [x] modify all for loops
 - [x] Re-add french MOTD
-- ------------------------ Command List 
-- [ ] privmsg
-- [x] ping
-  - dropped /pong (incompatible w/ irssi)
-- [x] part
-- [x] quit
-- [x] topic
-- [x] oper
-- [x] kick
-- [x] kill
-- [x] restart
-- [x] n/name/names (builtin)
-- ------------------------ "roi" USER_MODE 
+
+
+# "roi" USER_MODE 
 - [x] `+r` | set myself to `restricted` - avoid messages from unidentified users
 - [x] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
 - [x] `+i` 
@@ -30,7 +20,23 @@
 - [ ] `+n` | no external messages |  `/mode #chan +n`
 - [ ] `+k` | set chan key | `/oper ...` ` /mode #ROOM +k KEY`   
 - [ ] `+b` | ban someone | `/oper ...` ` /mode #ROOM +b USER` 
-- ------------------------ 分隔線 
+
+
+# Command List 
+- [ ] privmsg
+- [x] ping
+  - dropped /pong (incompatible w/ irssi)
+- [x] part
+- [x] quit
+- [x] topic
+- [x] oper
+- [x] kick
+- [x] kill
+- [x] restart
+- [x] n/name/names (builtin)
+
+
+# Command List II
 - [x] TOPIC works fine
   - `/topic` 
   - `/topic <new_topic>` (anyone can set topic)
