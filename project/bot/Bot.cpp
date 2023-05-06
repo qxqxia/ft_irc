@@ -3,11 +3,11 @@
 Bot::Bot() : m_name("Chat")
 {
 	this->m_command_handler.insert(
-        std::pair<std::string, command>("botawake", & connect)
+        std::pair<std::string, command>("botawake", & callin)
     );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("botstart", & connect)
+        std::pair<std::string, command>("botstart", & callin)
     );
 
     this->m_command_handler.insert(
@@ -31,11 +31,11 @@ Bot::Bot() : m_name("Chat")
     );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("botstop", & quit)
+        std::pair<std::string, command>("botstop", & callout)
     );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("botsleep", & quit)
+        std::pair<std::string, command>("botsleep", & callout)
     );
 }
 
@@ -44,7 +44,7 @@ Bot::~Bot()
     this->m_command_handler.clear();
 }
 
-std::string Bot::get_name() const
+std::string     Bot::get_name() const
 {
     return this->m_name;
 }
@@ -62,7 +62,7 @@ void Bot::find_command(Server * serv, Channel *chan, int socket_fd, std::string 
     }
 }
 
-void connect(Server *serv, Channel *chan, int socket_fd)
+void callin(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
@@ -78,7 +78,7 @@ void connect(Server *serv, Channel *chan, int socket_fd)
         Broadcast(get_RPL_ERR(482, serv, FIND_USER(socket_fd), chan->get_channelname(), ""), socket_fd);
 }
 
-void quit(Server *serv, Channel *chan, int socket_fd)
+void callout(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
@@ -142,7 +142,7 @@ void tell_date(Server *serv, Channel *chan, int socket_fd)
 
 void help(Server *serv, Channel *chan, int socket_fd)
 {
-    std::string line = "!wakeup  - Connect the bot to the channel.";
+    std::string line = "!botawake  - Summon the bot to the channel.";
     Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
 
     line = "!date    - Give today's date.";
@@ -151,7 +151,7 @@ void help(Server *serv, Channel *chan, int socket_fd)
     line = "!time    - Give the current local time.";
     Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
 
-    line = "!sleep   - Disconnect the bot.";
+    line = "!botsleep   - Dismiss the bot.";
     Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
 }
 
