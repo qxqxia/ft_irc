@@ -2,7 +2,8 @@
 
 
 # Now checking
-- [x] modify all for loops
+- [x] Init Candle7
+- [x] Modify all for loops
 - [x] Re-add french MOTD
 
 
