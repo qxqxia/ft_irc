@@ -18,7 +18,7 @@ Now checking
 - [ ] `+l` | set limit | `/oper ...` ` /mode #ROOM +l 2`
 - [ ] `+t` | topic protection | `/mode #chan +t `
 - [ ] `+v` | give _user_ a voice in a moderated room |  `/mode #chan +v user`
-- [ ] `+o` | give someone else _operator_ role | `/mode #chan +o user`
+- [ ] `+o` | give someone else _Operator_ role | `/mode #chan +o user`
 - [ ] `+n` | no external messages |  `/mode #chan +n`
 - [ ] `+k` | set chan key | `/oper ...` ` /mode #ROOM +k KEY`   
 - [ ] `+b` | ban someone | `/oper ...` ` /mode #ROOM +b USER` 
