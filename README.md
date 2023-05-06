@@ -11,7 +11,7 @@
   - `/notice @n2 hello, world`
 - [:heavy_check_mark:] /dcc
   - `/dcc send <~@~User> /mnt/nfs/homes/login/Downloads/Great.in`
-  - `/dcc < list | get >`
+  - `/dcc <list|get>`
 - [:heavy_check_mark:] XCQ after ***get_input_from_client_sfd (sfd)***
 - [:heavy_check_mark:] Candle 7
 - [:heavy_check_mark:] Modify all for loops
