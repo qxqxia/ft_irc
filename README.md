@@ -7,7 +7,7 @@
 - ------------------------ Command List 
 - [ ] privmsg
 - [x] ping
-  - pong ---> incompatible with irssi
+  - dropped /pong (incompatible w/ irssi)
 - [x] part
 - [x] quit
 - [x] topic
