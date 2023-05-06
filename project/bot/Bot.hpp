@@ -22,10 +22,10 @@ class   Bot
 		void find_command(Server * serv, Channel *chan, int sd, std::string cmd);
 } ;
 
-void    callin(Server *serv, Channel *chan, int sd);
+void    summon(Server *serv, Channel *chan, int sd);
 
 void    help(Server *serv, Channel *chan, int sd);
-void    callout(Server *serv, Channel *chan, int sd);
+void    dismiss(Server *serv, Channel *chan, int sd);
 
 void    tell_date(Server *serv, Channel *chan, int sd);
 void    tell_time(Server *serv, Channel *chan, int sd);

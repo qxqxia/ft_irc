@@ -74,7 +74,7 @@ void Server::connect_to_server()
 		// Can we make a separate handler function?
 
 		// it can't be done. 
-		//	Signal handlers are too primitive a mechanism to support calling
+		//	Signal handlers are too primitive a mechanism to support summong
 		//	of a member function on a particular instance of a class.
 
 		std::signal(SIGINT, handle_sigint);

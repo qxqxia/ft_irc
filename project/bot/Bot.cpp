@@ -3,11 +3,11 @@
 Bot::Bot() : m_name("Chat")
 {
 	this->m_command_handler.insert(
-        std::pair<std::string, command>("botawake", & callin)
+        std::pair<std::string, command>("botawake", & summon)
     );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("botstart", & callin)
+        std::pair<std::string, command>("botstart", & summon)
     );
 
     this->m_command_handler.insert(
@@ -31,11 +31,11 @@ Bot::Bot() : m_name("Chat")
     );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("botstop", & callout)
+        std::pair<std::string, command>("botstop", & dismiss)
     );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("botsleep", & callout)
+        std::pair<std::string, command>("botsleep", & dismiss)
     );
 }
 
@@ -62,7 +62,7 @@ void Bot::find_command(Server * serv, Channel *chan, int socket_fd, std::string 
     }
 }
 
-void callin(Server *serv, Channel *chan, int socket_fd)
+void summon(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
@@ -78,7 +78,7 @@ void callin(Server *serv, Channel *chan, int socket_fd)
         Broadcast(get_RPL_ERR(482, serv, FIND_USER(socket_fd), chan->get_channelname(), ""), socket_fd);
 }
 
-void callout(Server *serv, Channel *chan, int socket_fd)
+void dismiss(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
