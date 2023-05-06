@@ -9,16 +9,20 @@ void privmsg(Server *serv, std::string buffer, int sd)
 
     // if (buf.compare(0, 6, "NOTICE") == 0)
     if (buf == "NOTICE")
+    {
         pos_following_command = 7;
+    }
     else
+    {
         pos_following_command = 8;
+    }
 
     size_t i;
-    std::string msgtarget = "";
+    std::string target = "";
 
     if ((i = buf.find_first_not_of(SEP_CHARSET, pos_following_command)) != std::string::npos)
     {
-        msgtarget = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
+        target = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
     }
 
     std::string msg = "";
@@ -37,48 +41,48 @@ void privmsg(Server *serv, std::string buffer, int sd)
 
 
     user_answer = user_output(FIND_USER(sd));
-    user_answer += "PRIVMSG " + msgtarget + " " + msg;
+    user_answer += "PRIVMSG " + target + " " + msg;
 
-    std::cout << MAG "PRVMG 1 msgtarget: " RESET << msgtarget << nl;
-    std::cout << MAG "PRVMG 1 usranswer: " RESET << user_answer << nl;
+    std::cout << MAG "PRVMG 1 target: " RESET << target << nl;
+    std::cout << MAG "PRVMG 1 usranswer: " RESET << user_answer << nl2;
 
-    if (!msgtarget.empty() && channel_prefixes.find(msgtarget[0]) != std::string::npos)
+    if (!target.empty() && channel_prefixes.find(target[0]) != std::string::npos)
     {
-        if (serv->get_channels().find(msgtarget) == serv->get_channels().end())
+        if (serv->get_channels().find(target) == serv->get_channels().end())
         {
-            Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), msgtarget, ""), sd);
+            Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
         }
-        else if ((FIND_CHANNEL(msgtarget)->get_mode().find("n") != std::string::npos) && (FIND_CHANNEL(msgtarget)->search_user_by_nickname(FIND_USER(sd)->get_nickname()) == -1))
+        else if ((FIND_CHANNEL(target)->get_mode().find("n") != std::string::npos) && (FIND_CHANNEL(target)->search_user_by_nickname(FIND_USER(sd)->get_nickname()) == -1))
         {
-            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), msgtarget, ""), sd);
+            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
         }
-        else if ((FIND_CHANNEL(msgtarget)->get_mode().find("m") != std::string::npos) && (!FIND_CHANNEL(msgtarget)->is_chanop(sd)) && (!FIND_CHANNEL(msgtarget)->is_voice(sd)))
+        else if ((FIND_CHANNEL(target)->get_mode().find("m") != std::string::npos) && (!FIND_CHANNEL(target)->is_chanop(sd)) && (!FIND_CHANNEL(target)->is_voice(sd)))
         {
-            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), msgtarget, ""), sd);
+            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
         }
-        else if (FIND_CHANNEL(msgtarget)->is_banned(FIND_USER(sd)->get_nickname()) == true)
+        else if (FIND_CHANNEL(target)->is_banned(FIND_USER(sd)->get_nickname()) == true)
         {
-            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), msgtarget, ""), sd);
+            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
         }
         /// Added following session for bot
         else if ( is_bot_command(buffer))
         {
             std::string command = buffer.substr(buffer.find('!') + 1, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - (buffer.find('!') + 1) : buffer.length() - 1 - (buffer.find('!') + 1));
-            serv->get_bot()->find_command(serv, FIND_CHANNEL(msgtarget), sd, command);
+            serv->get_bot()->find_command(serv, FIND_CHANNEL(target), sd, command);
         }
-        else if ((FIND_CHANNEL(msgtarget)->get_mode().find("a") != std::string::npos))
+        else if ((FIND_CHANNEL(target)->get_mode().find("a") != std::string::npos))
         {
-            user_answer = anonymous_output() + "PRIVMSG " + msgtarget + " " + msg;
-            send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(msgtarget), sd);
+            user_answer = anonymous_output() + "PRIVMSG " + target + " " + msg;
+            send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
         }
         else
         {
-            send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(msgtarget), sd);
+            send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
         }
     }
     else
     {
-        if (msgtarget == serv->get_bot()->get_name())
+        if (target == serv->get_bot()->get_name())
         {
             int k = 0;
             int j = -1;
@@ -107,9 +111,9 @@ void privmsg(Server *serv, std::string buffer, int sd)
             }
             std::cout << MAG "PRVMG 2 : " RESET << word << nl;
         }
-        else if ((user_to_send_socket_fd = serv->search_user_by_nickname(msgtarget)) == -1)
+        else if ((user_to_send_socket_fd = serv->search_user_by_nickname(target)) == -1)
         {
-            Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), msgtarget, ""), sd);
+            Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
         }
         else
         {
