@@ -5,7 +5,8 @@
 - [ ] Do-the-f*ing-Math Bot
 - [ ] Weekday-guessing Bot
 - [ ] Date & Time Bot
-- [ ] Find all RPL
+- [ ] Read EVAL.pdf again
+- [:heavy_check_mark:] Find all RPL ( --- Home assignment)
 - [:heavy_check_mark:] /NOTICE|notice
   - `/notice #room hello, world`
   - `/notice @n2 hello, world`
