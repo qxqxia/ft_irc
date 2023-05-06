@@ -15,6 +15,14 @@ Bot::Bot() : m_name("Chat")
     );
 
     this->m_command_handler.insert(
+        std::pair<std::string, command>("helper", & help)
+    );
+
+    this->m_command_handler.insert(
+        std::pair<std::string, command>("guide", & help)
+    );
+
+    this->m_command_handler.insert(
         std::pair<std::string, command>("date", & tell_date)
     );
 
@@ -159,11 +167,12 @@ void help(Server *serv, Channel *chan, int fd)
 }
 
 
-Channel *userInChanBot(Server *serv, User *user)
+Channel *is_user_with_bot_in_chan(Server *serv, User *user)
 {
     std::set<std::string>::iterator it;
 
     it = user->get_channels().begin();
+
     while (it != user->get_channels().end())
     {
         if (FIND_CHANNEL(*it)->get_bot())
