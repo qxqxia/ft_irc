@@ -15,12 +15,13 @@ srcs	=	Freenode.cpp  \
 		commands/mode.cpp  \
 		commands/kill.cpp  \
 		commands/kick.cpp  \
-		commands/oper.cpp
+		commands/oper.cpp  \
+		bot/Bot.cpp
 
 obj	=	$(srcs:.cpp=.o)
 
 inc	=	-I includes
-inc	=	-I ./
+inc	=	-I ./ -I ./bot/
 
 comp	=	c++ -Wall -Wextra -Werror -std=c++98 -g3
 
