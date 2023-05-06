@@ -1,18 +1,18 @@
 ![](https://img.shields.io/badge/C++-Internet&nbsp;Relay&nbsp;Chat-red.svg?style=flat&logo=c%2B%2B)
 
 
-Now checking
+# Now checking
 - [x] modify all for loops
 - [x] Re-add french MOTD
 
 
-# "roi" - User Mode
+# "roi" (User)
 - [x] `+r` | set myself to `restricted` - avoid messages from unidentified users
 - [x] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
 - [x] `+i` 
 
 
-# "maltvonkb" - Channel Mode 
+# "maltvonkb" (Channel)
 - [ ] `+m` | set moderation |  `/mode #chan +m`
 - [ ] `+a` | auto-voice | +a users are auto-granted voice | `/mode #chan +a user` 
 - [ ] `+l` | set limit | `/oper ...` ` /mode #ROOM +l 2`
