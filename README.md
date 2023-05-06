@@ -2,7 +2,11 @@
 
 
 # Now checking
-- [x] Init Candle7
+- [ ] Do-the-f*ing-Math Bot
+- [ ] Weekday-guessing Bot
+- [ ] Date Bot
+- [ ] Find all RPL
+- [x] Candle 7
 - [x] Modify all for loops
 - [x] Re-add french MOTD
 
