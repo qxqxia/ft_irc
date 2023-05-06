@@ -16,23 +16,23 @@ void topic(Server *serv, std::string buffer, int sd)
     }
     if (channel_name.empty())
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(461, serv, FIND_USER(sd), "TOPIC", ""), sd);
+        Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "TOPIC", ""), sd);
     }
     else if (serv->get_channels().find(channel_name) == serv->get_channels().end())
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(403, serv, FIND_USER(sd), channel_name, ""), sd);
+        Broadcast(get_RPL_ERR(403, serv, FIND_USER(sd), channel_name, ""), sd);
     }
     else if (FIND_USER(sd)->get_channels().find(channel_name) == FIND_USER(sd)->get_channels().end())
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(442, serv, FIND_USER(sd), channel_name, ""), sd);
+        Broadcast(get_RPL_ERR(442, serv, FIND_USER(sd), channel_name, ""), sd);
     }
     else if ((FIND_CHANNEL(channel_name)->get_mode().find("t") != std::string::npos) && (FIND_USER(sd)->get_mode().find('r') != std::string::npos))
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(484, serv, FIND_USER(sd), "", ""), sd);
+        Broadcast(get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
     }
     else if ((FIND_CHANNEL(channel_name)->get_mode().find("t") != std::string::npos) && (FIND_CHANNEL(channel_name)->get_chanops().find(sd) == FIND_CHANNEL(channel_name)->get_chanops().end()))
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(482, serv, FIND_USER(sd), channel_name, ""), sd);
+        Broadcast(get_RPL_ERR(482, serv, FIND_USER(sd), channel_name, ""), sd);
     }
     else
     {
@@ -47,12 +47,12 @@ void topic(Server *serv, std::string buffer, int sd)
         }
         if (topic.empty())
         {
-            ___Broadcast___(___Broadcast_RPL_ERR___(332, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_topic()), sd);
+            Broadcast(get_RPL_ERR(332, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_topic()), sd);
         }
         else
         {
             FIND_CHANNEL(channel_name)->set_topic(topic);
-            ___Broadcast___(___Broadcast_RPL_ERR___(332, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_topic()), sd);
+            Broadcast(get_RPL_ERR(332, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_topic()), sd);
             std::string user_answer = user_output(FIND_USER(sd));
             if (FIND_CHANNEL(channel_name)->get_mode().find("a") != std::string::npos)
             {
