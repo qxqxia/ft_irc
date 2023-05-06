@@ -6,15 +6,15 @@
 - [ ] Weekday-guessing Bot
 - [ ] Date Bot
 - [ ] Find all RPL
-- [x] Candle 7
-- [x] Modify all for loops
-- [x] Re-add french MOTD
+- [:heavy_check_mark:] Candle 7
+- [:heavy_check_mark:] Modify all for loops
+- [:heavy_check_mark:] Re-add french MOTD
 
 
 # "roi" (User)
-- [x] `+r` | set myself to `restricted` - avoid messages from unidentified users
-- [x] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
-- [x] `+i` 
+- [:heavy_check_mark:] `+r` | set myself to `restricted` - avoid messages from unidentified users
+- [:heavy_check_mark:] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
+- [:heavy_check_mark:] `+i` 
 
 
 # "maltvonkb" (Channel)
