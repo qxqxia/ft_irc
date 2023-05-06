@@ -140,27 +140,37 @@ void tell_date(Server *serv, Channel *chan, int socket_fd)
     }
 }
 
-void help(Server *serv, Channel *chan, int socket_fd)
+void help(Server *serv, Channel *chan, int fd)
 {
-    std::string line = "!botawake  - Summon the bot to the channel.";
-    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
+    std::string     s;
 
-    line = "!date    - Give today's date.";
-    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
+    s = "!botstart/!botawake ---> Summon the bot to the channel";
+    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
 
-    line = "!time    - Give the current local time.";
-    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
+    s = "!botstop/!botsleep ---> Dismiss the bot";
+    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
 
-    line = "!botsleep   - Dismiss the bot.";
-    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
+    s = "!date ---> Give today's date.";
+    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
+
+    s = "!time ---> Give the current local time";
+    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
+
 }
 
 
 Channel *userInChanBot(Server *serv, User *user)
 {
-    for (std::set<std::string>::iterator it = user->get_channels().begin(); it != user->get_channels().end(); it++)
-        if (FIND_CHANNEL(*it)->get_bot() == true)
-            return FIND_CHANNEL(*it);
+    std::set<std::string>::iterator it;
+
+    it = user->get_channels().begin();
+    while (it != user->get_channels().end())
+    {
+        if (FIND_CHANNEL(*it)->get_bot())
+        {
+            return (FIND_CHANNEL(*it));
+        }
+    }
     return NULL;
 }
 
