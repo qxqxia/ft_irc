@@ -3,7 +3,11 @@
 Bot::Bot() : m_name("Chat")
 {
 	this->m_command_handler.insert(
-        std::pair<std::string, command>("wakeup", & connect)
+        std::pair<std::string, command>("botawake", & connect)
+    );
+
+    this->m_command_handler.insert(
+        std::pair<std::string, command>("botstart", & connect)
     );
 
     this->m_command_handler.insert(
@@ -19,10 +23,6 @@ Bot::Bot() : m_name("Chat")
     // );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("sleep", & quit)
-    );
-
-    this->m_command_handler.insert(
         std::pair<std::string, command>("date", & tell_date)
     );
 
@@ -31,7 +31,11 @@ Bot::Bot() : m_name("Chat")
     );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("sleep", & quit)
+        std::pair<std::string, command>("botstop", & quit)
+    );
+
+    this->m_command_handler.insert(
+        std::pair<std::string, command>("botsleep", & quit)
     );
 }
 
