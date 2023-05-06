@@ -2,50 +2,49 @@
 
 
 # Now checking
-- __FT_IRC - Candle 7__ ~~Candle 6~~ <kbd> Campus::Top Priority </kbd>
-  - [x] modify all for loops
-  - [x] Re-add french MOTD
------------- Command List ------------
-  - [ ] privmsg
-  - [x] ping
-    - pong ---> incompatible with irssi
-  - [x] part
-  - [x] quit
-  - [x] topic
-  - [x] oper
-  - [x] kick
-  - [x] kill
-  - [x] restart
-  - [x] n/name/names (builtin)
------------- USER_MODE "roi" ------------
-  - [x] `+r` | set myself to `restricted` - avoid messages from unidentified users
-  - [x] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
-  - [x] `+i` 
------------- CHANNEL_MODE "maltvonkb" ------------
-  - [ ] `+m` | set moderation |  `/mode #chan +m`
-  - [ ] `+a` | auto-voice | +a users are auto-granted voice | `/mode #chan +a user` 
-  - [ ] `+l` | set limit | `/oper ...` ` /mode #ROOM +l 2`
-  - [ ] `+t` | topic protection | `/mode #chan +t `
-  - [ ] `+v` | give _user_ a voice in a moderated room |  `/mode #chan +v user`
-  - [ ] `+o` | give someone else _operator_ role | `/mode #chan +o user`
-  - [ ] `+n` | no external messages |  `/mode #chan +n`
-  - [ ] `+k` | set chan key | `/oper ...` ` /mode #ROOM +k KEY`   
-  - [ ] `+b` | ban someone | `/oper ...` ` /mode #ROOM +b USER` 
------------- 分隔線 ------------
-  - [x] TOPIC works fine
-    - `/topic` 
-    - `/topic <new_topic>` (anyone can set topic)
-  - [x] RESTART works fine
-    - `/oper n1 ####` 
-    - `/restart`
-    - <kbd> ALT + LEFT Arrow </kbd> 
-  - [x] KILL works fine
-    - `/oper n1 ####`
-    - `/kill n2` 
-  - [x] OPER, MODE + KICK works fine
-    - `/oper n1 ####`
-    - `/mode #room +o n2`
-    - `/kick n1` (n2) 
+- [x] modify all for loops
+- [x] Re-add french MOTD
+- ------------------------ Command List 
+- [ ] privmsg
+- [x] ping
+  - pong ---> incompatible with irssi
+- [x] part
+- [x] quit
+- [x] topic
+- [x] oper
+- [x] kick
+- [x] kill
+- [x] restart
+- [x] n/name/names (builtin)
+- ------------------------ "roi" USER_MODE 
+- [x] `+r` | set myself to `restricted` - avoid messages from unidentified users
+- [x] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
+- [x] `+i` 
+- ------------------------ "maltvonkb" CHANNEL_MODE 
+- [ ] `+m` | set moderation |  `/mode #chan +m`
+- [ ] `+a` | auto-voice | +a users are auto-granted voice | `/mode #chan +a user` 
+- [ ] `+l` | set limit | `/oper ...` ` /mode #ROOM +l 2`
+- [ ] `+t` | topic protection | `/mode #chan +t `
+- [ ] `+v` | give _user_ a voice in a moderated room |  `/mode #chan +v user`
+- [ ] `+o` | give someone else _operator_ role | `/mode #chan +o user`
+- [ ] `+n` | no external messages |  `/mode #chan +n`
+- [ ] `+k` | set chan key | `/oper ...` ` /mode #ROOM +k KEY`   
+- [ ] `+b` | ban someone | `/oper ...` ` /mode #ROOM +b USER` 
+- ------------------------ 分隔線 
+- [x] TOPIC works fine
+  - `/topic` 
+  - `/topic <new_topic>` (anyone can set topic)
+- [x] RESTART works fine
+  - `/oper n1 ####` 
+  - `/restart`
+  - <kbd> ALT + LEFT Arrow </kbd> 
+- [x] KILL works fine
+  - `/oper n1 ####`
+  - `/kill n2` 
+- [x] OPER, MODE + KICK works fine
+  - `/oper n1 ####`
+  - `/mode #room +o n2`
+  - `/kick n1` (n2) 
 
 
 
