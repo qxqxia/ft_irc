@@ -3,8 +3,10 @@
 Channel::Channel(std::string channel_name) : 
     m_channelname(channel_name),
     m_topic(""),
-    m_last_joke_told(0)
-    {}
+    m_bot_in_channel(false) /* added for Bot*/
+{
+    // ... 
+}
 
 Channel::~Channel()
 {
@@ -64,11 +66,6 @@ int Channel::get_maximum_users() const
     return (this->m_maximum_users);
 }
 
-time_t	Channel::get_last_joke_told( ) const
-{
-    return (this->m_last_joke_told);
-}
-
 void Channel::set_topic(std::string topic)
 {
     this->m_topic = topic;
@@ -87,11 +84,6 @@ void Channel::set_key(std::string key)
 void Channel::set_maximum_users(int maxUser)
 {
     this->m_maximum_users = maxUser;
-}
-
-void Channel::set_last_joke_told()
-{
-    this->m_last_joke_told = get_time();
 }
 
 void Channel::add_user(int sd, User *user)
@@ -131,31 +123,25 @@ int Channel::search_user_by_nickname(std::string nickname)
 {
     std::map<int, User*>::iterator  it;
 
-    // for (std::map<int, User*>::iterator it = this->m_users.begin(); it != this->m_users.end(); it++)
     it = this->m_users.begin();
     while (it != this->m_users.end())
     {
-        // if (nickname.compare(it->second->get_nickname()) == 0)
         if (nickname == it->second->get_nickname())
             return (it->first);
         ++it;
     }
 
-    // for (std::map<int, User*>::iterator it = this->m_chanops.begin(); it != this->m_chanops.end(); it++)
     it = this->m_chanops.begin();
     while (it != this->m_chanops.end())
     {
-        // if (nickname.compare(it->second->get_nickname()) == 0)
         if (nickname == it->second->get_nickname())
             return (it->first);
         ++it;
     }
 
-    // for (std::map<int, User*>::iterator it = this->m_voices.begin(); it != this->m_voices.end(); it++)
     it = this->m_voices.begin();
     while (it != this->m_voices.end())
     {
-        // if (nickname.compare(it->second->get_nickname()) == 0)
         if (nickname == it->second->get_nickname())
             return (it->first);
         ++it;
@@ -168,7 +154,6 @@ std::string Channel::get_list_of_users_in_channel()
     std::map<int, User *>::iterator     it;
     std::string     output;
 
-    // for (std::map<int, User *>::iterator it = this->m_chanops.begin(); it != this->m_chanops.end(); it++)
     it = this->m_chanops.begin();
     while (it != this->m_chanops.end())
     {
@@ -179,7 +164,6 @@ std::string Channel::get_list_of_users_in_channel()
         ++it;
     }
 
-    // for (std::map<int, User *>::iterator it = this->m_voices.begin(); it != this->m_voices.end(); it++)
     it = this->m_voices.begin();
     while (it != this->m_voices.end())
     {
@@ -190,7 +174,6 @@ std::string Channel::get_list_of_users_in_channel()
         ++it;
     }
 
-    // for (std::map<int, User *>::iterator it = this->m_users.begin(); it != this->m_users.end(); it++)
     it = this->m_users.begin();
     while (it != this->m_users.end())
     {
@@ -207,7 +190,6 @@ std::string Channel::get_list_of_users_banned()
     std::map<std::string, std::string>::iterator    it;
     std::string     output;
 
-    // for (std::map<std::string, std::string>::iterator it = this->m_banlist.begin(); it != this->m_banlist.end(); it++)
 
     it = this->m_banlist.begin();
     while (it != this->m_banlist.end())
@@ -239,4 +221,17 @@ bool Channel::is_banned(std::string nickname)
     if (this->m_banlist.find(nickname) != this->m_banlist.end())
         return (true);
     return (false);
+}
+
+
+/// Added
+
+bool    Channel::get_bot() const
+{
+    return (this->m_bot_in_channel);
+}
+
+void    Channel::set_bot()
+{
+    this->m_bot_in_channel = !(this->m_bot_in_channel);
 }
