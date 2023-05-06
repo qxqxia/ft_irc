@@ -14,6 +14,10 @@ Bot::Bot() : m_name("Chat")
         std::pair<std::string, command>("help", & help)
     );
 
+    this->m_command_handler.insert(
+        std::pair<std::string, command>("date", & tell_date)
+    );
+
     // this->m_command_handler.insert(
     //     std::pair<std::string, command>("mult", & mult) // TODO
     // );
@@ -21,10 +25,6 @@ Bot::Bot() : m_name("Chat")
     // this->m_command_handler.insert(
     //     std::pair<std::string, command>("weekday", & weekday) // TODO
     // );
-
-    this->m_command_handler.insert(
-        std::pair<std::string, command>("date", & tell_date)
-    );
 
     this->m_command_handler.insert(
         std::pair<std::string, command>("time", & tell_time)
