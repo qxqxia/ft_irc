@@ -6,11 +6,13 @@ Now checking
 - [x] Re-add french MOTD
 
 
-# "roi" USER_MODE 
+# "roi" - User Mode
 - [x] `+r` | set myself to `restricted` - avoid messages from unidentified users
 - [x] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
 - [x] `+i` 
-- ------------------------ "maltvonkb" CHANNEL_MODE 
+
+
+# "maltvonkb" - Channel Mode 
 - [ ] `+m` | set moderation |  `/mode #chan +m`
 - [ ] `+a` | auto-voice | +a users are auto-granted voice | `/mode #chan +a user` 
 - [ ] `+l` | set limit | `/oper ...` ` /mode #ROOM +l 2`
