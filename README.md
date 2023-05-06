@@ -2,8 +2,8 @@
 
 
 # Now checking
-- [ ] Do-the-f*ing-Math Bot
-- [ ] Weekday-guessing Bot
+- [ ] ~Do-the-f*ing-Math Bot~
+- [ ] ~Weekday-guessing Bot~
 - [ ] Date & Time Bot
 - [ ] Read EVAL.pdf again
 - [:heavy_check_mark:] Find all RPL ( --- Home assignment)
