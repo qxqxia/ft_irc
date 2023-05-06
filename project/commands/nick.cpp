@@ -16,7 +16,6 @@ bool nickname_is_validated(std::string nick)
     if (firstChar.find(nick[0]) == std::string::npos)
         return (false);
 
-    // for (int i = 1; nick[i] && i < 9; i++)
 
     int i = 0;
     while (nick[++i] && i < 9)
@@ -29,7 +28,6 @@ bool nickname_is_validated(std::string nick)
 
 bool nickname_is_in_use(Server *serv, std::string nick)
 {
-    // for (std::map<int, User *>::iterator it = serv->get_users().begin(); it != serv->get_users().end(); it++)
 
     std::map<int, User *>::iterator     it;
 
@@ -53,26 +51,26 @@ void nick(Server *serv, std::string buffer, int sd)
         newNickname = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
     if (newNickname.empty())
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(431, serv, FIND_USER(sd), "", ""), sd);
+        Broadcast(get_RPL_ERR(431, serv, FIND_USER(sd), "", ""), sd);
         return ;
     }
     if (FIND_USER(sd)->get_mode().find('r') != std::string::npos)
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(484, serv, FIND_USER(sd), "", ""), sd);
+        Broadcast(get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
         return ;
     }
     if (!nickname_is_validated(newNickname))
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(432, serv, FIND_USER(sd), newNickname, ""), sd);
+        Broadcast(get_RPL_ERR(432, serv, FIND_USER(sd), newNickname, ""), sd);
         return ;
     }
     if (nickname_is_in_use(serv, newNickname))
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(433, serv, FIND_USER(sd), newNickname, ""), sd);
+        Broadcast(get_RPL_ERR(433, serv, FIND_USER(sd), newNickname, ""), sd);
         return ;
     }
     std::string user_answer = user_output(FIND_USER(sd));
     user_answer += "NICK " + newNickname;
-    ___Broadcast___(user_answer, sd);
+    Broadcast(user_answer, sd);
     FIND_USER(sd)->set_nick(newNickname);
 }
