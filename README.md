@@ -4,7 +4,7 @@
 # Now checking
 - [ ] Do-the-f*ing-Math Bot
 - [ ] Weekday-guessing Bot
-- [ ] Date Bot
+- [ ] Date & Time Bot
 - [ ] Find all RPL
 - [ ] Parsing after ***get_input_from_client_sfd (sfd)***
 - [:heavy_check_mark:] Candle 7
