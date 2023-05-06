@@ -63,6 +63,11 @@
 
 
 # IRC Mysteries
+- `anonymous!anonymous@anonymous`
+  - The 1st "anonymous" refers to the user's nickname
+  - The 2nd "anonymous" refers to the username
+  - The 3rd "anonymous" refers to the hostname
+  - eg. `john!johndoe@example.com`
 - Valid port: `(port >= 6660 && port <= 6669) || port == 6679 || port == 6697`
   - The standard port for IRC connection is 6667
   - More often, IRC networks use a range instead of just one
