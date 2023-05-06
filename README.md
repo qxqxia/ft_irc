@@ -6,7 +6,10 @@
 - [ ] Weekday-guessing Bot
 - [ ] Date & Time Bot
 - [ ] Find all RPL
-- [ ] Parsing after ***get_input_from_client_sfd (sfd)***
+- [:heavy_check_mark:] /dcc
+  - `/dcc send ~@~<User> /mnt/nfs/homes/login/Downloads/Great.in`
+  - `/dcc < list | get >`
+- [:heavy_check_mark:] XCQ after ***get_input_from_client_sfd (sfd)***
 - [:heavy_check_mark:] Candle 7
 - [:heavy_check_mark:] Modify all for loops
 - [:heavy_check_mark:] Re-add french MOTD
