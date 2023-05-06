@@ -6,6 +6,7 @@
 - [ ] Weekday-guessing Bot
 - [ ] Date Bot
 - [ ] Find all RPL
+- [ ] Parsing after ***get_input_from_client_sfd (sfd)***
 - [:heavy_check_mark:] Candle 7
 - [:heavy_check_mark:] Modify all for loops
 - [:heavy_check_mark:] Re-add french MOTD
