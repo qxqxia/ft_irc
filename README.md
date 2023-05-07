@@ -8,10 +8,10 @@
 - [ ] Date & Time Bot
 - [ ] Read EVAL.pdf again
 - [:white_check_mark:] Find all RPL ( --- Home assignment)
-- [:white_check_mark:] /NOTICE|notice
+- [:white_check_mark:] /NOTICE | notice
   - `/notice #room hello, world`
   - `/notice @n2 hello, world`
-- [:white_check_mark:] /DCC|dcc
+- [:white_check_mark:] /DCC | dcc
   - `/dcc send <~@~User> /mnt/nfs/homes/login/Downloads/Great.in`
   - `/dcc <list|get>`
 - [:white_check_mark:] XCQ after ***get_input_from_client_sfd (sfd)***
