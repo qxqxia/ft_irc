@@ -7,23 +7,23 @@
 - [ ] Use netcat ---> `nc localhost [port]`
 - [ ] Date & Time Bot
 - [ ] Read EVAL.pdf again
-- [:heavy_check_mark:] Find all RPL ( --- Home assignment)
-- [:heavy_check_mark:] /NOTICE|notice
+- [:white_check_mark:] Find all RPL ( --- Home assignment)
+- [:white_check_mark:] /NOTICE|notice
   - `/notice #room hello, world`
   - `/notice @n2 hello, world`
-- [:heavy_check_mark:] /DCC|dcc
+- [:white_check_mark:] /DCC|dcc
   - `/dcc send <~@~User> /mnt/nfs/homes/login/Downloads/Great.in`
   - `/dcc <list|get>`
-- [:heavy_check_mark:] XCQ after ***get_input_from_client_sfd (sfd)***
-- [:heavy_check_mark:] Candle 7
-- [:heavy_check_mark:] Modify all for loops
-- [:heavy_check_mark:] Re-add french MOTD
+- [:white_check_mark:] XCQ after ***get_input_from_client_sfd (sfd)***
+- [:white_check_mark:] Candle 7
+- [:white_check_mark:] Modify all for loops
+- [:white_check_mark:] Re-add french MOTD
 
 
 # "roi" (User)
-- [:heavy_check_mark:] `+r` | set myself to `restricted` - avoid messages from unidentified users
-- [:heavy_check_mark:] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
-- [:heavy_check_mark:] `+i` 
+- [:white_check_mark:] `+r` | set myself to `restricted` - avoid messages from unidentified users
+- [:white_check_mark:] `+o` | set operator | Syntax <kbd> $ /mode #ROOM +o USER </kbd>
+- [:white_check_mark:] `+i` 
 
 
 # "maltvonkb" (Channel)
