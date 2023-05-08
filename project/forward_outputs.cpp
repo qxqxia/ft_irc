@@ -1,6 +1,6 @@
 #include "Freenode.hpp"
 
-void ___Broadcast___(std::string message, int sd)
+void Broadcast(std::string message, int sd)
 {
 	message += "\r\n";
 	if (send(sd, message.c_str(), message.length(), 0) < 0)
@@ -13,30 +13,27 @@ void send_everyone_in_channel(std::string message, Channel *chan)
 {
     std::map<int, User *>::iterator     it;
 
-    // for (std::map<int, User *>::iterator it = chan->get_users().begin(); it != chan->get_users().end(); it++)
 
     it = chan->get_users().begin();
     while (it != chan->get_users().end())    
     {   
-        ___Broadcast___(message, it->first);
+        Broadcast(message, it->first);
         ++it;
     }
 
-    // for (std::map<int, User *>::iterator it = chan->get_chanops().begin(); it != chan->get_chanops().end(); it++)
 
     it = chan->get_chanops().begin();
     while (it != chan->get_chanops().end())
     {
-        ___Broadcast___(message, it->first);
+        Broadcast(message, it->first);
         ++it;
     }
 
-    // for (std::map<int, User *>::iterator it = chan->get_voices().begin(); it != chan->get_voices().end(); it++)
 
     it = chan->get_voices().begin();
     while (it != chan->get_voices().end())
     {
-        ___Broadcast___(message, it->first);
+        Broadcast(message, it->first);
         ++it;
     }
 }
@@ -46,46 +43,42 @@ void send_everyone_in_channel_except_user(std::string message, Channel *chan, in
     std::map<int, User *>::iterator     it;
 
 
-    // for (std::map<int, User *>::iterator it = chan->get_users().begin(); it != chan->get_users().end(); it++)
 
     it = chan->get_users().begin();
     while (it != chan->get_users().end())    
     {
         if (sd != it->first)
-            ___Broadcast___(message, it->first);
+            Broadcast(message, it->first);
         ++it;
     }
 
-    // for (std::map<int, User *>::iterator it = chan->get_chanops().begin(); it != chan->get_chanops().end(); it++)
     
     it = chan->get_chanops().begin();
     while (it != chan->get_chanops().end())
     {
         if (sd != it->first)
-            ___Broadcast___(message, it->first);
+            Broadcast(message, it->first);
         ++it;
     }
 
-    // for (std::map<int, User *>::iterator it = chan->get_voices().begin(); it != chan->get_voices().end(); it++)
 
     it = chan->get_voices().begin();
     while (it != chan->get_voices().end())
     {
         if (sd != it->first)
-            ___Broadcast___(message, it->first);
+            Broadcast(message, it->first);
         ++it;
     }
 }
 
 void send_everyone(std::string message, std::map<int, User *> users)
 {
-    // for (std::map<int, User *>::iterator it = users.begin(); it != users.end(); it++)
 
     std::map<int, User *>::iterator     it = users.begin();
     
     while (it != users.end())
     {
-        ___Broadcast___(message, it->first);
+        Broadcast(message, it->first);
         ++it;
     }
 }

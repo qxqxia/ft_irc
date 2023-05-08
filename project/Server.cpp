@@ -31,11 +31,15 @@ Server::Server(const std::string & port, const std::string & password)
 	this->m_commands["RESTART"] = & restart;
 	this->m_commands["restart"] = & restart;
 
+	this->m_bot = new Bot; ///	Added
+
 }
 
 Server::~Server()
 {
 	this->m_commands.clear();
+
+	delete	this->m_bot; ///	Added
 }
 
 
@@ -57,7 +61,6 @@ void Server::connect_to_server()
 	int		socket_fd, max_socket_fd, activity;
 	int		i = -1;
 
-	// for (int i = 0; i < MAX_CLIENTS; i++)
 
 	while (++i < MAX_CLIENTS)
     {
@@ -71,7 +74,7 @@ void Server::connect_to_server()
 		// Can we make a separate handler function?
 
 		// it can't be done. 
-		//	Signal handlers are too primitive a mechanism to support calling
+		//	Signal handlers are too primitive a mechanism to support summong
 		//	of a member function on a particular instance of a class.
 
 		std::signal(SIGINT, handle_sigint);
@@ -90,7 +93,6 @@ void Server::connect_to_server()
 
         // add child sockets to set
 
-		// for (int i = 0; i < MAX_CLIENTS; i++)
 
 		i = -1;
 		while (++i < MAX_CLIENTS)
@@ -140,7 +142,6 @@ void Server::connect_to_server()
 		}
 		else if (g_server_is_alive)
 		{
-			// for (int i = 0; i < MAX_CLIENTS; i++)
 
 			i = -1;
 			while (++i < MAX_CLIENTS)
@@ -183,7 +184,6 @@ void Server::connect_to_server()
 	}
 	clear_all();
 	
-	// for (int i = 0; i < MAX_CLIENTS; i++)
 	i = -1;
 	while (++i < MAX_CLIENTS)
 	{
@@ -245,12 +245,11 @@ void Server::new_connection()
 	{
 		if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
 		{
-			___Broadcast___(___Broadcast_RPL_ERR___(461, this, NULL, "PASS", ""), this->m_sock_coming);
+			Broadcast(get_RPL_ERR(461, this, NULL, "PASS", ""), this->m_sock_coming);
 			close(this->m_sock_coming);
 		}
 		else
 		{
-			// for (int i = 0; ret[first_occurrence + i] && SEP_CHARSET.find(ret[first_occurrence + i]) == std::string::npos; i++)
 
 			int		i = 0;
 			while (ret[first_occurrence + i] && SEP_CHARSET.find(ret[first_occurrence + i]) == std::string::npos)			
@@ -260,12 +259,12 @@ void Server::new_connection()
 			}
 			if (pass.empty())
 			{
-				___Broadcast___(___Broadcast_RPL_ERR___(461, this, NULL, "PASS", ""), this->m_sock_coming);
+				Broadcast(get_RPL_ERR(461, this, NULL, "PASS", ""), this->m_sock_coming);
 				close(this->m_sock_coming);
 			}
 			else if (pass != this->m_pass)
 			{
-				___Broadcast___("WRONG PASSWORD", this->m_sock_coming);
+				Broadcast("WRONG PASSWORD", this->m_sock_coming);
 				close(this->m_sock_coming);
 			}
 			else
@@ -274,7 +273,7 @@ void Server::new_connection()
 	}
 	else
 	{
-		___Broadcast___("You need to enter a pass!", this->m_sock_coming);
+		Broadcast("You need to enter a pass!", this->m_sock_coming);
 		close(this->m_sock_coming);
 	}
 	if (password_is_valid == true)
@@ -285,7 +284,7 @@ void Server::new_connection()
 		{
 			if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
 			{
-				___Broadcast___(___Broadcast_RPL_ERR___(432, this, NULL, nick, ""), this->m_sock_coming);
+				Broadcast(get_RPL_ERR(432, this, NULL, nick, ""), this->m_sock_coming);
 				close(this->m_sock_coming);
 			}
 			else
@@ -294,13 +293,13 @@ void Server::new_connection()
 				nick = nick.substr(0, nick.find_last_not_of(SEP_CHARSET, nick.size()) + 1);
 				if (!nickname_is_validated(nick))
 				{
-					___Broadcast___(___Broadcast_RPL_ERR___(432, this, NULL, nick, ""), this->m_sock_coming);
+					Broadcast(get_RPL_ERR(432, this, NULL, nick, ""), this->m_sock_coming);
 					close(this->m_sock_coming);	
 				}
 				else if (nickname_is_in_use(this, nick))
 				{
-					___Broadcast___(___Broadcast_RPL_ERR___(433, this, NULL, nick, ""), this->m_sock_coming);
-					___Broadcast___("Please try reconnect with an available nickname.", this->m_sock_coming);
+					Broadcast(get_RPL_ERR(433, this, NULL, nick, ""), this->m_sock_coming);
+					Broadcast("Please try reconnect with an available nickname.", this->m_sock_coming);
 					close(this->m_sock_coming);
 				}
 				else
@@ -311,7 +310,7 @@ void Server::new_connection()
 		}
 		else
 		{
-			___Broadcast___("You have to enter a nickname\nUsage: NICK [nickname]", this->m_sock_coming);
+			Broadcast("You have to enter a nickname\nUsage: NICK [nickname]", this->m_sock_coming);
 			close(this->m_sock_coming);
 		}
 		if (username_is_valid == false && nickname_is_valid == true)
@@ -325,7 +324,7 @@ void Server::new_connection()
 				//username
 
 				if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
-					___Broadcast___(___Broadcast_RPL_ERR___(461, this, NULL, "USER", ""), this->m_sock_coming);
+					Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_sock_coming);
 				else
 				{
 					user = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
@@ -333,7 +332,7 @@ void Server::new_connection()
 					//	hostname
 
 					if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
-						___Broadcast___(___Broadcast_RPL_ERR___(461, this, NULL, "USER", ""), this->m_sock_coming);
+						Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_sock_coming);
 					else
 					{
 						host = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
@@ -341,7 +340,7 @@ void Server::new_connection()
 						//	server_name
 
 						if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
-							___Broadcast___(___Broadcast_RPL_ERR___(461, this, NULL, "USER", ""), this->m_sock_coming);
+							Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_sock_coming);
 						else
 						{
 							server_name = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
@@ -349,7 +348,7 @@ void Server::new_connection()
 							//	real_name
 
 							if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
-								___Broadcast___(___Broadcast_RPL_ERR___(461, this, NULL, "USER", ""), this->m_sock_coming);
+								Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_sock_coming);
 							else
 							{
 								real_name = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
@@ -364,7 +363,7 @@ void Server::new_connection()
 		}
 		if (username_is_valid == false && nickname_is_valid == true)
 		{
-			___Broadcast___("Usage: USER [username] [hostname] [server_name] [real_name]", this->m_sock_coming);
+			Broadcast("Usage: USER [username] [hostname] [server_name] [real_name]", this->m_sock_coming);
 			close(this->m_sock_coming);
 		}
 	}
@@ -375,15 +374,14 @@ void Server::new_connection()
 		User *newUser = new User(nick, user, host, real_name);
 		this->set_users(this->m_sock_coming, newUser);
 		std::cout << "Number of user connected on the server: " << this->m_users.size() << std::endl;
-		___Broadcast___(___Broadcast_RPL_ERR___(001, this, newUser, "", ""), this->m_sock_coming);
-		___Broadcast___(___Broadcast_RPL_ERR___(002, this, newUser, "", ""), this->m_sock_coming);
-		___Broadcast___(___Broadcast_RPL_ERR___(003, this, newUser, "", ""), this->m_sock_coming);
-		___Broadcast___(___Broadcast_RPL_ERR___(004, this, newUser, "", ""), this->m_sock_coming);
-		forward_MOTD(this->m_sock_coming);
+		Broadcast(get_RPL_ERR(001, this, newUser, "", ""), this->m_sock_coming);
+		Broadcast(get_RPL_ERR(002, this, newUser, "", ""), this->m_sock_coming);
+		Broadcast(get_RPL_ERR(003, this, newUser, "", ""), this->m_sock_coming);
+		Broadcast(get_RPL_ERR(004, this, newUser, "", ""), this->m_sock_coming);
+		Forward_MOTD(this->m_sock_coming);
 
 		//add new socket to array of sockets
 
-		// for (int i = 0; i < MAX_CLIENTS; i++)
 
 		int		i = -1;
 		while (++i < MAX_CLIENTS)
@@ -398,7 +396,7 @@ void Server::new_connection()
 		}
 	}
 	else if (password_is_valid == true && nickname_is_valid == true && g_server_is_alive == true && username_is_valid == true)
-		___Broadcast___(___Broadcast_RPL_ERR___(005, this, NULL, nick, ""), this->m_sock_coming);
+		Broadcast(get_RPL_ERR(005, this, NULL, nick, ""), this->m_sock_coming);
 }
 
 int Server::new_socket()
@@ -496,7 +494,6 @@ void Server::set_is_restarting()
 
 int Server::search_user_by_nickname(std::string nickname)
 {
-    // for (std::map<int, User*>::iterator it = this->m_users.begin(); it != this->m_users.end(); it++)
     
 	std::map<int, User*>::iterator	it;
 
@@ -513,8 +510,6 @@ int Server::search_user_by_nickname(std::string nickname)
 
 std::ostream	& operator << (std::ostream & stdout, std::map<std::string, Channel*> & channels)
 {
-	// int i = 0;
-	// for (std::map<std::string, Channel*>::iterator it = channels.begin(); it != channels.end(); it++, i++)
 
 	std::map<std::string, Channel*>::iterator	it;
 	int	i = 0;
@@ -531,8 +526,6 @@ std::ostream	& operator << (std::ostream & stdout, std::map<std::string, Channel
 
 std::ostream	& operator << (std::ostream & stdout, std::map<int, User*> &users)
 {
-	// int i = 0;
-	// for (std::map<int, User*>::iterator it = users.begin(); it != users.end(); it++, i++)
 
 	std::map<int, User*>::iterator	it;
 	int	i = 0;
@@ -552,9 +545,6 @@ std::ostream	& operator << (std::ostream & stdout, User &user)
     std::set<std::string> channels = user.get_channels();
 
 
-    // for (std::set<std::string>::iterator it = channels.begin(); it != channels.end(); it++, i++)
-
-
 	std::set<std::string>::iterator		it;
 
 	it = channels.begin();
@@ -571,7 +561,6 @@ void Server::clear_all()
 	std::map<int, User*>::iterator				itU;
 	std::map<std::string, Channel*>::iterator	itC;
 
-	// for (std::map<int, User*>::iterator it = this->m_users.begin(); it != this->m_users.end(); it++)
 
 	itU = this->m_users.begin();
 	while (itU != this->m_users.end())
@@ -582,7 +571,6 @@ void Server::clear_all()
 	}
 	this->m_users.clear();
 
-	// for (std::map<std::string, Channel*>::iterator it = this->m_channels.begin(); it != this->m_channels.end(); it++)
 
 	itC = this->m_channels.begin();
 	while (itC != this->m_channels.end())
@@ -595,130 +583,135 @@ void Server::clear_all()
 	this->m_channels.clear();
 }
 
-void Server::forward_MOTD(int socket_fd)  // Message of the Day
+void Server::Forward_MOTD(int socket_fd)  // Message of the Day
 {
 	size_t	choice = rand() % 6;
 
-	void	(Server::*forward_MOTD_modes[6]) (int) =
+	void	(Server::*Forward_MOTD_modes[6]) (int) =
 	{
-		& Server::forward_MOTD_Slant_Relief,
-		& Server::forward_MOTD_Dot_Matrix,
-		& Server::forward_MOTD_Mahjong,
-		& Server::forward_MOTD_Doh,
-		& Server::forward_MOTD_la_nuit_mes_yeux,
-		& Server::forward_MOTD_voir_un_univers
+		& Server::Forward_MOTD_Slant_Relief,
+		& Server::Forward_MOTD_Dot_Matrix,
+		& Server::Forward_MOTD_Mahjong,
+		& Server::Forward_MOTD_Doh,
+		& Server::Forward_MOTD_la_nuit_mes_yeux,
+		& Server::Forward_MOTD_voir_un_univers
 	};
 
-	(this->*forward_MOTD_modes[choice])(socket_fd);
+	(this->*Forward_MOTD_modes[choice])(socket_fd);
 
 }
 
 
-void Server::forward_MOTD_voir_un_univers(int socket_fd)
+void Server::Forward_MOTD_voir_un_univers(int socket_fd)
 {
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("            Voir un univers dans un grain de sable,", socket_fd);
-	___Broadcast___("            et un paradis dans une fleur sauvage.", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("            Voir un univers dans un grain de sable,", socket_fd);
+	Broadcast("            et un paradis dans une fleur sauvage.", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
 }
 
 
-void Server::forward_MOTD_la_nuit_mes_yeux(int socket_fd)
+void Server::Forward_MOTD_la_nuit_mes_yeux(int socket_fd)
 {
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("            La nuit mes yeux t'eclairent", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("            La nuit mes yeux t'eclairent", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
 }
-void Server::forward_MOTD_Slant_Relief(int socket_fd)
+void Server::Forward_MOTD_Slant_Relief(int socket_fd)
 {
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("__/\\\\\\\\\\\\\\\\\\\\\\____/\\\\\\\\\\\\\\\\\\____________/\\\\\\\\\\\\\\\\\\_        ", socket_fd);
-	___Broadcast___(" _\\/////\\\\\\///___/\\\\\\///////\\\\\\_______/\\\\\\////////__       ", socket_fd);
-	___Broadcast___("  _____\\/\\\\\\_____\\/\\\\\\_____\\/\\\\\\_____/\\\\\\/___________      ", socket_fd);
-	___Broadcast___("   _____\\/\\\\\\_____\\/\\\\\\\\\\\\\\\\\\\\\\/_____/\\\\\\_____________     ", socket_fd);
-	___Broadcast___("    _____\\/\\\\\\____\\/\\\\\\//////\\\\\\____\\/\\\\\\_____________    ", socket_fd);
-	___Broadcast___("     _____\\/\\\\\\_____\\/\\\\\\____\\//\\\\\\___\\//\\\\\\____________   ", socket_fd);
-	___Broadcast___("      _____\\/\\\\\\_____\\/\\\\\\_____\\//\\\\\\___\\///\\\\\\__________  ", socket_fd);
-	___Broadcast___("       __/\\\\\\\\\\\\\\\\\\\\\\_\\/\\\\\\______\\//\\\\\\____\\////\\\\\\\\\\\\\\\\\\_ ", socket_fd);
-	___Broadcast___("        _\\///////////__\\///________\\///________\\/////////__", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-}
-
-
-void Server::forward_MOTD_Dot_Matrix(int socket_fd)
-{
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("       _  _  _  _  _  _  _        _  _  _       ", socket_fd);
-	___Broadcast___("      (_)(_)(_)(_)(_)(_)(_) _  _ (_)(_)(_) _    ", socket_fd);
-	___Broadcast___("         (_)   (_)         (_)(_)         (_)   ", socket_fd);
-	___Broadcast___("         (_)   (_) _  _  _ (_)(_)               ", socket_fd);
-	___Broadcast___("         (_)   (_)(_)(_)(_)   (_)               ", socket_fd);
-	___Broadcast___("         (_)   (_)   (_) _    (_)          _    ", socket_fd);
-	___Broadcast___("       _ (_) _ (_)      (_) _ (_) _  _  _ (_)   ", socket_fd);
-	___Broadcast___("      (_)(_)(_)(_)         (_)   (_)(_)(_)      ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("__/\\\\\\\\\\\\\\\\\\\\\\____/\\\\\\\\\\\\\\\\\\____________/\\\\\\\\\\\\\\\\\\_        ", socket_fd);
+	Broadcast(" _\\/////\\\\\\///___/\\\\\\///////\\\\\\_______/\\\\\\////////__       ", socket_fd);
+	Broadcast("  _____\\/\\\\\\_____\\/\\\\\\_____\\/\\\\\\_____/\\\\\\/___________      ", socket_fd);
+	Broadcast("   _____\\/\\\\\\_____\\/\\\\\\\\\\\\\\\\\\\\\\/_____/\\\\\\_____________     ", socket_fd);
+	Broadcast("    _____\\/\\\\\\____\\/\\\\\\//////\\\\\\____\\/\\\\\\_____________    ", socket_fd);
+	Broadcast("     _____\\/\\\\\\_____\\/\\\\\\____\\//\\\\\\___\\//\\\\\\____________   ", socket_fd);
+	Broadcast("      _____\\/\\\\\\_____\\/\\\\\\_____\\//\\\\\\___\\///\\\\\\__________  ", socket_fd);
+	Broadcast("       __/\\\\\\\\\\\\\\\\\\\\\\_\\/\\\\\\______\\//\\\\\\____\\////\\\\\\\\\\\\\\\\\\_ ", socket_fd);
+	Broadcast("        _\\///////////__\\///________\\///________\\/////////__", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
 }
 
 
-void Server::forward_MOTD_Mahjong(int socket_fd)
+void Server::Forward_MOTD_Dot_Matrix(int socket_fd)
 {
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___(" .----------------.  .----------------.  .----------------. ", socket_fd);
-	___Broadcast___("| .--------------. || .--------------. || .--------------. |", socket_fd);
-	___Broadcast___("| |     _____    | || |  _______     | || |     ______   | |", socket_fd);
-	___Broadcast___("| |    |_   _|   | || | |_   __ \\    | || |   .' ___  |  | |", socket_fd);
-	___Broadcast___("| |      | |     | || |   | |__) |   | || |  / .'   \\_|  | |", socket_fd);
-	___Broadcast___("| |      | |     | || |   |  __ /    | || |  | |         | |", socket_fd);
-	___Broadcast___("| |     _| |_    | || |  _| |  \\ \\_  | || |  \\ `.___.'\\  | |", socket_fd);
-	___Broadcast___("| |    |_____|   | || | |____| |___| | || |   `._____.'  | |", socket_fd);
-	___Broadcast___("| |              | || |              | || |              | |", socket_fd);
-	___Broadcast___("| '--------------' || '--------------' || '--------------' |", socket_fd);
-	___Broadcast___(" '----------------'  '----------------'  '----------------' ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("       _  _  _  _  _  _  _        _  _  _       ", socket_fd);
+	Broadcast("      (_)(_)(_)(_)(_)(_)(_) _  _ (_)(_)(_) _    ", socket_fd);
+	Broadcast("         (_)   (_)         (_)(_)         (_)   ", socket_fd);
+	Broadcast("         (_)   (_) _  _  _ (_)(_)               ", socket_fd);
+	Broadcast("         (_)   (_)(_)(_)(_)   (_)               ", socket_fd);
+	Broadcast("         (_)   (_)   (_) _    (_)          _    ", socket_fd);
+	Broadcast("       _ (_) _ (_)      (_) _ (_) _  _  _ (_)   ", socket_fd);
+	Broadcast("      (_)(_)(_)(_)         (_)   (_)(_)(_)      ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
 }
 
 
-void Server::forward_MOTD_Doh(int socket_fd)
+void Server::Forward_MOTD_Mahjong(int socket_fd)
 {
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("IIIIIIIIIIRRRRRRRRRRRRRRRRR           CCCCCCCCCCCCC", socket_fd);
-	___Broadcast___("I::::::::IR::::::::::::::::R       CCC::::::::::::C", socket_fd);
-	___Broadcast___("II::::::IIRR:::::R     R:::::R  C:::::CCCCCCCC::::C", socket_fd);
-	___Broadcast___("  I::::I    R::::R     R:::::R C:::::C       CCCCCC", socket_fd);
-	___Broadcast___("  I::::I    R::::R     R:::::RC:::::C              ", socket_fd);
-	___Broadcast___("  I::::I    R::::RRRRRR:::::R C:::::C              ", socket_fd);
-	___Broadcast___("  I::::I    R:::::::::::::RR  C:::::C              ", socket_fd);
-	___Broadcast___("  I::::I    R::::RRRRRR:::::R C:::::C              ", socket_fd);
-	___Broadcast___("  I::::I    R::::R     R:::::RC:::::C              ", socket_fd);
-	___Broadcast___("  I::::I    R::::R     R:::::RC:::::C              ", socket_fd);
-	___Broadcast___("  I::::I    R::::R     R:::::R C:::::C       CCCCCC", socket_fd);
-	___Broadcast___("II::::::IIRR:::::R     R:::::R  C:::::CCCCCCCC::::C", socket_fd);
-	___Broadcast___("I::::::::IR::::::R     R:::::R   CC:::::::::::::::C", socket_fd);
-	___Broadcast___("I::::::::IR::::::R     R:::::R     CCC::::::::::::C", socket_fd);
-	___Broadcast___("IIIIIIIIIIRRRRRRRR     RRRRRRR        CCCCCCCCCCCCC", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
-	___Broadcast___("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast(" .----------------.  .----------------.  .----------------. ", socket_fd);
+	Broadcast("| .--------------. || .--------------. || .--------------. |", socket_fd);
+	Broadcast("| |     _____    | || |  _______     | || |     ______   | |", socket_fd);
+	Broadcast("| |    |_   _|   | || | |_   __ \\    | || |   .' ___  |  | |", socket_fd);
+	Broadcast("| |      | |     | || |   | |__) |   | || |  / .'   \\_|  | |", socket_fd);
+	Broadcast("| |      | |     | || |   |  __ /    | || |  | |         | |", socket_fd);
+	Broadcast("| |     _| |_    | || |  _| |  \\ \\_  | || |  \\ `.___.'\\  | |", socket_fd);
+	Broadcast("| |    |_____|   | || | |____| |___| | || |   `._____.'  | |", socket_fd);
+	Broadcast("| |              | || |              | || |              | |", socket_fd);
+	Broadcast("| '--------------' || '--------------' || '--------------' |", socket_fd);
+	Broadcast(" '----------------'  '----------------'  '----------------' ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+}
+
+
+void Server::Forward_MOTD_Doh(int socket_fd)
+{
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("IIIIIIIIIIRRRRRRRRRRRRRRRRR           CCCCCCCCCCCCC", socket_fd);
+	Broadcast("I::::::::IR::::::::::::::::R       CCC::::::::::::C", socket_fd);
+	Broadcast("II::::::IIRR:::::R     R:::::R  C:::::CCCCCCCC::::C", socket_fd);
+	Broadcast("  I::::I    R::::R     R:::::R C:::::C       CCCCCC", socket_fd);
+	Broadcast("  I::::I    R::::R     R:::::RC:::::C              ", socket_fd);
+	Broadcast("  I::::I    R::::RRRRRR:::::R C:::::C              ", socket_fd);
+	Broadcast("  I::::I    R:::::::::::::RR  C:::::C              ", socket_fd);
+	Broadcast("  I::::I    R::::RRRRRR:::::R C:::::C              ", socket_fd);
+	Broadcast("  I::::I    R::::R     R:::::RC:::::C              ", socket_fd);
+	Broadcast("  I::::I    R::::R     R:::::RC:::::C              ", socket_fd);
+	Broadcast("  I::::I    R::::R     R:::::R C:::::C       CCCCCC", socket_fd);
+	Broadcast("II::::::IIRR:::::R     R:::::R  C:::::CCCCCCCC::::C", socket_fd);
+	Broadcast("I::::::::IR::::::R     R:::::R   CC:::::::::::::::C", socket_fd);
+	Broadcast("I::::::::IR::::::R     R:::::R     CCC::::::::::::C", socket_fd);
+	Broadcast("IIIIIIIIIIRRRRRRRR     RRRRRRR        CCCCCCCCCCCCC", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+	Broadcast("                                                   ", socket_fd);
+}
+
+Bot		*Server::get_bot() const
+{
+	return (this->m_bot);
 }

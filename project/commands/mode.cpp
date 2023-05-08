@@ -43,7 +43,7 @@ v                gives a user a voice on a moderated channel
 void mode_o(Server *serv, Channel *channel, std::string mode, std::string buffer, int sd)
 {
     int i = -1, j = 0;
-    // for (int j = 0; buffer[i] && j < 3; i++)
+
     while (buffer[++i] && j < 3)
     {
         if (buffer[i] == ' ' || buffer[i] == '\t')
@@ -60,7 +60,7 @@ void mode_o(Server *serv, Channel *channel, std::string mode, std::string buffer
     int user_socket_fd = channel->search_user_by_nickname(name);
     if (user_socket_fd == -1)
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(441, serv, FIND_USER(sd), name, channel->get_channelname()), sd);
+        Broadcast(get_RPL_ERR(441, serv, FIND_USER(sd), name, channel->get_channelname()), sd);
         return ;
     }
 
@@ -82,13 +82,12 @@ void mode_o(Server *serv, Channel *channel, std::string mode, std::string buffer
         user_answer = anonymous_output();
     }
     user_answer += "MODE " + channel->get_channelname() + " " + mode + " " + name;
-    ___Broadcast___(user_answer, user_socket_fd);
+    Broadcast(user_answer, user_socket_fd);
 }
 
 void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer, int sd)
 {
-    // int i = 0;
-    // for (int j = 0; buffer[i] && j < 3; i++)
+
     int i = -1, j = 0;
     while (buffer[++i] && j < 3)
     {
@@ -106,7 +105,7 @@ void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer
 
     if (user_socket_fd == -1)
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(441, serv, FIND_USER(sd), name, channel->get_channelname()), sd);
+        Broadcast(get_RPL_ERR(441, serv, FIND_USER(sd), name, channel->get_channelname()), sd);
         return ;
     }
     if (channel->is_chanop(user_socket_fd) == true)
@@ -133,7 +132,7 @@ void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer
     }
 
     user_answer += "MODE " + channel->get_channelname() + " " + mode + " " + name;
-    ___Broadcast___(user_answer, sd);
+    Broadcast(user_answer, sd);
 
 }
 
@@ -141,8 +140,7 @@ void mode_b(Server *serv, Channel *channel, std::string mode, std::string buffer
 {
     (void)  mode;
 
-    // int i = 0;
-    // for (int j = 0; buffer[i] && j < 3; i++)
+
     int i = -1, j = 0;
     while (buffer[++i] && j < 3)
     {
@@ -164,9 +162,9 @@ void mode_b(Server *serv, Channel *channel, std::string mode, std::string buffer
         std::string banlist = channel->get_list_of_users_banned();
         if ( !banlist.empty())
         {
-            ___Broadcast___(___Broadcast_RPL_ERR___(367, serv, FIND_USER(sd), channel->get_channelname(), banlist), sd);
+            Broadcast(get_RPL_ERR(367, serv, FIND_USER(sd), channel->get_channelname(), banlist), sd);
         }
-        ___Broadcast___(___Broadcast_RPL_ERR___(368, serv, FIND_USER(sd), channel->get_channelname(), ""), sd);
+        Broadcast(get_RPL_ERR(368, serv, FIND_USER(sd), channel->get_channelname(), ""), sd);
     }
 	else
     {
@@ -197,8 +195,7 @@ void mode_k(Server *serv, Channel *channel, std::string mode, std::string buffer
         channel->set_key("");
 	    return ;
     }
-    // int i = 0;
-    // for (int j = 0; buffer[i] && j < 3; i++)
+
     int i = -1, j = 0;
     while (buffer[++i] && j < 3)
     {
@@ -213,10 +210,10 @@ void mode_k(Server *serv, Channel *channel, std::string mode, std::string buffer
         }
     }
     std::string key = buffer.substr(i, (buffer.find_first_of(SEP_CHARSET, i) - i));
-    // if (key.compare("x") == 0)
+
     if (key == "x")
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(467, serv, FIND_USER(sd), channel->get_key(), ""), sd);
+        Broadcast(get_RPL_ERR(467, serv, FIND_USER(sd), channel->get_key(), ""), sd);
     }
     else
     {
@@ -225,7 +222,7 @@ void mode_k(Server *serv, Channel *channel, std::string mode, std::string buffer
         else
         {
             std::string truc = user_output(FIND_USER(sd));
-            ___Broadcast___(truc + ": Wrong key!", sd);
+            Broadcast(truc + ": Wrong key!", sd);
         }
     }
 }
@@ -255,7 +252,7 @@ void mode_l(Server *serv, Channel *channel, std::string mode, std::string buffer
     int maxUser = std::strtoul(name.c_str(), NULL, 0);
     if (maxUser < 0)
     {
-	    ___Broadcast___("Max user key must be superior to 0.", sd);
+	    Broadcast("Max user key must be superior to 0.", sd);
 	    return ;
     }
     channel->set_maximum_users(maxUser);
@@ -284,7 +281,6 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
     {
         std::string deleted_mode;
 
-        // for (i = 1; mode[i]; i++)
 
         i = 0;
         while (mode[++i])
@@ -292,7 +288,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
             if (available_modes(mode[i], CHANNEL_MODE) == false)
 	        {
 		        std::string stringMode(1, mode[i]);
-                ___Broadcast___(___Broadcast_RPL_ERR___(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
+                Broadcast(get_RPL_ERR(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
 	        }
             else if (available_modes(mode[i], "ovbkl") == true)
 	        {
@@ -319,7 +315,6 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
     {
         std::string added_mode;
 
-        // for ((mode[0] != '+') ? i = 0 : i = 1; mode[i]; i++)
 
         i = mode[0] != '+' ? -1 : 0;
         while (mode[++i])
@@ -327,7 +322,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
             if (available_modes(mode[i], CHANNEL_MODE) == false)
             {
                 std::string stringMode(1, mode[i]);
-                ___Broadcast___(___Broadcast_RPL_ERR___(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
+                Broadcast(get_RPL_ERR(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
             }
             else if (available_modes(mode[i], "ovbkl") == true)
             {
@@ -358,23 +353,23 @@ void userMode(Server *serv, User *user, std::string mode, int sd)
     if (mode[0] == '-')
     {
         std::string deleted_mode;
-        // for (i = 1; mode[i]; i++)
+
         i = 0;
         while (mode[++i])
         {
             if (available_modes(mode[i], USER_MODE) == false)
             {
-                ___Broadcast___(___Broadcast_RPL_ERR___(501, serv, FIND_USER(sd), "", ""), sd);
+                Broadcast(get_RPL_ERR(501, serv, FIND_USER(sd), "", ""), sd);
             }
             else if (userMode.find(mode[i]) != std::string::npos)
             {
                 if (mode[i] == 'o' && user->get_nickname() != FIND_USER(sd)->get_nickname())
                 {
-                    ___Broadcast___(___Broadcast_RPL_ERR___(481, serv, FIND_USER(sd), "", ""), sd);
+                    Broadcast(get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
                 }
                 else if (mode[i] == 'r' && ((FIND_USER(sd)->get_mode().find('r') != std::string::npos) || (FIND_USER(sd)->get_mode().find('o') == std::string::npos )))
                 {
-                    ___Broadcast___(___Broadcast_RPL_ERR___(481, serv, FIND_USER(sd), "", ""), sd);
+                    Broadcast(get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
                 }
                 else
                 {
@@ -388,26 +383,25 @@ void userMode(Server *serv, User *user, std::string mode, int sd)
         if (!deleted_mode.empty())
             user_answer += "MODE " + user->get_nickname() + " -" + deleted_mode;
         if (user_answer.find("MODE") != std::string::npos)
-            ___Broadcast___(user_answer, user_socket_fd);
+            Broadcast(user_answer, user_socket_fd);
     }
     else
     {
         std::string added_mode;
 
-        // for ((mode[0] != '+') ? i = 0 : i = 1; mode[i]; i++)
 
         i = mode[0] != '+' ? -1 : 0;        
         while (mode[++i])
         {
             if (available_modes(mode[i], USER_MODE) == false)
             {
-                ___Broadcast___(___Broadcast_RPL_ERR___(501, serv, FIND_USER(sd), "", ""), sd);
+                Broadcast(get_RPL_ERR(501, serv, FIND_USER(sd), "", ""), sd);
             }
             else if (userMode.find(mode[i]) == std::string::npos)
             {
                 if (mode[i] == 'o' && FIND_USER(sd)->get_mode().find('o') == std::string::npos)
                 {
-                    ___Broadcast___(___Broadcast_RPL_ERR___(481, serv, FIND_USER(sd), "", ""), sd);
+                    Broadcast(get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
                 }
                 else if (mode[i] == 'r' && user->get_nickname() == FIND_USER(sd)->get_nickname())
                 {
@@ -415,7 +409,7 @@ void userMode(Server *serv, User *user, std::string mode, int sd)
                 }
                 else if (mode[i] == 'r' && ((FIND_USER(sd)->get_mode().find('r') != std::string::npos) || (FIND_USER(sd)->get_mode().find('o') == std::string::npos)))
                 {
-                    ___Broadcast___(___Broadcast_RPL_ERR___(481, serv, FIND_USER(sd), "", ""), sd);
+                    Broadcast(get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
                 }
                 else
                 {
@@ -431,7 +425,7 @@ void userMode(Server *serv, User *user, std::string mode, int sd)
         }
         if (user_answer.find("MODE") != std::string::npos)
         {
-            ___Broadcast___(user_answer, user_socket_fd);
+            Broadcast(user_answer, user_socket_fd);
         }
     }
 }
@@ -446,7 +440,7 @@ void mode(Server *serv, std::string buffer, int sd)
         msgtarget = buf.substr(i, ((j = buf.find_first_of(SEP_CHARSET, i)) - i));
     if (msgtarget.empty())
     {
-        ___Broadcast___(___Broadcast_RPL_ERR___(461, serv, FIND_USER(sd), "MODE", ""), sd);
+        Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "MODE", ""), sd);
         return ;
     }
     std::string idOfChannel = "#&+";
@@ -457,11 +451,11 @@ void mode(Server *serv, std::string buffer, int sd)
     if (!msgtarget.empty() && idOfChannel.find(msgtarget[0]) != std::string::npos)
     {
         if (serv->get_channels().find(msgtarget) == serv->get_channels().end())
-            ___Broadcast___(___Broadcast_RPL_ERR___(403, serv, FIND_USER(sd), msgtarget, ""), sd);
+            Broadcast(get_RPL_ERR(403, serv, FIND_USER(sd), msgtarget, ""), sd);
         else if (FIND_USER(sd)->get_mode().find('r') != std::string::npos)
-            ___Broadcast___(___Broadcast_RPL_ERR___(484, serv, FIND_USER(sd), "", ""), sd);
+            Broadcast(get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
         else if (FIND_CHANNEL(msgtarget)->get_chanops().find(sd) == FIND_CHANNEL(msgtarget)->get_chanops().end())
-            ___Broadcast___(___Broadcast_RPL_ERR___(482, serv, FIND_USER(sd), msgtarget, ""), sd);
+            Broadcast(get_RPL_ERR(482, serv, FIND_USER(sd), msgtarget, ""), sd);
         else
             channel_mode(serv, FIND_CHANNEL(msgtarget), mode, sd, buffer);
     }
@@ -469,11 +463,11 @@ void mode(Server *serv, std::string buffer, int sd)
     {
         int user_socket_fd;
         if ((user_socket_fd = serv->search_user_by_nickname(msgtarget)) == -1)
-            ___Broadcast___(___Broadcast_RPL_ERR___(401, serv, FIND_USER(sd), msgtarget, ""), sd);
+            Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), msgtarget, ""), sd);
         else if (mode.empty() && !FIND_USER(user_socket_fd)->get_mode().empty())
-            ___Broadcast___(___Broadcast_RPL_ERR___(221, serv, FIND_USER(user_socket_fd), '+' + FIND_USER(user_socket_fd)->get_mode(), ""), sd);
+            Broadcast(get_RPL_ERR(221, serv, FIND_USER(user_socket_fd), '+' + FIND_USER(user_socket_fd)->get_mode(), ""), sd);
         else if (mode.empty() && FIND_USER(user_socket_fd)->get_mode().empty())
-            ___Broadcast___("This user don't have any modes!", sd);
+            Broadcast("This user don't have any modes!", sd);
         else
             userMode(serv, FIND_USER(user_socket_fd), mode, sd);
     }
