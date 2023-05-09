@@ -4,7 +4,11 @@
 # Now checking
 - [ ] ~Do-the-f*ing-Math Bot~
 - [ ] ~Weekday-guessing Bot~
-- [ ] Use netcat ---> `nc localhost [port]`
+- Use netcat ---> `nc localhost [port]`
+  - `$ nc <Seat> <Port>`
+  - `PASS !@#$` - `NICK qxnx` - `USER qxnx * * qxnx`
+  - `JOIN #room` - `PART`
+  - `/part` `/join` not working
 - [ ] Date & Time Bot
 - [ ] Read EVAL.pdf again
 - [:white_check_mark:] Find all RPL ( --- Home assignment)
