@@ -1,6 +1,19 @@
 ![](https://img.shields.io/badge/C++-Internet&nbsp;Relay&nbsp;Chat-red.svg?style=flat&logo=c%2B%2B)
 
 
+# Now checkout 
+@      | command
+:----- | :------
+__notice__ | `/notice @xqin hello, world`
+-&nbsp;| -
+__nc__ | &nbsp;
+&nbsp; | `$ nc e1r2p3 6677`
+&nbsp; | `PASS 1abc`
+&nbsp; | `NICK nuo`
+&nbsp; | `USER login`
+&nbsp; | :red_circle: lowercase not allowed - `/part` 
+__notice__ | `PRIVMSG #room <msg>`
+
 # Now checking
 - [ ] ~Do-the-f*ing-Math Bot~
 - [ ] ~Weekday-guessing Bot~
