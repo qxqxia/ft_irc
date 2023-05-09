@@ -8,7 +8,7 @@
   - `$ nc <Seat> <Port>`
   - `PASS !@#$` - `NICK qxnx` - `USER qxnx * * qxnx`
   - `JOIN #room` - `PART`
-  - `/part` `/join` not working
+  - `/part` `/join` ---> lowercase = NO
 - [ ] Date & Time Bot
 - [ ] Read EVAL.pdf again
 - [:white_check_mark:] Find all RPL ( --- Home assignment)
