@@ -12,9 +12,9 @@ __/notice__ | `/notice @xqin hello, world`
 &nbsp;     | __nc__ 
 &nbsp;     | &nbsp;
 __login__  | `$ nc e1r2p3 6677`
-&nbsp;     | `PASS 1abc`
-&nbsp;     | `NICK nuo`
-&nbsp;     | `USER login`
+&nbsp;     | `PASS password`
+&nbsp;     | `NICK nick`
+&nbsp;     | `USER user`
 &nbsp;     | :red_circle: lowercase not allowed: `/part` 
 __/notice__ | `PRIVMSG #room <msg>`
 
