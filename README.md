@@ -11,7 +11,7 @@ __/notice__ | `/notice @xqin hello, world`
 &nbsp;     | &nbsp;
 &nbsp;     | __nc__ 
 &nbsp;     | &nbsp;
-__login__  | `$ nc e1r2p3 6677`
+__Login__  | `$ nc e1r2p3 6677`
 &nbsp;     | `PASS password`
 &nbsp;     | `NICK nick`
 &nbsp;     | `USER user`
