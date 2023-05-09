@@ -16,6 +16,7 @@
   - `/notice #room hello, world`
   - `/notice @n2 hello, world`
 - [:white_check_mark:] /DCC | dcc
+  - *Update* [:white_check_mark:] - qxia successfully sent a _Fmt.hpp_ to nuo
   - `/dcc send <~@~User> /mnt/nfs/homes/login/Downloads/Great.in`
   - `/dcc <list|get>`
 - [:white_check_mark:] XCQ after ***get_input_from_client_sfd (sfd)***
