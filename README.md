@@ -13,7 +13,7 @@
 - [ ] Read EVAL.pdf again
 - [:white_check_mark:] Find all RPL ( --- Home assignment)
 - [:white_check_mark:] /NOTICE | notice
-  - `/notice #room hello, world`
+  - `/notice #room hello, world` (not for irssi) --> nc `PRIVMSG #room <msg>`
   - `/notice @n2 hello, world`
 - [:white_check_mark:] /DCC | dcc
   - *Update* [:white_check_mark:] - qxia successfully sent a _Fmt.hpp_ to nuo
