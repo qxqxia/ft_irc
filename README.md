@@ -7,6 +7,11 @@ command      | syntax
 &nbsp;       | &nbsp;
 &nbsp;       | __irssi__ 
 &nbsp;       | &nbsp;
+__/dcc__     | `/dcc send <~@~User> /mnt/nfs/homes/LOGIN/Downloads/log1`
+&nbsp;       | `/dcc <list|get>`
+&nbsp;       | in channel: user still in server
+&nbsp;       | out of channel: user disconnected
+&nbsp;       | &nbsp;
 __/kill__    | `/oper qxia OPER_PW` `/kill someone`
 &nbsp;       | in channel: user still in server
 &nbsp;       | out of channel: user disconnected
@@ -27,8 +32,9 @@ __/mode__    | channel mode
 __/part__    | `/part <#room>`
 &nbsp;       | &nbsp;
 __/topic__   | `/topic` / `topic <topic>`
-&nbsp;       | :red_circle: topic updated only at re-joining
-&nbsp;       | :red_circle: topic unchanged at quiting
+&nbsp;       | :red_circle: Not working
+&nbsp;       | topic updated only at re-joining
+&nbsp;       | topic unchanged at quiting
 &nbsp;       | &nbsp;
 __/restart__ | `/oper qxia OPER_PW`
 &nbsp;       | `/restart`
