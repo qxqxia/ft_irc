@@ -5,7 +5,12 @@
 command      | client | syntax
 :----------- | :----- | :-
 &nbsp;       |&nbsp;| &nbsp;
-__/dcc__     | irssi| `/dcc send <~@~user> /mnt/nfs/homes/LOGIN/Downloads/log1`
+Login        | nc   | `$ nc e1r2p3 6677`
+&nbsp;       |      | `PASS password`
+&nbsp;       |      | `NICK nick`
+&nbsp;       |      | `USER user`
+&nbsp;       |&nbsp;| &nbsp;
+__/DCC__     | irssi| `/dcc send <~@~user> /mnt/nfs/homes/LOGIN/Downloads/log1`
 &nbsp;       |      | `/dcc <list\|get>`
 &nbsp;       | &nbsp;| _in channel: user still in server_
 &nbsp;       | &nbsp;| _out of channel: user disconnected_
@@ -48,11 +53,7 @@ __/notice__  | irssi| `/notice @xqin hello, world`
 &nbsp;       |&nbsp;| _by default a private msg to oneself ..._
 &nbsp;       |&nbsp;| _and not to the entire channel (to prevent flooding)_
 __/notice__  | nc   | `PRIVMSG #room <msg>`
-&nbsp;       |&nbsp;| &nbsp;
-__Login__    | nc   | `$ nc e1r2p3 6677`
-&nbsp;       |      | `PASS password`
-&nbsp;       |      | `NICK nick`
-&nbsp;       |      | `USER user`
+
 
 
 # Now checking
