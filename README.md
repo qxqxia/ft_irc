@@ -91,7 +91,7 @@ __/notice__  | nc     | `PRIVMSG #room <msg>`
 # "maltvonkb" (Channel)
 - [ ] `+m` | set moderation |  `/mode #chan +m`
 - [ ] `+a` | auto-voice | +a users are auto-granted voice | `/mode #chan +a user` 
-- [ ] `+l` | set limit | `/oper ...` ` /mode #ROOM +l 2`
+- [x] `+l` | set limit | `/oper ...` ` /mode #ROOM +l 2`
 - [ ] `+t` | topic protection | `/mode #chan +t `
 - [ ] `+v` | give _user_ a voice in a moderated room |  `/mode #chan +v user`
 - [ ] `+o` | give someone else _Operator_ role | `/mode #chan +o user`
