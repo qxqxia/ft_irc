@@ -4,55 +4,55 @@
 # Now checkout 
 command      | client | syntax
 :----------- | :----- | :-
-&nbsp;       |&nbsp;| &nbsp;
-Login        | nc   | `$ nc e1r2p3 6677`
-&nbsp;       |      | `PASS password`
-&nbsp;       |      | `NICK nick`
-&nbsp;       |      | `USER user`
-&nbsp;       |&nbsp;| &nbsp;
-__/DCC__     | irssi| `/dcc send <~@~user> /mnt/nfs/homes/LOGIN/Downloads/log1`
-&nbsp;       |      | `/dcc <list\|get>`
-&nbsp;       | &nbsp;| _in channel: user still in server_
-&nbsp;       | &nbsp;| _out of channel: user disconnected_
-&nbsp;       |&nbsp;| &nbsp;
-__/kill__    | irssi| `/oper qxia OPER_PW` `/kill someone`
-&nbsp;       | &nbsp;| in channel: _user still in server_
-&nbsp;       | &nbsp;| out of channel: _user disconnected_
-&nbsp;       |&nbsp;| &nbsp;
-__user +/-i__| irssi| `/mode qxia +i`
-&nbsp;       |&nbsp;| _modified, nothing happens_
-&nbsp;       |&nbsp;| &nbsp;
-__/kick__    |&nbsp;| _must be done inside a channel_
-&nbsp;       | irssi| `/oper qxia OPER_PW` 
-&nbsp;       |      | `/kick nuo.o`
-&nbsp;       |      | `nuo.o` can't `part` & has to `/quit` or `/exit`
-&nbsp;       |&nbsp;| &nbsp;
-__/mode__    |&nbsp;| _channel mode_
-&nbsp;       | irssi| `/oper qxia OPER_PW`
-&nbsp;       |      | `/mode #room +o n1`
-&nbsp;       |      | `/kick qxia` (n1)
-&nbsp;       |&nbsp;| &nbsp;
-__/part__    | irssi| `/part <#room>`
-&nbsp;       |&nbsp;| &nbsp;
-__/topic__   |&nbsp;| `/topic` / `topic <topic>`
-&nbsp;       |&nbsp;| :red_circle: _Not working_
-&nbsp;       |&nbsp;| _topic updated only at re-joining_
-&nbsp;       |&nbsp;| _topic unchanged at quiting_
-&nbsp;       |&nbsp;| &nbsp;
-__/restart__ | irssi| `/oper qxia OPER_PW`
-&nbsp;       |      | `/restart`
-&nbsp;       |&nbsp;| &nbsp;
-__/say__     |&nbsp;| (IRSSI built-in)
-&nbsp;       | irssi| `/say something`
-&nbsp;       |&nbsp;| &nbsp;
-__/names__   |&nbsp;| (IRSSI built-in)
-&nbsp;       | irssi| `/n` or `/name`
-&nbsp;       |&nbsp;| &nbsp;
-__/notice__  | irssi| `/notice @xqin hello, world`
-&nbsp;       |      | `/notice #room hello, world` :yellow_circle:
-&nbsp;       |&nbsp;| _by default a private msg to oneself ..._
-&nbsp;       |&nbsp;| _and not to the entire channel (to prevent flooding)_
-__/notice__  | nc   | `PRIVMSG #room <msg>`
+&nbsp;       | &nbsp; | &nbsp;
+Login        | nc     | `$ nc e1r2p3 6677`
+&nbsp;       |        | `PASS password`
+&nbsp;       |        | `NICK nick`
+&nbsp;       |        | `USER user`
+&nbsp;       | &nbsp; | &nbsp;
+__/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
+&nbsp;       |        | `/dcc <list\|get>`
+&nbsp;       | &nbsp; | _in channel: user still in server_
+&nbsp;       | &nbsp; | _out of channel: user disconnected_
+&nbsp;       | &nbsp; | &nbsp;
+__/kill__    | irssi | `/oper qxia OPER_PW` `/kill someone`
+&nbsp;       | &nbsp; | in channel: _user still in server_
+&nbsp;       | &nbsp; | out of channel: _user disconnected_
+&nbsp;       | &nbsp; | &nbsp;
+__user +/-i__| irssi  | `/mode qxia +i`
+&nbsp;       | &nbsp; | _modified, nothing happens_
+&nbsp;       | &nbsp; | &nbsp;
+__/kick__    | &nbsp; | _must be done inside a channel_
+&nbsp;       | irssi  | `/oper qxia OPER_PW` 
+&nbsp;       |        | `/kick nuo.o`
+&nbsp;       |        | `nuo.o` can't `part` & has to `/quit` or `/exit`
+&nbsp;       | &nbsp; | &nbsp;
+__/mode__    | &nbsp; | _channel mode_
+&nbsp;       | irssi  | `/oper qxia OPER_PW`
+&nbsp;       |        | `/mode #room +o n1`
+&nbsp;       |        | `/kick qxia` (n1)
+&nbsp;       | &nbsp; | &nbsp;
+__/part__    | irssi  | `/part <#room>`
+&nbsp;       | &nbsp; | &nbsp;
+__/topic__   | &nbsp; | `/topic` / `topic <topic>`
+&nbsp;       | &nbsp; | :red_circle: _Not working_
+&nbsp;       | &nbsp; | _topic updated only at re-joining_
+&nbsp;       | &nbsp; | _topic unchanged at quiting_
+&nbsp;       | &nbsp; | &nbsp;
+__/restart__ | irssi  | `/oper qxia OPER_PW`
+&nbsp;       |        | `/restart`
+&nbsp;       | &nbsp; | &nbsp;
+__/say__     | &nbsp; | (IRSSI built-in)
+&nbsp;       | irssi  | `/say something`
+&nbsp;       | &nbsp; | &nbsp;
+__/names__   | &nbsp; | (IRSSI built-in)
+&nbsp;       | irssi  | `/n` or `/name`
+&nbsp;       | &nbsp; | &nbsp;
+__/notice__  | irssi  | `/notice @xqin hello, world`
+&nbsp;       |        | `/notice #room hello, world` :yellow_circle:
+&nbsp;       | &nbsp; | _by default a private msg to oneself ..._
+&nbsp;       | &nbsp; | _and not to the entire channel (to prevent flooding)_
+__/notice__  | nc     | `PRIVMSG #room <msg>`
 
 
 
