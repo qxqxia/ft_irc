@@ -2,60 +2,58 @@
 
 
 # Now checkout 
-command      | syntax
-:----------- | :------
-&nbsp;       | &nbsp;
-__/dcc__     | `/dcc send <~@~user> /mnt/nfs/homes/LOGIN/Downloads/log1`
-&nbsp;       | `/dcc <list\|get>`
-&nbsp;       | in channel: user still in server
-&nbsp;       | out of channel: user disconnected
-&nbsp;       | &nbsp;
-__/kill__    | `/oper qxia OPER_PW` `/kill someone`
-&nbsp;       | in channel: user still in server
-&nbsp;       | out of channel: user disconnected
-&nbsp;       | &nbsp;
-__user +/-i__    | `/mode qxia +i`
-&nbsp;      | modified, nothing happens
-&nbsp;       | &nbsp;
-__/kick__    | must be done inside a channel
-&nbsp;       | `/oper qxia OPER_PW` 
-&nbsp;       | `/kick nuo.o`
-&nbsp;       | `nuo.o` can't `part` & has to `/quit` or `/exit`
-&nbsp;       | &nbsp;
-__/mode__    | channel mode
-&nbsp;       | `/oper qxia OPER_PW`
-&nbsp;       | `/mode #room +o n1`
-&nbsp;       | `/kick qxia` (n1)
-&nbsp;       | &nbsp;
-__/part__    | `/part <#room>`
-&nbsp;       | &nbsp;
-__/topic__   | `/topic` / `topic <topic>`
-&nbsp;       | :red_circle: Not working
-&nbsp;       | topic updated only at re-joining
-&nbsp;       | topic unchanged at quiting
-&nbsp;       | &nbsp;
-__/restart__ | `/oper qxia OPER_PW`
-&nbsp;       | `/restart`
-&nbsp;       | &nbsp;
-__/say__   | (IRSSI built-in)
-&nbsp;       | `/say something`
-&nbsp;       | &nbsp;
-__/names__   | (IRSSI built-in)
-&nbsp;       | `/n` or `/name`
-&nbsp;       | &nbsp;
-__/notice__  | `/notice @xqin hello, world`
-&nbsp;       | `/notice #room hello, world`
-&nbsp;       | by default a private msg to oneself and not to the entire channel (to prevent flooding)
-&nbsp;       | &nbsp;
-&nbsp;       | __nc__ 
-&nbsp;       | &nbsp;
-__Login__    | `$ nc e1r2p3 6677`
-&nbsp;       | `PASS password`
-&nbsp;       | `NICK nick`
-&nbsp;       | `USER user`
-&nbsp;       | :red_circle: lowercase not allowed: `/part`
-&nbsp;       | &nbsp; 
-__/notice__  | `PRIVMSG #room <msg>`
+command      | client | syntax
+:----------- | :----- | :-
+&nbsp;       |&nbsp;| &nbsp;
+__/dcc__     | irssi| `/dcc send <~@~user> /mnt/nfs/homes/LOGIN/Downloads/log1`
+&nbsp;       |      | `/dcc <list\|get>`
+&nbsp;       | &nbsp;| _in channel: user still in server_
+&nbsp;       | &nbsp;| _out of channel: user disconnected_
+&nbsp;       |&nbsp;| &nbsp;
+__/kill__    | irssi| `/oper qxia OPER_PW` `/kill someone`
+&nbsp;       | &nbsp;| in channel: _user still in server_
+&nbsp;       | &nbsp;| out of channel: _user disconnected_
+&nbsp;       |&nbsp;| &nbsp;
+__user +/-i__| irssi| `/mode qxia +i`
+&nbsp;       |&nbsp;| _modified, nothing happens_
+&nbsp;       |&nbsp;| &nbsp;
+__/kick__    |&nbsp;| _must be done inside a channel_
+&nbsp;       | irssi| `/oper qxia OPER_PW` 
+&nbsp;       |      | `/kick nuo.o`
+&nbsp;       |      | `nuo.o` can't `part` & has to `/quit` or `/exit`
+&nbsp;       |&nbsp;| &nbsp;
+__/mode__    |&nbsp;| _channel mode_
+&nbsp;       | irssi| `/oper qxia OPER_PW`
+&nbsp;       |      | `/mode #room +o n1`
+&nbsp;       |      | `/kick qxia` (n1)
+&nbsp;       |&nbsp;| &nbsp;
+__/part__    | irssi| `/part <#room>`
+&nbsp;       |&nbsp;| &nbsp;
+__/topic__   |&nbsp;| `/topic` / `topic <topic>`
+&nbsp;       |&nbsp;| :red_circle: _Not working_
+&nbsp;       |&nbsp;| _topic updated only at re-joining_
+&nbsp;       |&nbsp;| _topic unchanged at quiting_
+&nbsp;       |&nbsp;| &nbsp;
+__/restart__ | irssi| `/oper qxia OPER_PW`
+&nbsp;       |      | `/restart`
+&nbsp;       |&nbsp;| &nbsp;
+__/say__     |&nbsp;| (IRSSI built-in)
+&nbsp;       | irssi| `/say something`
+&nbsp;       |&nbsp;| &nbsp;
+__/names__   |&nbsp;| (IRSSI built-in)
+&nbsp;       | irssi| `/n` or `/name`
+&nbsp;       |&nbsp;| &nbsp;
+__/notice__  | irssi| `/notice @xqin hello, world`
+&nbsp;       |      | `/notice #room hello, world` :yellow_circle:
+&nbsp;       |&nbsp;| _by default a private msg to oneself ..._
+&nbsp;       |&nbsp;| _and not to the entire channel (to prevent flooding)_
+__/notice__  | nc   | `PRIVMSG #room <msg>`
+&nbsp;       |&nbsp;| &nbsp;
+__Login__    | nc   | `$ nc e1r2p3 6677`
+&nbsp;       |      | `PASS password`
+&nbsp;       |      | `NICK nick`
+&nbsp;       |      | `USER user`
+
 
 # Now checking
 - [ ] ~Do-the-f*ing-Math Bot~
