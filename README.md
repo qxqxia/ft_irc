@@ -8,8 +8,13 @@ mode         | client | syntax
 &nbsp;       | &nbsp; | &nbsp;
 `oper`       | &nbsp; | `oper qxia OPER_PW`
 &nbsp;       | &nbsp; | &nbsp;
+`+o`         | &nbsp; | `/mode #chan +o qxia`
+&nbsp;       | &nbsp; | `/kick nuo.o` (qxia)
+&nbsp;       | &nbsp; | grand Operator role to someone 
+&nbsp;       | &nbsp; | &nbsp;
 `+k`         | &nbsp; | `/mode #room +k <key>`
-&nbsp;       | &nbsp; | :red_circle::red_circle::red_circle: Doesn't work
+&nbsp;       | &nbsp; | :green_circle: works fine w/ a key
+&nbsp;       | &nbsp; | :red_circle: still available w/o a key
 &nbsp;       | &nbsp; | &nbsp;
 `+l`         | irssi  | `/mode #room +l 1`
 &nbsp;       | &nbsp; | set limit
@@ -112,7 +117,7 @@ __/notice__  | nc     | `PRIVMSG #room <msg>`
 - [x] `+l` | set limit | `/oper ...` ` /mode #ROOM +l 2`
 - [ ] `+t` | topic protection | `/mode #chan +t `
 - [ ] `+v` | give _user_ a voice in a moderated room |  `/mode #chan +v user`
-- [ ] `+o` | give someone else _Operator_ role | `/mode #chan +o user`
+- [ ] `+o` | give someone _Operator_ role | `/mode #chan +o user`
 - [ ] `+n` | no external messages |  `/mode #chan +n`
 - [ ] `+k` | :red_circle::red_circle::red_circle: set chan key | `/oper ...` ` /mode #ROOM +k KEY`   
 - [x] `+b` | ban someone | `/oper ...` ` /mode #ROOM +b USER` 
