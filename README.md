@@ -7,6 +7,11 @@ command      | syntax
 &nbsp;       | &nbsp;
 &nbsp;       | __irssi__ 
 &nbsp;       | &nbsp;
+__/mode__    | channel mode
+&nbsp;       | `/oper qxia OPER_PW`
+&nbsp;       | `/mode #room +o n1`
+&nbsp;       | `/kick qxia` (n1)
+__/part__    | `/part <#room>`
 __/topic__   | `/topic` / `topic <topic>`
 &nbsp;       | :red_circle: topic updated only at re-joining
 &nbsp;       | :red_circle: topic unchanged at quiting
