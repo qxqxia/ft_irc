@@ -5,9 +5,7 @@
 command      | syntax
 :----------- | :------
 &nbsp;       | &nbsp;
-&nbsp;       | __irssi__ 
-&nbsp;       | &nbsp;
-__/dcc__     | `/dcc send <user> /mnt/nfs/homes/LOGIN/Downloads/log1`
+__/dcc__     | `/dcc send <~@~user> /mnt/nfs/homes/LOGIN/Downloads/log1`
 &nbsp;       | `/dcc <list\|get>`
 &nbsp;       | in channel: user still in server
 &nbsp;       | out of channel: user disconnected
@@ -39,9 +37,15 @@ __/topic__   | `/topic` / `topic <topic>`
 __/restart__ | `/oper qxia OPER_PW`
 &nbsp;       | `/restart`
 &nbsp;       | &nbsp;
-__/names__   | `/n` or `/name`
+__/say__   | (IRSSI built-in)
+&nbsp;       | `/say something`
+&nbsp;       | &nbsp;
+__/names__   | (IRSSI built-in)
+&nbsp;       | `/n` or `/name`
 &nbsp;       | &nbsp;
 __/notice__  | `/notice @xqin hello, world`
+&nbsp;       | `/notice #room hello, world`
+&nbsp;       | by default a private msg to oneself and not to the entire channel (to prevent flooding)
 &nbsp;       | &nbsp;
 &nbsp;       | __nc__ 
 &nbsp;       | &nbsp;
