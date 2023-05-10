@@ -12,8 +12,8 @@ Login        | nc     | `$ nc e1r2p3 6677`
 &nbsp;       | &nbsp; | &nbsp;
 __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;       |        | `/dcc <list\|get>`
-&nbsp;       | &nbsp; | _in channel: user still in server_
-&nbsp;       | &nbsp; | _out of channel: user disconnected_
+&nbsp;       | &nbsp; | _inside channel: user still in server_
+&nbsp;       | &nbsp; | _outside channel: user disconnected_
 &nbsp;       | &nbsp; | &nbsp;
 __/kill__    | irssi | `/oper qxia OPER_PW`, `/kill someone`
 &nbsp;       | &nbsp; | in channel: _user still in server_
