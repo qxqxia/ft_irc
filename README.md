@@ -7,6 +7,9 @@ command      | syntax
 &nbsp;       | &nbsp;
 &nbsp;       | __irssi__ 
 &nbsp;       | &nbsp;
+__/kill__    | `/oper qxia OPER_PW` `/kill someone`
+&nbsp;       | in channel: user still in server
+&nbsp;       | out of channel: user disconnected
 __/mode__    | channel mode
 &nbsp;       | `/oper qxia OPER_PW`
 &nbsp;       | `/mode #room +o n1`
