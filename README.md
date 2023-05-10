@@ -9,7 +9,7 @@ command      | syntax
 &nbsp;       | &nbsp;
 __/kick__    | `/oper qxia OPER_PW`
 &nbsp;       | `/kick nuo.o`
-&nbsp;       | `nuo.o` can't `part` & has to `/quit` or `exit`
+&nbsp;       | `nuo.o` can't `part` & has to `/quit` or `/exit`
 __/restart__ | `/oper qxia OPER_PW`
 &nbsp;       | `/restart`
 __/names__   | `/n` or `/name`
@@ -67,13 +67,13 @@ __/notice__  | `PRIVMSG #room <msg>`
 
 
 # Command List 
-- [ ] privmsg
-- [x] ping
-  - dropped /pong (incompatible w/ irssi)
-- [x] part
-- [x] quit
-- [x] topic
 - [x] oper
+- [ ] privmsg
+- [ ] ping
+  - dropped /pong (incompatible w/ irssi)
+- [ ] part
+- [ ] topic
+- [x] quit
 - [x] kick
 - [x] kill
 - [x] restart
