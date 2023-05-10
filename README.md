@@ -7,7 +7,8 @@ command    | syntax
 &nbsp;     | &nbsp;
 &nbsp;     | __irssi__ 
 &nbsp;     | &nbsp;
-__/notice__ | `/notice @xqin hello, world`
+__/names__ | `/n` or `/name`
+__/notice__| `/notice @xqin hello, world`
 &nbsp;     | &nbsp;
 &nbsp;     | __nc__ 
 &nbsp;     | &nbsp;
