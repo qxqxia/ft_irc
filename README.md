@@ -11,6 +11,9 @@ __/kill__    | `/oper qxia OPER_PW` `/kill someone`
 &nbsp;       | in channel: user still in server
 &nbsp;       | out of channel: user disconnected
 &nbsp;       | &nbsp;
+__user +/-i__    | `/mode qxia +i`
+&nbsp;      | modified, nothing happens
+&nbsp;       | &nbsp;
 __/kick__    | must be done inside a channel
 &nbsp;       | `/oper qxia OPER_PW` 
 &nbsp;       | `/kick nuo.o`
