@@ -7,8 +7,8 @@ command      | syntax
 &nbsp;       | &nbsp;
 &nbsp;       | __irssi__ 
 &nbsp;       | &nbsp;
-__/dcc__     | `/dcc send <~@~User> /mnt/nfs/homes/LOGIN/Downloads/log1`
-&nbsp;       | `/dcc <list|get>`
+__/dcc__     | `/dcc send <user> /mnt/nfs/homes/LOGIN/Downloads/log1`
+&nbsp;       | `/dcc <list\|get>`
 &nbsp;       | in channel: user still in server
 &nbsp;       | out of channel: user disconnected
 &nbsp;       | &nbsp;
