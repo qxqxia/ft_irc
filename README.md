@@ -6,9 +6,19 @@
 mode         | client | syntax
 :----------- | :----- | :-
 &nbsp;       | &nbsp; | &nbsp;
-`l`          | irssi  | `/mode #room +l 1`
+`oper`       | &nbsp; | `oper qxia OPER_PW`
+&nbsp;       | &nbsp; | &nbsp;
+`+k`         | &nbsp; | `/mode #room +k <key>`
+&nbsp;       | &nbsp; | :red_circle::red_circle::red_circle: Doesn't work
+&nbsp;       | &nbsp; | &nbsp;
+`+l`         | irssi  | `/mode #room +l 1`
 &nbsp;       | &nbsp; | set limit
 &nbsp;       | &nbsp; | &nbsp;
+`+b`         | irssi | `/mode #room +b nuo.o`
+&nbsp;       | &nbsp; | ban someone (#room cannot send to channel)
+&nbsp;       | &nbsp; | &nbsp;
+
+
 
 command      | client | syntax
 :----------- | :----- | :-
@@ -104,8 +114,8 @@ __/notice__  | nc     | `PRIVMSG #room <msg>`
 - [ ] `+v` | give _user_ a voice in a moderated room |  `/mode #chan +v user`
 - [ ] `+o` | give someone else _Operator_ role | `/mode #chan +o user`
 - [ ] `+n` | no external messages |  `/mode #chan +n`
-- [ ] `+k` | set chan key | `/oper ...` ` /mode #ROOM +k KEY`   
-- [ ] `+b` | ban someone | `/oper ...` ` /mode #ROOM +b USER` 
+- [ ] `+k` | :red_circle::red_circle::red_circle: set chan key | `/oper ...` ` /mode #ROOM +k KEY`   
+- [x] `+b` | ban someone | `/oper ...` ` /mode #ROOM +b USER` 
 
 
 # Command List 
