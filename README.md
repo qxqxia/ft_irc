@@ -2,6 +2,14 @@
 
 
 # Now checkout 
+
+mode         | client | syntax
+:----------- | :----- | :-
+&nbsp;       | &nbsp; | &nbsp;
+`l`          | irssi  | `/mode #room +l 1`
+&nbsp;       | &nbsp; | set limit
+&nbsp;       | &nbsp; | &nbsp;
+
 command      | client | syntax
 :----------- | :----- | :-
 &nbsp;       | &nbsp; | &nbsp;
