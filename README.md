@@ -7,6 +7,9 @@ command      | syntax
 &nbsp;       | &nbsp;
 &nbsp;       | __irssi__ 
 &nbsp;       | &nbsp;
+__/topic__   | `/topic` / `topic <topic>`
+&nbsp;       | :red_circle: topic updated only at re-joining
+&nbsp;       | :red_circle: topic unchanged at quiting
 __/kick__    | `/oper qxia OPER_PW`
 &nbsp;       | `/kick nuo.o`
 &nbsp;       | `nuo.o` can't `part` & has to `/quit` or `/exit`
