@@ -15,7 +15,7 @@ __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;       | &nbsp; | _in channel: user still in server_
 &nbsp;       | &nbsp; | _out of channel: user disconnected_
 &nbsp;       | &nbsp; | &nbsp;
-__/kill__    | irssi | `/oper qxia OPER_PW` `/kill someone`
+__/kill__    | irssi | `/oper qxia OPER_PW`, `/kill someone`
 &nbsp;       | &nbsp; | in channel: _user still in server_
 &nbsp;       | &nbsp; | out of channel: _user disconnected_
 &nbsp;       | &nbsp; | &nbsp;
