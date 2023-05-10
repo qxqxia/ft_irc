@@ -7,6 +7,9 @@ command      | syntax
 &nbsp;       | &nbsp;
 &nbsp;       | __irssi__ 
 &nbsp;       | &nbsp;
+__/kick__    | `/oper qxia OPER_PW`
+&nbsp;       | `/kick nuo.o`
+&nbsp;       | `nuo.o` can't `part` & has to `/quit` or `exit`
 __/restart__ | `/oper qxia OPER_PW`
 &nbsp;       | `/restart`
 __/names__   | `/n` or `/name`
