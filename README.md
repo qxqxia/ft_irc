@@ -10,20 +10,28 @@ command      | syntax
 __/kill__    | `/oper qxia OPER_PW` `/kill someone`
 &nbsp;       | in channel: user still in server
 &nbsp;       | out of channel: user disconnected
+&nbsp;       | &nbsp;
+__/kick__    | must be done inside a channel
+&nbsp;       | `/oper qxia OPER_PW` 
+&nbsp;       | `/kick nuo.o`
+&nbsp;       | `nuo.o` can't `part` & has to `/quit` or `/exit`
+&nbsp;       | &nbsp;
 __/mode__    | channel mode
 &nbsp;       | `/oper qxia OPER_PW`
 &nbsp;       | `/mode #room +o n1`
 &nbsp;       | `/kick qxia` (n1)
+&nbsp;       | &nbsp;
 __/part__    | `/part <#room>`
+&nbsp;       | &nbsp;
 __/topic__   | `/topic` / `topic <topic>`
 &nbsp;       | :red_circle: topic updated only at re-joining
 &nbsp;       | :red_circle: topic unchanged at quiting
-__/kick__    | `/oper qxia OPER_PW`
-&nbsp;       | `/kick nuo.o`
-&nbsp;       | `nuo.o` can't `part` & has to `/quit` or `/exit`
+&nbsp;       | &nbsp;
 __/restart__ | `/oper qxia OPER_PW`
 &nbsp;       | `/restart`
+&nbsp;       | &nbsp;
 __/names__   | `/n` or `/name`
+&nbsp;       | &nbsp;
 __/notice__  | `/notice @xqin hello, world`
 &nbsp;       | &nbsp;
 &nbsp;       | __nc__ 
@@ -32,7 +40,8 @@ __Login__    | `$ nc e1r2p3 6677`
 &nbsp;       | `PASS password`
 &nbsp;       | `NICK nick`
 &nbsp;       | `USER user`
-&nbsp;       | :red_circle: lowercase not allowed: `/part` 
+&nbsp;       | :red_circle: lowercase not allowed: `/part`
+&nbsp;       | &nbsp; 
 __/notice__  | `PRIVMSG #room <msg>`
 
 # Now checking
