@@ -25,7 +25,7 @@ __user +/-i__| irssi  | `/mode qxia +i`
 __/kick__    | &nbsp; | _must be done inside a channel_
 &nbsp;       | irssi  | `/oper qxia OPER_PW` 
 &nbsp;       |        | `/kick nuo.o`
-&nbsp;       |        | `nuo.o` can't `part` & has to `/quit` or `/exit`
+&nbsp;       |        | `nuo.o` can't `/part` & has to `/quit` or `/exit`
 &nbsp;       | &nbsp; | &nbsp;
 __/mode__    | &nbsp; | _channel mode_
 &nbsp;       | irssi  | `/oper qxia OPER_PW`
