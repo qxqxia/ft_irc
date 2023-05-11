@@ -34,7 +34,7 @@ __+/- b__    | &nbsp; | ban someone (#room cannot send to channel)
 USER MODE    | client | syntax
 :----------: | :----: | :-
 &nbsp;       |        | &nbsp;
-user +/- i   |        | toggle *invisible* for user
+__user +/- i__|       | toggle *invisible* for user
 &nbsp;       | irssi  | `/mode user1 +i`
 &nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_
 &nbsp;       | nc     | 
