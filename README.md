@@ -3,45 +3,46 @@
 
 # Now checkout 
 
-C mode | client | syntax
-:----: | :----: | :-
-&nbsp; |        | &nbsp;
-oper   | irssi  | `oper user1 OPER_PW`
-&nbsp; | nc     | 
-&nbsp; |        | &nbsp;
-+/- o  |        | grand Operator role to someone 
-&nbsp; | irssi  | `/mode #chan +o user1`
-&nbsp; |        | `/kick user2` (user1)
-&nbsp; | nc     | 
-&nbsp; |        | 
-&nbsp; | &nbsp; | &nbsp;
-+/- k  | &nbsp; | set token/key for room
-&nbsp; | irssi  | `/mode #room +k <key>`
-&nbsp; | &nbsp; | :green_circle: works fine w/ a key
-&nbsp; | &nbsp; | :red_circle: still available w/o a key
-&nbsp; | nc     | 
-&nbsp; | &nbsp; | &nbsp;
-+/- l  | &nbsp; | set limit
-&nbsp; | irssi  | `/mode #room +l 1`
-&nbsp; | nc     | 
-&nbsp; | &nbsp; | &nbsp;
-+/- b  | &nbsp; | ban someone (#room cannot send to channel)
-&nbsp; | irssi  | `/mode #room +b user1`
-&nbsp; | nc     | 
-&nbsp; | &nbsp; | &nbsp;
-
-U mode | client | syntax
-:----: | :----: | :-
-&nbsp; |        | &nbsp;
-user +/- i |    | toggle *invisible* for user
-&nbsp; | irssi  | `/mode user1 +i`
-&nbsp; | &nbsp; | :red_circle: _modified, nothing happens_
-&nbsp; | nc     | 
-&nbsp; | &nbsp; | &nbsp;
+CHANNEL MODE | client | syntax
+:----------: | :----: | :-
+&nbsp;       |        | &nbsp;
+oper         | irssi  | `oper user1 OPER_PW`
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
++/- o        |        | grand Operator role to someone 
+&nbsp;       | irssi  | `/mode #chan +o user1`
+&nbsp;       |        | `/kick user2` (user1)
+&nbsp;       | nc     | 
+&nbsp;       |        | 
+&nbsp;       |        | &nbsp;
++/- k        | &nbsp; | set token/key for room
+&nbsp;       | irssi  | `/mode #room +k <key>`
+&nbsp;       | &nbsp; | :green_circle: works fine w/ a key
+&nbsp;       | &nbsp; | :red_circle: still available w/o a key
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
++/- l        | &nbsp; | set limit
+&nbsp;       | irssi  | `/mode #room +l 1`
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
++/- b        | &nbsp; | ban someone (#room cannot send to channel)
+&nbsp;       | irssi  | `/mode #room +b user1`
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
 
 
+USER MODE    | client | syntax
+:----------: | :----: | :-
+&nbsp;       |        | &nbsp;
+user +/- i   |        | toggle *invisible* for user
+&nbsp;       | irssi  | `/mode user1 +i`
+&nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_
+&nbsp;       | nc     | 
+&nbsp;       | &nbsp; | &nbsp;
 
-command      | client | syntax
+
+
+COMMAND      | client | syntax
 :----------- | :----- | :-
 &nbsp;       | &nbsp; | &nbsp;
 Login        | nc     | `$ nc e1r2p3 6677`
