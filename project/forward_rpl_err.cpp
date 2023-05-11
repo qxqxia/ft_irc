@@ -135,7 +135,7 @@ std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg1, st
     // std::cout << "(dbg) get_RPL_ERR: " << res << std::endl;
     std::cout << YELLOW "(dbg)(get_RPL_ERR): " RESET << (
         (res.empty()) ? "(None)" : res
-    ) << nl2;
+    ) << nl;
 
     return res;
 }

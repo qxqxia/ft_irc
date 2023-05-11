@@ -158,7 +158,7 @@ void Server::connect_to_server()
 					buf = get_input_from_client_sfd(socket_fd);
 					if ( ! buf.empty())
 					{
-						std::cout << CYAN "Input : " RESET << buf;
+						std::cout << CYAN "(dgb)(input):\t" RESET << buf;
 
 						std::string		command(buf);
 
@@ -174,7 +174,7 @@ void Server::connect_to_server()
 						// else
 						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << buf;
 
-						std::cout << CYAN "(dbg)(echo 1): " RESET << (
+						std::cout << CYAN "(dbg)(echo 1):\t" RESET << (
 							(buf.empty()) ? "(None)" : buf
 						);
 
@@ -185,7 +185,7 @@ void Server::connect_to_server()
 						// 	std::cout << CYAN "(dbg)(echo 2): " RESET << command << nl2;
 
 
-						std::cout << CYAN "(dbg)(echo 2): " RESET << (
+						std::cout << CYAN "(dbg)(echo 2):\t" RESET << (
 							(command.empty()) ? "(None)" : command
 						) << nl2;
 

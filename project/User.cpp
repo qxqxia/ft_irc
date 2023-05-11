@@ -72,6 +72,11 @@ void	User::add_channel(std::string channel_name)
 
 void	User::set_nick(std::string new_nick)
 {
+	std::cout
+		<< GREEN "(dbg)(Modify nick):" RESET nl
+		<< "(from): " << this->m_nickname << nl
+		<< "( to ): " << new_nick << nl2;
+		;
 	this->m_nickname = new_nick;
 }
 
