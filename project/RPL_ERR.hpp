@@ -4,7 +4,7 @@
 
 # include "Freenode.hpp"
 
-std::string get_RPL_ERR(int code, Server *serv, User *user, std::string args, std::string args2);
+std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std::string arg2);
 
 //RPL
 
@@ -32,8 +32,7 @@ std::string get_RPL_ERR(int code, Server *serv, User *user, std::string args, st
     ("Try server " SERVER_NAME ", port " + port)
 
 //221
-# define RPL_UMODEIS(args) \
-    (args)
+# define RPL_UMODEIS(arg) (arg)
 
 //324
 # define RPL_CHANNELMODEIS(channel, modes) \
