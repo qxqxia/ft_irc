@@ -69,18 +69,19 @@ __/topic__   | &nbsp; | `/topic` / `topic <topic>`
 __/restart__ | irssi  | `/oper qxia OPER_PW`
 &nbsp;       |        | `/restart`
 &nbsp;       | &nbsp; | &nbsp;
-__/say__     | &nbsp; | (IRSSI built-in)
-&nbsp;       | irssi  | `/say something`
-&nbsp;       | &nbsp; | &nbsp;
-__/names__   | &nbsp; | (IRSSI built-in)
-&nbsp;       | irssi  | `/n` or `/name`
-&nbsp;       | &nbsp; | &nbsp;
 __/notice__  | irssi  | `/notice @xqin hello, world`
 &nbsp;       |        | `/notice #room hello, world` :yellow_circle:
 &nbsp;       | &nbsp; | _by default a private msg to oneself ..._
 &nbsp;       | &nbsp; | _and not to the entire channel (to prevent flooding)_
 &nbsp;       | &nbsp; | &nbsp;
 __/notice__  | nc     | `PRIVMSG #room <msg>`
+&nbsp;       | &nbsp; | &nbsp;
+__/say__     | &nbsp; | (IRSSI built-in)
+&nbsp;       | irssi  | `/say something`
+&nbsp;       | &nbsp; | &nbsp;
+__/names__   | &nbsp; | (IRSSI built-in)
+&nbsp;       | irssi  | `/n` or `/name`
+&nbsp;       | &nbsp; | &nbsp;
 
 
 
