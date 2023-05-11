@@ -3,7 +3,7 @@
 
 # Now checkout 
 
-mode   | client | syntax
+C mode | client | syntax
 :----: | :----: | :-
 &nbsp; |        | &nbsp;
 oper   | irssi  | `oper user1 OPER_PW`
@@ -29,6 +29,10 @@ oper   | irssi  | `oper user1 OPER_PW`
 &nbsp; | irssi  | `/mode #room +b user1`
 &nbsp; | nc     | 
 &nbsp; | &nbsp; | &nbsp;
+
+U mode | client | syntax
+:----: | :----: | :-
+&nbsp; |        | &nbsp;
 user +/- i |    | toggle *invisible* for user
 &nbsp; | irssi  | `/mode user1 +i`
 &nbsp; | &nbsp; | :red_circle: _modified, nothing happens_
