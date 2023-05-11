@@ -3,25 +3,26 @@
 
 # Now checkout 
 
-mode         | client | syntax
-:----------- | :----- | :-
-&nbsp;       | &nbsp; | &nbsp;
-`oper`       | &nbsp; | `oper qxia OPER_PW`
-&nbsp;       | &nbsp; | &nbsp;
-`+o`         | &nbsp; | `/mode #chan +o qxia`
-&nbsp;       | &nbsp; | `/kick nuo.o` (qxia)
-&nbsp;       | &nbsp; | grand Operator role to someone 
-&nbsp;       | &nbsp; | &nbsp;
-`+k`         | &nbsp; | `/mode #room +k <key>`
-&nbsp;       | &nbsp; | :green_circle: works fine w/ a key
-&nbsp;       | &nbsp; | :red_circle: still available w/o a key
-&nbsp;       | &nbsp; | &nbsp;
-`+l`         | irssi  | `/mode #room +l 1`
-&nbsp;       | &nbsp; | set limit
-&nbsp;       | &nbsp; | &nbsp;
-`+b`         | irssi | `/mode #room +b nuo.o`
-&nbsp;       | &nbsp; | ban someone (#room cannot send to channel)
-&nbsp;       | &nbsp; | &nbsp;
+mode   | client | syntax
+:----: | :----- | :-
+&nbsp; |        | &nbsp;
+oper   | irssi  | `oper qxia OPER_PW`
+&nbsp; |        | &nbsp;
++/- o  |        | grand Operator role to someone 
+&nbsp; | irssi  | `/mode #chan +o qxia`
+&nbsp; |        | `/kick nuo.o` (qxia)
+&nbsp; |        | 
+&nbsp; | &nbsp; | &nbsp;
++/- k  | irssi  | `/mode #room +k <key>`
+&nbsp; | &nbsp; | :green_circle: works fine w/ a key
+&nbsp; | &nbsp; | :red_circle: still available w/o a key
+&nbsp; | &nbsp; | &nbsp;
++/- l  | &nbsp; | set limit
+&nbsp; | irssi  | `/mode #room +l 1`
+&nbsp; | &nbsp; | &nbsp;
++/- b  | &nbsp; | ban someone (#room cannot send to channel)
+&nbsp; | irssi  | `/mode #room +b nuo.o`
+&nbsp; | &nbsp; | &nbsp;
 
 
 
@@ -192,7 +193,7 @@ __/notice__  | nc     | `PRIVMSG #room <msg>`
     - else
       - **buf = receive_msg(g_server_client_socket[ i ])** loop through G_Client_Sockets and receive msg/cmds
     - Here we XCQ the any command carried in the input
-  - 
+  - ...
 
 
 
