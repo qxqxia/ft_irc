@@ -152,8 +152,8 @@ void Server::connect_to_server()
 				{
 					std::string buf;
 
-					//Check if it was for closing , and also read the
-					//incoming message
+					//	+ check command is for stopping the server
+					//	+ try to read next incoming message
 
 					buf = get_input_from_client_sfd(socket_fd);
 					if ( ! buf.empty())
@@ -164,13 +164,30 @@ void Server::connect_to_server()
 
 						int	L = buf.find_first_not_of(SEP_CHARSET, 0);
 
-						// std::cout << CYAN "Echo : " RESET << buf << nl;
+						// std::cout << CYAN "(dbg)(echo 0): " RESET << buf << nl;
 
 						buf = command.substr(L, buf.length() - L);
 						command = buf.substr(0, buf.find_first_of(SEP_CHARSET, 0));
 
-						std::cout << CYAN "Echo 1: " RESET << buf;
-						std::cout << CYAN "Echo 2: " RESET << command << nl2;
+						// if (buf.empty())
+						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << "(None)";
+						// else
+						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << buf;
+
+						std::cout << CYAN "(dbg)(echo 1): " RESET << (
+							(buf.empty()) ? "(None)" : buf
+						);
+
+
+						// if (command.empty())	
+						// 	std::cout << CYAN "(dbg)(echo 2): " RESET << "(None)" << nl2;
+						// else
+						// 	std::cout << CYAN "(dbg)(echo 2): " RESET << command << nl2;
+
+
+						std::cout << CYAN "(dbg)(echo 2): " RESET << (
+							(command.empty()) ? "(None)" : command
+						) << nl2;
 
 						if (m_commands.find(command) != m_commands.end())
 						{
