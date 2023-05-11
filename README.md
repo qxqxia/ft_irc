@@ -4,29 +4,35 @@
 # Now checkout 
 
 mode   | client | syntax
-:----: | :----- | :-
+:----: | :----: | :-
 &nbsp; |        | &nbsp;
 oper   | irssi  | `oper user1 OPER_PW`
+&nbsp; | nc     | 
 &nbsp; |        | &nbsp;
 +/- o  |        | grand Operator role to someone 
 &nbsp; | irssi  | `/mode #chan +o user1`
 &nbsp; |        | `/kick user2` (user1)
+&nbsp; | nc     | 
 &nbsp; |        | 
 &nbsp; | &nbsp; | &nbsp;
 +/- k  | &nbsp; | set token/key for room
 &nbsp; | irssi  | `/mode #room +k <key>`
 &nbsp; | &nbsp; | :green_circle: works fine w/ a key
 &nbsp; | &nbsp; | :red_circle: still available w/o a key
+&nbsp; | nc     | 
 &nbsp; | &nbsp; | &nbsp;
 +/- l  | &nbsp; | set limit
 &nbsp; | irssi  | `/mode #room +l 1`
+&nbsp; | nc     | 
 &nbsp; | &nbsp; | &nbsp;
 +/- b  | &nbsp; | ban someone (#room cannot send to channel)
 &nbsp; | irssi  | `/mode #room +b user1`
+&nbsp; | nc     | 
 &nbsp; | &nbsp; | &nbsp;
 user +/- i |    | toggle *invisible* for user
 &nbsp; | irssi  | `/mode user1 +i`
 &nbsp; | &nbsp; | :red_circle: _modified, nothing happens_
+&nbsp; | nc     | 
 &nbsp; | &nbsp; | &nbsp;
 
 
@@ -43,44 +49,54 @@ __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;       |        | `/dcc <list\|get>`
 &nbsp;       | &nbsp; | _inside channel: user still in server_
 &nbsp;       | &nbsp; | _outside channel: user disconnected_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/kill__    | irssi | `/oper user1 OPER_PW`, `/kill someone`
 &nbsp;       | &nbsp; | in channel: _user still in server_
 &nbsp;       | &nbsp; | out of channel: _user disconnected_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/kick__    | &nbsp; | _must be done inside a channel_
 &nbsp;       | irssi  | `/oper user1 OPER_PW` 
 &nbsp;       |        | `/kick user2`
 &nbsp;       |        | `user2`: only allowed to `/quit` `/exit` once kicked
 &nbsp;       |        | cannot `/part`
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/mode__    | &nbsp; | _channel mode_
 &nbsp;       | irssi  | `/oper user1 OPER_PW`
 &nbsp;       |        | `/mode #room +o user1`
 &nbsp;       |        | `/kick user2` (user1)
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/part__    | irssi  | `/part <#room>`
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/topic__   | &nbsp; | `/topic` / `topic <topic>`
 &nbsp;       | &nbsp; | :red_circle: _Not working_
 &nbsp;       | &nbsp; | _topic updated only at re-joining_
 &nbsp;       | &nbsp; | _topic unchanged at quiting_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/restart__ | irssi  | `/oper user1 OPER_PW`
 &nbsp;       |        | `/restart`
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/notice__  | irssi  | `/notice @xqin hello, world`
 &nbsp;       |        | `/notice #room hello, world` :yellow_circle:
 &nbsp;       | &nbsp; | _by default a private msg to oneself ..._
 &nbsp;       | &nbsp; | _and not to the entire channel (to prevent flooding)_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/notice__  | nc     | `PRIVMSG #room <msg>`
 &nbsp;       | &nbsp; | &nbsp;
 __/say__     | &nbsp; | (IRSSI built-in)
 &nbsp;       | irssi  | `/say something`
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/names__   | &nbsp; | (IRSSI built-in)
 &nbsp;       | irssi  | `/n` or `/name`
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 
 
