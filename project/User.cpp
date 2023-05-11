@@ -9,7 +9,14 @@ User::User(
 	m_nickname(nickname),
 	m_username(username),
 	m_hostname(hostname),
-	m_realname(realname){
+	m_realname(realname) {
+		std::cout
+		<< YELLOW "(dbg)(Create user):" RESET nl
+		<< "nck :: " << get_nickname() << nl
+		<< "usr :: " << get_username() << nl
+		<< "hst :: " << get_hostname() << nl
+		<< "rln :: " << get_realname() << nl2
+		;
 }
 
 User::~User()
