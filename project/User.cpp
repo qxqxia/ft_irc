@@ -11,7 +11,7 @@ User::User(
 	m_hostname(hostname),
 	m_realname(realname) {
 		std::cout
-		<< YELLOW "(dbg)(Create user):" RESET nl
+		<< GREEN "(dbg)(Create user):" RESET nl
 		<< "nck :: " << get_nickname() << nl
 		<< "usr :: " << get_username() << nl
 		<< "hst :: " << get_hostname() << nl
