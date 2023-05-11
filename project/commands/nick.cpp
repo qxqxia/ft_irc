@@ -45,32 +45,42 @@ bool nickname_is_in_use(Server *serv, std::string nick)
 void nick(Server *serv, std::string buffer, int sd)
 {
     size_t i = 0;
-    std::string newNickname = "";
+    std::string new_nick = "";
     std::string buf(buffer);
+
     if ((i = buf.find_first_not_of(SEP_CHARSET, 5)) != std::string::npos)
-        newNickname = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
-    if (newNickname.empty())
+    {
+        new_nick = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
+    }
+
+    if (new_nick.empty())
     {
         Broadcast(get_RPL_ERR(431, serv, FIND_USER(sd), "", ""), sd);
         return ;
     }
+
     if (FIND_USER(sd)->get_mode().find('r') != std::string::npos)
     {
         Broadcast(get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
         return ;
     }
-    if (!nickname_is_validated(newNickname))
+
+    if (!nickname_is_validated(new_nick))
     {
-        Broadcast(get_RPL_ERR(432, serv, FIND_USER(sd), newNickname, ""), sd);
+        Broadcast(get_RPL_ERR(432, serv, FIND_USER(sd), new_nick, ""), sd);
         return ;
     }
-    if (nickname_is_in_use(serv, newNickname))
+
+    if (nickname_is_in_use(serv, new_nick))
     {
-        Broadcast(get_RPL_ERR(433, serv, FIND_USER(sd), newNickname, ""), sd);
+        Broadcast(get_RPL_ERR(433, serv, FIND_USER(sd), new_nick, ""), sd);
         return ;
     }
-    std::string user_answer = user_output(FIND_USER(sd));
-    user_answer += "NICK " + newNickname;
+
+    std::string user_answer;
+    
+    user_answer = user_output(FIND_USER(sd));
+    user_answer += "NICK " + new_nick;
     Broadcast(user_answer, sd);
-    FIND_USER(sd)->set_nick(newNickname);
+    FIND_USER(sd)->set_nick(new_nick);
 }
