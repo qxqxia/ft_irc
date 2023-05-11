@@ -56,8 +56,8 @@ __/kick__    | &nbsp; | _must be done inside a channel_
 &nbsp;       | &nbsp; | &nbsp;
 __/mode__    | &nbsp; | _channel mode_
 &nbsp;       | irssi  | `/oper user1 OPER_PW`
-&nbsp;       |        | `/mode #room +o n1`
-&nbsp;       |        | `/kick user1` (n1)
+&nbsp;       |        | `/mode #room +o user1`
+&nbsp;       |        | `/kick user2` (user1)
 &nbsp;       | &nbsp; | &nbsp;
 __/part__    | irssi  | `/part <#room>`
 &nbsp;       | &nbsp; | &nbsp;
@@ -146,16 +146,16 @@ __/names__   | &nbsp; | (IRSSI built-in)
   - `/topic` 
   - `/topic <new_topic>` (anyone can set topic)
 - [x] RESTART works fine
-  - `/oper n1 ####` 
+  - `/oper user1 ####` 
   - `/restart`
   - <kbd> ALT + LEFT Arrow </kbd> 
 - [x] KILL works fine
-  - `/oper n1 ####`
+  - `/oper user1 ####`
   - `/kill n2` 
 - [x] OPER, MODE + KICK works fine
-  - `/oper n1 ####`
+  - `/oper user1 ####`
   - `/mode #room +o n2`
-  - `/kick n1` (n2) 
+  - `/kick user1` (n2) 
 
 
 
