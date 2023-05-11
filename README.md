@@ -23,6 +23,10 @@ oper   | irssi  | `oper qxia OPER_PW`
 +/- b  | &nbsp; | ban someone (#room cannot send to channel)
 &nbsp; | irssi  | `/mode #room +b nuo.o`
 &nbsp; | &nbsp; | &nbsp;
+user +/- i |    | toggle *invisible* for user
+&nbsp; | irssi  | `/mode qxia +i`
+&nbsp; | &nbsp; | :red_circle: _modified, nothing happens_
+&nbsp; | &nbsp; | &nbsp;
 
 
 
@@ -42,9 +46,6 @@ __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 __/kill__    | irssi | `/oper qxia OPER_PW`, `/kill someone`
 &nbsp;       | &nbsp; | in channel: _user still in server_
 &nbsp;       | &nbsp; | out of channel: _user disconnected_
-&nbsp;       | &nbsp; | &nbsp;
-__user +/-i__| irssi  | `/mode qxia +i`
-&nbsp;       | &nbsp; | _modified, nothing happens_
 &nbsp;       | &nbsp; | &nbsp;
 __/kick__    | &nbsp; | _must be done inside a channel_
 &nbsp;       | irssi  | `/oper qxia OPER_PW` 
