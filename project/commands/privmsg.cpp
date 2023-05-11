@@ -7,8 +7,8 @@ void privmsg(Server *serv, std::string buffer, int sd)
     int pos_following_command;
     std::string buf(buffer);
 
-    // if (buf.compare(0, 6, "NOTICE") == 0)
-    if (buf == "NOTICE")
+    if (buf.compare(0, 6, "NOTICE") == 0)
+    // if (buf == "NOTICE")
     {
         pos_following_command = 7;
     }
@@ -33,6 +33,9 @@ void privmsg(Server *serv, std::string buffer, int sd)
     {
         msg = buf.substr(j, (buf.find_first_of(BUFFER_ENDS, j) - j));
     }
+
+    std::cout << LOWKEY "PRVMG buf: " RESET << target << nl;
+    std::cout << LOWKEY "PRVMG msg: " RESET << target << nl2;
 
     std::string channel_prefixes = "#&+";
     std::string user_answer;
