@@ -13,7 +13,8 @@ oper   | irssi  | `oper qxia OPER_PW`
 &nbsp; |        | `/kick nuo.o` (qxia)
 &nbsp; |        | 
 &nbsp; | &nbsp; | &nbsp;
-+/- k  | irssi  | `/mode #room +k <key>`
++/- k  | &nbsp; | set token/key for room
+&nbsp; | irssi  | `/mode #room +k <key>`
 &nbsp; | &nbsp; | :green_circle: works fine w/ a key
 &nbsp; | &nbsp; | :red_circle: still available w/o a key
 &nbsp; | &nbsp; | &nbsp;
