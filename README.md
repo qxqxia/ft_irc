@@ -6,11 +6,11 @@
 mode   | client | syntax
 :----: | :----- | :-
 &nbsp; |        | &nbsp;
-oper   | irssi  | `oper qxia OPER_PW`
+oper   | irssi  | `oper user1 OPER_PW`
 &nbsp; |        | &nbsp;
 +/- o  |        | grand Operator role to someone 
-&nbsp; | irssi  | `/mode #chan +o qxia`
-&nbsp; |        | `/kick nuo.o` (qxia)
+&nbsp; | irssi  | `/mode #chan +o user1`
+&nbsp; |        | `/kick user2` (user1)
 &nbsp; |        | 
 &nbsp; | &nbsp; | &nbsp;
 +/- k  | &nbsp; | set token/key for room
@@ -22,10 +22,10 @@ oper   | irssi  | `oper qxia OPER_PW`
 &nbsp; | irssi  | `/mode #room +l 1`
 &nbsp; | &nbsp; | &nbsp;
 +/- b  | &nbsp; | ban someone (#room cannot send to channel)
-&nbsp; | irssi  | `/mode #room +b nuo.o`
+&nbsp; | irssi  | `/mode #room +b user1`
 &nbsp; | &nbsp; | &nbsp;
 user +/- i |    | toggle *invisible* for user
-&nbsp; | irssi  | `/mode qxia +i`
+&nbsp; | irssi  | `/mode user1 +i`
 &nbsp; | &nbsp; | :red_circle: _modified, nothing happens_
 &nbsp; | &nbsp; | &nbsp;
 
@@ -44,20 +44,20 @@ __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;       | &nbsp; | _inside channel: user still in server_
 &nbsp;       | &nbsp; | _outside channel: user disconnected_
 &nbsp;       | &nbsp; | &nbsp;
-__/kill__    | irssi | `/oper qxia OPER_PW`, `/kill someone`
+__/kill__    | irssi | `/oper user1 OPER_PW`, `/kill someone`
 &nbsp;       | &nbsp; | in channel: _user still in server_
 &nbsp;       | &nbsp; | out of channel: _user disconnected_
 &nbsp;       | &nbsp; | &nbsp;
 __/kick__    | &nbsp; | _must be done inside a channel_
-&nbsp;       | irssi  | `/oper qxia OPER_PW` 
-&nbsp;       |        | `/kick nuo.o`
-&nbsp;       |        | `nuo.o`: only allowed to `/quit` `/exit`
+&nbsp;       | irssi  | `/oper user1 OPER_PW` 
+&nbsp;       |        | `/kick user2`
+&nbsp;       |        | `user2`: only allowed to `/quit` `/exit` once kicked
 &nbsp;       |        | cannot `/part`
 &nbsp;       | &nbsp; | &nbsp;
 __/mode__    | &nbsp; | _channel mode_
-&nbsp;       | irssi  | `/oper qxia OPER_PW`
+&nbsp;       | irssi  | `/oper user1 OPER_PW`
 &nbsp;       |        | `/mode #room +o n1`
-&nbsp;       |        | `/kick qxia` (n1)
+&nbsp;       |        | `/kick user1` (n1)
 &nbsp;       | &nbsp; | &nbsp;
 __/part__    | irssi  | `/part <#room>`
 &nbsp;       | &nbsp; | &nbsp;
@@ -66,7 +66,7 @@ __/topic__   | &nbsp; | `/topic` / `topic <topic>`
 &nbsp;       | &nbsp; | _topic updated only at re-joining_
 &nbsp;       | &nbsp; | _topic unchanged at quiting_
 &nbsp;       | &nbsp; | &nbsp;
-__/restart__ | irssi  | `/oper qxia OPER_PW`
+__/restart__ | irssi  | `/oper user1 OPER_PW`
 &nbsp;       |        | `/restart`
 &nbsp;       | &nbsp; | &nbsp;
 __/notice__  | irssi  | `/notice @xqin hello, world`
