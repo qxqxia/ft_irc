@@ -74,7 +74,7 @@ void Server::connect_to_server()
 		// Can we make a separate handler function?
 
 		// it can't be done. 
-		//	Signal handlers are too primitive a mechanism to support summong
+		//	Signal handlers are too primitive a mechanism to support calling
 		//	of a member function on a particular instance of a class.
 
 		std::signal(SIGINT, handle_sigint);
@@ -152,31 +152,47 @@ void Server::connect_to_server()
 				{
 					std::string buf;
 
-					//Check if it was for closing , and also read the
-					//incoming message
+					//	+ check command is for stopping the server
+					//	+ try to read next incoming message
 
 					buf = get_input_from_client_sfd(socket_fd);
 					if ( ! buf.empty())
 					{
-						std::cout << CYAN "Input : " RESET << buf;
+						std::cout << CYAN "(dgb)(input):\t" RESET << buf;
 
 						std::string		command(buf);
 
 						int	L = buf.find_first_not_of(SEP_CHARSET, 0);
 
-						// std::cout << CYAN "Echo : " RESET << buf << nl;
+						// std::cout << CYAN "(dbg)(echo 0): " RESET << buf << nl;
 
 						buf = command.substr(L, buf.length() - L);
 						command = buf.substr(0, buf.find_first_of(SEP_CHARSET, 0));
 
-						std::cout << CYAN "Echo 1: " RESET << buf;
-						std::cout << CYAN "Echo 2: " RESET << command << nl2;
+						std::cout << CYAN "(dbg)(echo 1):\t" RESET << (
+							(buf.empty()) ? "(None)" : buf
+						);
+
+						// if (buf.empty())
+						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << "(None)";
+						// else
+						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << buf;
+
+						std::cout << CYAN "(dbg)(echo 2):\t" RESET << (
+							(command.empty()) ? "(None)" : command
+						) << nl2;
+
+						// if (command.empty())	
+						// 	std::cout << CYAN "(dbg)(echo 2): " RESET << "(None)" << nl2;
+						// else
+						// 	std::cout << CYAN "(dbg)(echo 2): " RESET << command << nl2;
 
 						if (m_commands.find(command) != m_commands.end())
-						{
+						//{
 							(m_commands[command])(this, buf, socket_fd);
-							break ;
-						}
+							 // break ; // Greatest bug of all time
+						//} // Greatest bug of all time
+						break ; // BUG FIX : re-added 
 					}
 				}
 			}

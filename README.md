@@ -3,29 +3,46 @@
 
 # Now checkout 
 
-mode         | client | syntax
-:----------- | :----- | :-
-&nbsp;       | &nbsp; | &nbsp;
-`oper`       | &nbsp; | `oper qxia OPER_PW`
-&nbsp;       | &nbsp; | &nbsp;
-`+o`         | &nbsp; | `/mode #chan +o qxia`
-&nbsp;       | &nbsp; | `/kick nuo.o` (qxia)
-&nbsp;       | &nbsp; | grand Operator role to someone 
-&nbsp;       | &nbsp; | &nbsp;
-`+k`         | &nbsp; | `/mode #room +k <key>`
+CHANNEL M.   | client | syntax
+:----------- | :----: | :-
+&nbsp;       |        | &nbsp;
+__oper__     | irssi  | `oper user1 OPER_PW`
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
+__+/- o__    |        | grand Operator role to someone 
+&nbsp;       | irssi  | `/mode #chan +o user1`
+&nbsp;       |        | `/kick user2` (user1)
+&nbsp;       | nc     | 
+&nbsp;       |        | 
+&nbsp;       |        | &nbsp;
+__+/- k__    | &nbsp; | set token/key for room
+&nbsp;       | irssi  | `/mode #room +k <key>`
 &nbsp;       | &nbsp; | :green_circle: works fine w/ a key
 &nbsp;       | &nbsp; | :red_circle: still available w/o a key
-&nbsp;       | &nbsp; | &nbsp;
-`+l`         | irssi  | `/mode #room +l 1`
-&nbsp;       | &nbsp; | set limit
-&nbsp;       | &nbsp; | &nbsp;
-`+b`         | irssi | `/mode #room +b nuo.o`
-&nbsp;       | &nbsp; | ban someone (#room cannot send to channel)
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
+__+/- l__    | &nbsp; | set limit
+&nbsp;       | irssi  | `/mode #room +l 1`
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
+__+/- b__    | &nbsp; | ban someone (#room cannot send to channel)
+&nbsp;       | irssi  | `/mode #room +b user1`
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
+
+
+USER MODE    | client | syntax
+:----------- | :----: | :-
+&nbsp;       |        | &nbsp;
+__+/- i__    |        | toggle *invisible* for user
+&nbsp;       | irssi  | `/mode user1 +i`
+&nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 
 
 
-command      | client | syntax
+COMMAND      | client | syntax
 :----------- | :----- | :-
 &nbsp;       | &nbsp; | &nbsp;
 Login        | nc     | `$ nc e1r2p3 6677`
@@ -35,49 +52,55 @@ Login        | nc     | `$ nc e1r2p3 6677`
 &nbsp;       | &nbsp; | &nbsp;
 __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;       |        | `/dcc <list\|get>`
-&nbsp;       | &nbsp; | _inside channel: user still in server_
-&nbsp;       | &nbsp; | _outside channel: user disconnected_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
-__/kill__    | irssi | `/oper qxia OPER_PW`, `/kill someone`
+__/kill__    | irssi | `/oper user1 OPER_PW`, `/kill someone`
 &nbsp;       | &nbsp; | in channel: _user still in server_
 &nbsp;       | &nbsp; | out of channel: _user disconnected_
-&nbsp;       | &nbsp; | &nbsp;
-__user +/-i__| irssi  | `/mode qxia +i`
-&nbsp;       | &nbsp; | _modified, nothing happens_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/kick__    | &nbsp; | _must be done inside a channel_
-&nbsp;       | irssi  | `/oper qxia OPER_PW` 
-&nbsp;       |        | `/kick nuo.o`
-&nbsp;       |        | `nuo.o`: only allowed to `/quit` `/exit`
+&nbsp;       | irssi  | `/oper user1 OPER_PW` 
+&nbsp;       |        | `/kick user2`
+&nbsp;       |        | `user2`: only allowed to `/quit` `/exit` once kicked
 &nbsp;       |        | cannot `/part`
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/mode__    | &nbsp; | _channel mode_
-&nbsp;       | irssi  | `/oper qxia OPER_PW`
-&nbsp;       |        | `/mode #room +o n1`
-&nbsp;       |        | `/kick qxia` (n1)
+&nbsp;       | irssi  | `/oper user1 OPER_PW`
+&nbsp;       |        | `/mode #room +o user1`
+&nbsp;       |        | `/kick user2` (user1)
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/part__    | irssi  | `/part <#room>`
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/topic__   | &nbsp; | `/topic` / `topic <topic>`
 &nbsp;       | &nbsp; | :red_circle: _Not working_
 &nbsp;       | &nbsp; | _topic updated only at re-joining_
 &nbsp;       | &nbsp; | _topic unchanged at quiting_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
-__/restart__ | irssi  | `/oper qxia OPER_PW`
+__/restart__ | irssi  | `/oper user1 OPER_PW`
 &nbsp;       |        | `/restart`
-&nbsp;       | &nbsp; | &nbsp;
-__/say__     | &nbsp; | (IRSSI built-in)
-&nbsp;       | irssi  | `/say something`
-&nbsp;       | &nbsp; | &nbsp;
-__/names__   | &nbsp; | (IRSSI built-in)
-&nbsp;       | irssi  | `/n` or `/name`
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/notice__  | irssi  | `/notice @xqin hello, world`
 &nbsp;       |        | `/notice #room hello, world` :yellow_circle:
 &nbsp;       | &nbsp; | _by default a private msg to oneself ..._
 &nbsp;       | &nbsp; | _and not to the entire channel (to prevent flooding)_
+&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/notice__  | nc     | `PRIVMSG #room <msg>`
+&nbsp;       | &nbsp; | &nbsp;
+__/say__     | &nbsp; | (IRSSI built-in)
+&nbsp;       | irssi  | `/say something`
+&nbsp;       | nc     | 
+&nbsp;       | &nbsp; | &nbsp;
+__/names__   | &nbsp; | (IRSSI built-in)
+&nbsp;       | irssi  | `/n` or `/name`
+&nbsp;       | nc     | 
+&nbsp;       | &nbsp; | &nbsp;
 
 
 
@@ -142,16 +165,16 @@ __/notice__  | nc     | `PRIVMSG #room <msg>`
   - `/topic` 
   - `/topic <new_topic>` (anyone can set topic)
 - [x] RESTART works fine
-  - `/oper n1 ####` 
+  - `/oper user1 ####` 
   - `/restart`
   - <kbd> ALT + LEFT Arrow </kbd> 
 - [x] KILL works fine
-  - `/oper n1 ####`
+  - `/oper user1 ####`
   - `/kill n2` 
 - [x] OPER, MODE + KICK works fine
-  - `/oper n1 ####`
+  - `/oper user1 ####`
   - `/mode #room +o n2`
-  - `/kick n1` (n2) 
+  - `/kick user1` (n2) 
 
 
 
@@ -192,7 +215,7 @@ __/notice__  | nc     | `PRIVMSG #room <msg>`
     - else
       - **buf = receive_msg(g_server_client_socket[ i ])** loop through G_Client_Sockets and receive msg/cmds
     - Here we XCQ the any command carried in the input
-  - 
+  - ...
 
 
 
