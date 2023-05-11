@@ -4,7 +4,7 @@
 # Now checkout 
 
 CHANNEL M.   | client | syntax
-:----------: | :----: | :-
+:----------- | :----: | :-
 &nbsp;       |        | &nbsp;
 __oper__     | irssi  | `oper user1 OPER_PW`
 &nbsp;       | nc     | 
@@ -32,7 +32,7 @@ __+/- b__    | &nbsp; | ban someone (#room cannot send to channel)
 
 
 USER MODE    | client | syntax
-:----------: | :----: | :-
+:----------- | :----: | :-
 &nbsp;       |        | &nbsp;
 __user +/- i__|       | toggle *invisible* for user
 &nbsp;       | irssi  | `/mode user1 +i`
