@@ -53,6 +53,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
     {
         if (serv->get_channels().find(target) == serv->get_channels().end())
         {
+            Broadcast(MAG "HERE" RESET, sd);
             Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
         }
         else if ((FIND_CHANNEL(target)->get_mode().find("n") != std::string::npos) && (FIND_CHANNEL(target)->search_user_by_nickname(FIND_USER(sd)->get_nickname()) == -1))
@@ -116,6 +117,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
         }
         else if ((user_to_send_socket_fd = serv->search_user_by_nickname(target)) == -1)
         {
+            Broadcast(RED "HERE" RESET, sd);
             Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
         }
         else

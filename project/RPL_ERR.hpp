@@ -20,7 +20,7 @@ std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std
 
 //003
 # define RPL_CREATED \
-    ("This server was created May 9, 2023")
+    ("This server was created on May 9, 2023")
 
 //004
 # define RPL_MYINFO \

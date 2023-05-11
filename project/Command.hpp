@@ -13,6 +13,9 @@ void	privmsg(Server *, std::string, int);
 void	nick(Server *, std::string, int);
 void	join(Server *, std::string, int);
 void	ping(Server *, std::string, int);
+
+void	pong(Server *, std::string, int); // added
+
 void	part(Server *, std::string, int);
 
 void	topic(Server *, std::string, int);
