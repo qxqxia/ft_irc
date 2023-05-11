@@ -3,7 +3,7 @@
 
 # Now checkout 
 
-CHANNEL MODE | client | syntax
+CHANNEL M.   | client | syntax
 :----------: | :----: | :-
 &nbsp;       |        | &nbsp;
 oper         | irssi  | `oper user1 OPER_PW`
