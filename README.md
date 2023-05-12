@@ -55,8 +55,8 @@ __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/kill__    | irssi | `/oper user1 OPER_PASS`, `/kill someone`
-&nbsp;       | &nbsp; | in channel: _user still in server_
-&nbsp;       | &nbsp; | out of channel: _user disconnected_
+&nbsp;       | &nbsp; | ::: in channel: _user still in server_
+&nbsp;       | &nbsp; | ::: out of channel: _user disconnected_
 &nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/kick__    | &nbsp; | _must be done inside a channel_
@@ -78,8 +78,8 @@ __/part__    | irssi  | `/part <#room>`
 &nbsp;       | &nbsp; | &nbsp;
 __/topic__   | &nbsp; | `/topic` | `topic <topic>`
 &nbsp;       | &nbsp; | :red_circle: _Not working_
-&nbsp;       | &nbsp; | _topic updated only at re-joining_
-&nbsp;       | &nbsp; | _topic unchanged at quiting_
+&nbsp;       | &nbsp; | _::: topic updated only at re-joining_
+&nbsp;       | &nbsp; | _::: topic unchanged at quiting_
 &nbsp;       | nc     | `TOPIC #room :no`
 &nbsp;       |        | `TOPIC #room :yes`
 &nbsp;       | &nbsp; | &nbsp;
