@@ -1,28 +1,70 @@
 ![](https://img.shields.io/badge/C++-Internet&nbsp;Relay&nbsp;Chat-red.svg?style=flat&logo=c%2B%2B)
 
 
-# Now checkout 
+# User mode
 
-CHANNEL M.   | client | syntax
+USER MODE    | client | syntax
 :----------- | :----: | :-
-&nbsp;       |        | &nbsp;
+&nbsp;       |
+__+/- i__    |        | toggle *invisible* a user
+&nbsp;       | irssi  | `/mode user1 +i`
+&nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_
+&nbsp;       | nc     | 
+&nbsp;       | &nbsp; | &nbsp;
+__+/- r__    |        | restrict mode
+&nbsp;       | irssi  | `/mode user2 -r`
+&nbsp;       | nc     | 
+&nbsp;       | &nbsp; | &nbsp;
+
+# Channel mode
+
+CHANNEL      | client | syntax
+:----------- | :----: | :-
+&nbsp;
 __oper__     | irssi  | `oper user1 OPER_PASS`
 &nbsp;       | nc     | 
 &nbsp;       |        | &nbsp;
-__+/- o__    |        | grand Operator role to someone 
+__+/- m__    |        | channel moderation
+&nbsp;       | irssi  | `/mode #chan +m`
+&nbsp;       |        | `/say something` (user2 can't talk)
+&nbsp;       | nc     | 
+&nbsp;       |        | 
+&nbsp;       |
+__+/- v__    |        | give someone a voice in a moderated room
+&nbsp;       | irssi  | `/mode #chan +v user`
+&nbsp;       |        | `/say something else` (now user2 can talk)
+&nbsp;       | nc     | 
+&nbsp;       |        | 
+&nbsp;       |
+__+/- a__    |        |
+&nbsp;       | irssi  | 
+&nbsp;       |        | 
+&nbsp;       | nc     | 
+&nbsp;       |        | 
+&nbsp;       |
+__+/- l__    | &nbsp; | TODO
+&nbsp;       | irssi  | `/mode #room +l 1`
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
+__+/- t__    | &nbsp; | TODO
+&nbsp;       | irssi  | `/mode #room +l 1`
+&nbsp;       | nc     | 
+&nbsp;       |        | &nbsp;
+__+/- o__    |        | grand operator role to someone 
 &nbsp;       | irssi  | `/mode #chan +o user1`
 &nbsp;       |        | `/kick user2` (user1)
 &nbsp;       | nc     | 
 &nbsp;       |        | 
-&nbsp;       |        | &nbsp;
+&nbsp;       |
+__+/- n__    |        | TODO 
+&nbsp;       | irssi  | 
+&nbsp;       | nc     | 
+&nbsp;       |        | 
+&nbsp;       |
 __+/- k__    | &nbsp; | set token/key for room
 &nbsp;       | irssi  | `/mode #room +k <key>`
 &nbsp;       | &nbsp; | :green_circle: works fine w/ a key
 &nbsp;       | &nbsp; | :red_circle: still available w/o a key
-&nbsp;       | nc     | 
-&nbsp;       |        | &nbsp;
-__+/- l__    | &nbsp; | set limit
-&nbsp;       | irssi  | `/mode #room +l 1`
 &nbsp;       | nc     | 
 &nbsp;       |        | &nbsp;
 __+/- b__    | &nbsp; | ban someone (#room cannot send to channel)
@@ -31,20 +73,11 @@ __+/- b__    | &nbsp; | ban someone (#room cannot send to channel)
 &nbsp;       |        | &nbsp;
 
 
-USER MODE    | client | syntax
-:----------- | :----: | :-
-&nbsp;       |        | &nbsp;
-__+/- i__    |        | toggle *invisible* a user
-&nbsp;       | irssi  | `/mode user1 +i`
-&nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_
-&nbsp;       | nc     | 
-&nbsp;       | &nbsp; | &nbsp;
-
-
+# Command mode
 
 COMMAND      | client | syntax
 :----------- | :----: | :-
-&nbsp;       | &nbsp; | &nbsp;
+&nbsp;
 Login        | nc     | `$ nc e1r2p3 6677`
 &nbsp;       |        | `PASS password`
 &nbsp;       |        | `NICK nick`
