@@ -159,7 +159,11 @@ void Server::connect_to_server()
 					buf = get_input_from_client_sfd(socket_fd);
 					if ( ! buf.empty())
 					{
-						std::cout << CYAN "(dgb)(input):\t" RESET << buf;
+						// std::cout << CYAN "(dbg)(input):\t" RESET << buf;
+
+						std::cout << CYAN "(dbg)(input):\t" RESET << (
+							(buf.empty()) ? "(None)" : buf
+						);
 
 						std::string		command(buf);
 
