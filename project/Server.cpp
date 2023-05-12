@@ -18,6 +18,7 @@ Server::Server(const std::string & port, const std::string & password)
 	this->m_commands["PRIVMSG"] = & privmsg;
 	this->m_commands["NOTICE"] = & privmsg;
 	this->m_commands["PING"] = & ping;
+	this->m_commands["PING"] = & pong;
 	this->m_commands["PART"] = & part;
 	this->m_commands["TOPIC"] = & topic;
 	this->m_commands["KICK"] = & kick;

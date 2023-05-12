@@ -9,22 +9,24 @@ std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std
 //RPL
 
 //001
-# define RPL_WELCOME(nick, user, host) \
-    (":Welcome to the <FreeNode/Discord> Network " + nick + "!" + user + "@" + host)
+# define RPL_WELCOME(n, u, h) \
+    (":\033[0;32mWelcome to the <FreeNode/Discord> Network " + n + "[!" + u + "@" + h + "]" + RESET)
+//    "<client> :Welcome to the <networkname> Network, <nick>[!<user>@<host>]"
 //    :server 001 <nick> :Welcome to the <network> Network, <nick>[!<user>@<host>]
 
 
 //002
 # define RPL_YOURHOST \
-    ("Your host is " SERVER_NAME ", running version " ver)
+    (":" GREEN "Your host is " SERVER_NAME ", running version " ver nl RESET)
+    //"<client> :Your host is <servername>, running version <version>"
 
 //003
 # define RPL_CREATED \
-    ("This server was created May 9, 2023")
+    (":" GREEN "This server was created on May 12, 2023")
 
 //004
 # define RPL_MYINFO \
-    (SERVER_NAME " ver. " ver)
+    (":" GREEN SERVER_NAME " ver. " ver nl RESET)
     // (SERVER_NAME " ver. " ver " " USER_MODE " " CHANNEL_MODE)
 
 //005
