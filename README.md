@@ -89,8 +89,8 @@ __/restart__ | irssi  | `/oper user1 OPER_PASS`
 &nbsp;       | &nbsp; | &nbsp;
 __/notice__  | irssi  | `/notice @xqin hello, world`
 &nbsp;       |        | `/notice #room hello, world` :yellow_circle:
-&nbsp;       | &nbsp; | _by default a private msg to oneself ..._
-&nbsp;       | &nbsp; | _and not to the entire channel (to prevent flooding)_
+&nbsp;       | &nbsp; | _::: by default a private msg to oneself ..._
+&nbsp;       | &nbsp; | _::: and not to the entire channel (to prevent flooding)_
 &nbsp;       | nc     | `PRIVMSG #room <msg>`
 &nbsp;       | &nbsp; | &nbsp;
 __/say__     | &nbsp; | (IRSSI built-in)
