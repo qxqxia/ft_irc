@@ -35,7 +35,7 @@ __+/- v__    |        | give someone a voice in a moderated room
 &nbsp;       | nc     | 
 &nbsp;       |        | 
 &nbsp;       |
-__+/- a__    |        | anonymous mode
+__+/- a__    |        | anonymous mode (to be deprecated)
 &nbsp;       | irssi  | `/mode #channel +a`
 &nbsp;       |        | :red_circle: `-a` does not work
 &nbsp;       | nc     | 
