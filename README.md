@@ -43,12 +43,12 @@ __+/- i__    |        | toggle *invisible* for user
 
 
 COMMAND      | client | syntax
-:----------- | :----- | :-
+:----------- | :----: | :-
 &nbsp;       | &nbsp; | &nbsp;
 Login        | nc     | `$ nc e1r2p3 6677`
 &nbsp;       |        | `PASS password`
 &nbsp;       |        | `NICK nick`
-&nbsp;       |        | `USER user`
+&nbsp;       |        | `USER usr * * Usr`
 &nbsp;       | &nbsp; | &nbsp;
 __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;       |        | `/dcc <list\|get>`
@@ -64,7 +64,8 @@ __/kick__    | &nbsp; | _must be done inside a channel_
 &nbsp;       |        | `/kick user2`
 &nbsp;       |        | `user2`: only allowed to `/quit` `/exit` once kicked
 &nbsp;       |        | cannot `/part`
-&nbsp;       | nc     | 
+&nbsp;       | nc     | `OPER user1 OPER_PASS`
+&nbsp;       |        | `KICK #room nuo misbehaving`
 &nbsp;       | &nbsp; | &nbsp;
 __/mode__    | &nbsp; | _channel mode_
 &nbsp;       | irssi  | `/oper user1 OPER_PW`
@@ -95,11 +96,13 @@ __/notice__  | nc     | `PRIVMSG #room <msg>`
 &nbsp;       | &nbsp; | &nbsp;
 __/say__     | &nbsp; | (IRSSI built-in)
 &nbsp;       | irssi  | `/say something`
-&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/names__   | &nbsp; | (IRSSI built-in)
 &nbsp;       | irssi  | `/n` or `/name`
-&nbsp;       | nc     | 
+&nbsp;       | nc     | no `NAME #room` for nc :yellow_circle:
+&nbsp;       | &nbsp; | &nbsp;
+PRIVMSG      | nc     | `PRIVMSG #room hello world`
+&nbsp;       |        | `PRIVMSG nuo hi, how r u？`
 &nbsp;       | &nbsp; | &nbsp;
 
 
