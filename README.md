@@ -6,7 +6,7 @@
 CHANNEL M.   | client | syntax
 :----------- | :----: | :-
 &nbsp;       |        | &nbsp;
-__oper__     | irssi  | `oper user1 OPER_PW`
+__oper__     | irssi  | `oper user1 OPER_PASS`
 &nbsp;       | nc     | 
 &nbsp;       |        | &nbsp;
 __+/- o__    |        | grand Operator role to someone 
@@ -54,13 +54,13 @@ __/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;       |        | `/dcc <list\|get>`
 &nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
-__/kill__    | irssi | `/oper user1 OPER_PW`, `/kill someone`
+__/kill__    | irssi | `/oper user1 OPER_PASS`, `/kill someone`
 &nbsp;       | &nbsp; | in channel: _user still in server_
 &nbsp;       | &nbsp; | out of channel: _user disconnected_
 &nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 __/kick__    | &nbsp; | _must be done inside a channel_
-&nbsp;       | irssi  | `/oper user1 OPER_PW` 
+&nbsp;       | irssi  | `/oper user1 OPER_PASS` 
 &nbsp;       |        | `/kick user2`
 &nbsp;       |        | `user2`: only allowed to `/quit` `/exit` once kicked
 &nbsp;       |        | cannot `/part`
@@ -68,7 +68,7 @@ __/kick__    | &nbsp; | _must be done inside a channel_
 &nbsp;       |        | `KICK #room nuo misbehaving`
 &nbsp;       | &nbsp; | &nbsp;
 __/mode__    | &nbsp; | _channel mode_
-&nbsp;       | irssi  | `/oper user1 OPER_PW`
+&nbsp;       | irssi  | `/oper user1 OPER_PASS`
 &nbsp;       |        | `/mode #room +o user1`
 &nbsp;       |        | `/kick user2` (user1)
 &nbsp;       | nc     | 
@@ -83,7 +83,7 @@ __/topic__   | &nbsp; | `/topic` | `topic <topic>`
 &nbsp;       | nc     | `TOPIC #room :no`
 &nbsp;       |        | `TOPIC #room :yes`
 &nbsp;       | &nbsp; | &nbsp;
-__/restart__ | irssi  | `/oper user1 OPER_PW`
+__/restart__ | irssi  | `/oper user1 OPER_PASS`
 &nbsp;       |        | `/restart`
 &nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
