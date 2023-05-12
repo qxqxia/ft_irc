@@ -76,11 +76,12 @@ __/mode__    | &nbsp; | _channel mode_
 __/part__    | irssi  | `/part <#room>`
 &nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
-__/topic__   | &nbsp; | `/topic` / `topic <topic>`
+__/topic__   | &nbsp; | `/topic` | `topic <topic>`
 &nbsp;       | &nbsp; | :red_circle: _Not working_
 &nbsp;       | &nbsp; | _topic updated only at re-joining_
 &nbsp;       | &nbsp; | _topic unchanged at quiting_
-&nbsp;       | nc     | 
+&nbsp;       | nc     | `TOPIC #room :no`
+&nbsp;       |        | `TOPIC #room :yes`
 &nbsp;       | &nbsp; | &nbsp;
 __/restart__ | irssi  | `/oper user1 OPER_PW`
 &nbsp;       |        | `/restart`
