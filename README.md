@@ -6,10 +6,9 @@
 USER MODE    | client | syntax
 :----------- | :----: | :-
 &nbsp;       |
-__+/- i__    |        | toggle *invisible* a user
+__+/- i__    |        | toggle *invisible* a user 
 &nbsp;       | irssi  | `/mode user1 +i`
-&nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_
-&nbsp;       | nc     | 
+&nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_ (to be deprecated)
 &nbsp;       | &nbsp; | &nbsp;
 __+/- r__    |        | restrict mode
 &nbsp;       | irssi  | `/mode user2 -r`
@@ -36,18 +35,18 @@ __+/- v__    |        | give someone a voice in a moderated room
 &nbsp;       | nc     | 
 &nbsp;       |        | 
 &nbsp;       |
-__+/- a__    |        |
-&nbsp;       | irssi  | 
-&nbsp;       |        | 
+__+/- a__    |        | anonymous mode
+&nbsp;       | irssi  | `/mode #channel +a`
+&nbsp;       |        | :red_circle: `-a` does not work
 &nbsp;       | nc     | 
 &nbsp;       |        | 
 &nbsp;       |
-__+/- l__    | &nbsp; | TODO
+__+/- l__    | &nbsp; | set limit
 &nbsp;       | irssi  | `/mode #room +l 1`
 &nbsp;       | nc     | 
 &nbsp;       |        | &nbsp;
-__+/- t__    | &nbsp; | TODO
-&nbsp;       | irssi  | `/mode #room +l 1`
+__+/- t__    | &nbsp; | topic settable by channel operator only
+&nbsp;       | irssi  | `/mode #room +t`
 &nbsp;       | nc     | 
 &nbsp;       |        | &nbsp;
 __+/- o__    |        | grand operator role to someone 
@@ -56,12 +55,10 @@ __+/- o__    |        | grand operator role to someone
 &nbsp;       | nc     | 
 &nbsp;       |        | 
 &nbsp;       |
-__+/- n__    |        | TODO 
-&nbsp;       | irssi  | 
-&nbsp;       | nc     | 
+__+/- n__    |        | (deprecated)
 &nbsp;       |        | 
 &nbsp;       |
-__+/- k__    | &nbsp; | set token/key for room
+__+/- k__    | &nbsp; | set token/key for room (to be deprecated)
 &nbsp;       | irssi  | `/mode #room +k <key>`
 &nbsp;       | &nbsp; | :green_circle: works fine w/ a key
 &nbsp;       | &nbsp; | :red_circle: still available w/o a key
