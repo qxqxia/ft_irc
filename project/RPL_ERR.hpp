@@ -22,7 +22,7 @@ std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std
 
 //003
 # define RPL_CREATED \
-    (":" GREEN "This server was created on May 12, 2023")
+    (":" GREEN "This server was created on May 12, 2023" RESET)
 
 //004
 # define RPL_MYINFO \
