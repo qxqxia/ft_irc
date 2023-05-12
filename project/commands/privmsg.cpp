@@ -7,8 +7,8 @@ void privmsg(Server *serv, std::string buffer, int sd)
     int pos_following_command;
     std::string buf(buffer);
 
-    // if (buf.compare(0, 6, "NOTICE") == 0)
-    if (buf == "NOTICE")
+    if (buf.compare(0, 6, "NOTICE") == 0)
+    // if (buf == "NOTICE")
     {
         pos_following_command = 7;
     }
@@ -34,6 +34,9 @@ void privmsg(Server *serv, std::string buffer, int sd)
         msg = buf.substr(j, (buf.find_first_of(BUFFER_ENDS, j) - j));
     }
 
+    std::cout << LOWKEY "PRVMG buf: " RESET << target << nl;
+    std::cout << LOWKEY "PRVMG msg: " RESET << target << nl2;
+
     std::string channel_prefixes = "#&+";
     std::string user_answer;
 
@@ -50,6 +53,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
     {
         if (serv->get_channels().find(target) == serv->get_channels().end())
         {
+            Broadcast(MAG "HERE" RESET, sd);
             Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
         }
         else if ((FIND_CHANNEL(target)->get_mode().find("n") != std::string::npos) && (FIND_CHANNEL(target)->search_user_by_nickname(FIND_USER(sd)->get_nickname()) == -1))
@@ -113,6 +117,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
         }
         else if ((user_to_send_socket_fd = serv->search_user_by_nickname(target)) == -1)
         {
+            Broadcast(RED "HERE" RESET, sd);
             Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
         }
         else

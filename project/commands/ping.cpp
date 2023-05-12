@@ -17,3 +17,10 @@ void ping(Server *serv, std::string buffer, int sd)
 
     */
 }
+
+void pong(Server *serv, std::string buffer, int sd)
+{
+    (void)serv;
+    buffer[1] = 'I';
+    Broadcast(buffer, sd);
+}
