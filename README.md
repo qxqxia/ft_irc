@@ -3,7 +3,7 @@
 
 # User mode
 
-USER MODE    | client | syntax
+USER         | client | syntax
 :----------- | :----: | :-
 &nbsp;       |
 __+/- i__    |        | toggle *invisible* a user 
