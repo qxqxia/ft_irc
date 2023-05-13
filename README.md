@@ -86,6 +86,8 @@ USER         | client | syntax
 __+/- r__    |        | restrict mode
 &nbsp;       | irssi  | `/mode user2 -r`
 &nbsp;       | 
+__+/- o__    |        | activate `a` mode
+&nbsp;       | 
 
 
 ---
