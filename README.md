@@ -159,7 +159,7 @@ PRIVMSG      | nc     | `PRIVMSG #room hello world`
 
 ### About user
 - anonymous!anonymous@anonymous
+  - "anonymous" (1st one) refers to the user's Nickname
+  - "!anonymous" refers to Username
+  - "@anonymous" refers to Hostname
 - eg. `john!johndoe@example.com`
-  - The 1st "anonymous" refers to the user's nickname
-  - The 2nd "anonymous" refers to the username
-  - The 3rd "anonymous" refers to the hostname
