@@ -74,13 +74,15 @@ void summon(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
-        if (chan && chan->get_bot() == false)
+        if (chan && chan->is_bot_in_channel() == false)
         {
             chan->set_bot();
-            send_everyone_in_channel(":" + serv->get_bot()->get_name() + " JOIN " + chan->get_channelname(), chan);
+            send_everyone_in_channel(":" + serv->is_bot_in_channel()->get_name() + " JOIN " + chan->get_channelname(), chan);
         }
         else
-            Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :I am already awake.", socket_fd);
+        {
+            Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :I am already awake.", socket_fd);
+        }
     }
     else
         Broadcast(get_RPL_ERR(482, serv, FIND_USER(socket_fd), chan->get_channelname(), ""), socket_fd);
@@ -90,13 +92,13 @@ void dismiss(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
-        if (chan && chan->get_bot() == true)
+        if (chan && chan->is_bot_in_channel() == true)
         {
             chan->set_bot();
-            send_everyone_in_channel(":" + serv->get_bot()->get_name() + " PART " + chan->get_channelname(), chan);
+            send_everyone_in_channel(":" + serv->is_bot_in_channel()->get_name() + " PART " + chan->get_channelname(), chan);
         }
         else
-            Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :I am sleeping right now, wake me up to play with me.", socket_fd);
+            Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :I am sleeping right now, wake me up to play with me.", socket_fd);
     }
     else
         Broadcast(get_RPL_ERR(482, serv, FIND_USER(socket_fd), chan->get_channelname(), ""), socket_fd);
@@ -106,7 +108,7 @@ void dismiss(Server *serv, Channel *chan, int socket_fd)
 
 void tell_time(Server *serv, Channel *chan, int socket_fd)
 {
-    if (chan && chan->get_bot() == true)
+    if (chan && chan->is_bot_in_channel() == true)
     {
         std::time_t t = std::time(0);
         std::tm* now = std::localtime(&t);
@@ -114,16 +116,16 @@ void tell_time(Server *serv, Channel *chan, int socket_fd)
         sshour << now->tm_hour;
         std::stringstream ssmin;
         ssmin << now->tm_min;
-        Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :It is " + sshour.str() + ":" + ssmin.str() + ".", socket_fd);
+        Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :It is " + sshour.str() + ":" + ssmin.str() + ".", socket_fd);
     }
     else
-        Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :I am sleeping right now, wake me up to play with me.", socket_fd);
+        Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :I am sleeping right now, wake me up to play with me.", socket_fd);
 
 }
 
 void tell_date(Server *serv, Channel *chan, int socket_fd)
 {
-    if (chan && chan->get_bot() == true)
+    if (chan && chan->is_bot_in_channel() == true)
     {
         std::string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         std::time_t t = std::time(0);
@@ -140,11 +142,11 @@ void tell_date(Server *serv, Channel *chan, int socket_fd)
         else
             ssmday << now->tm_mday << "th";
 
-        Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :Today we are on " + months[now->tm_mon] + " " + ssmday.str() + " of " + ssyear.str() + ".", socket_fd);
+        Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :Today we are on " + months[now->tm_mon] + " " + ssmday.str() + " of " + ssyear.str() + ".", socket_fd);
     }
     else
     {
-        Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :I am sleeping right now, wake me up to play with me.", socket_fd);
+        Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :I am sleeping right now, wake me up to play with me.", socket_fd);
     }
 }
 
@@ -153,16 +155,16 @@ void help(Server *serv, Channel *chan, int fd)
     std::string     s;
 
     s = "!botstart/!botawake ---> Summon the bot to the channel";
-    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
+    Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
 
     s = "!botstop/!botsleep ---> Dismiss the bot";
-    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
+    Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
 
     s = "!date ---> Give today's date.";
-    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
+    Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
 
     s = "!time ---> Give the current local time";
-    Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
+    Broadcast(":" + serv->is_bot_in_channel()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + s, fd);
 
 }
 
@@ -175,7 +177,7 @@ Channel *is_user_with_bot_in_chan(Server *serv, User *user)
 
     while (it != user->get_channels().end())
     {
-        if (FIND_CHANNEL(*it)->get_bot())
+        if (FIND_CHANNEL(*it)->is_bot_in_channel())
         {
             return (FIND_CHANNEL(*it));
         }
