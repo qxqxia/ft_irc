@@ -172,7 +172,7 @@ __/mode__    | &nbsp; | _channel mode_
 &nbsp;       |
 __/part__    | irssi  | `/part <#room>`
 &nbsp;       |        |
-__~~~~/topic~~~~__   | &nbsp; | ~~`/topic` | `topic <topic>`~~~~
+__~~/topic~~__   | &nbsp; | ~~`/topic` | `topic <topic>`~~
 &nbsp;       | &nbsp; | :red_circle: _Not working_
 &nbsp;       | &nbsp; | _::: topic updated only at re-joining_
 &nbsp;       | &nbsp; | _::: topic unchanged at quiting_
