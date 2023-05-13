@@ -76,10 +76,13 @@ void mode_o(Server *serv, Channel *channel, std::string mode, std::string buffer
 
     std::string user_answer = user_output(FIND_USER(sd));
 
-    if (channel->get_mode().find('a') != std::string::npos)
-    {
-        user_answer = anonymous_output();
-    }
+    ////    +/- a :: anonymous mode (draft)
+
+    // if (channel->get_mode().find('a') != std::string::npos)
+    // {
+    //     user_answer = anonymous_output();
+    // }
+
     user_answer += "MODE " + channel->get_channelname() + " " + mode + " " + name;
     Broadcast(user_answer, user_socket_fd);
 }
@@ -125,10 +128,12 @@ void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer
 
     std::string user_answer = user_output(FIND_USER(sd));
 
-    if (channel->get_mode().find('a') != std::string::npos)
-    {
-        user_answer = anonymous_output();
-    }
+    ////    +/- a :: anonymous mode (draft)
+
+    // if (channel->get_mode().find('a') != std::string::npos)
+    // {
+    //     user_answer = anonymous_output();
+    // }
 
     user_answer += "MODE " + channel->get_channelname() + " " + mode + " " + name;
     Broadcast(user_answer, sd);
@@ -273,8 +278,9 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
 	handle_mode.insert(std::make_pair('o', &mode_o));
 	handle_mode.insert(std::make_pair('v', &mode_v));
 	handle_mode.insert(std::make_pair('b', &mode_b));
-    handle_mode.insert(std::make_pair('k', &mode_k));
     handle_mode.insert(std::make_pair('l', &mode_l));
+    ////    +/- k :: key    (draft)
+    // handle_mode.insert(std::make_pair('k', &mode_k));
 
     if (mode[0] == '-')
     {
@@ -292,7 +298,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
             else if (available_modes(mode[i], "ovbkl") == true)
 	        {
 		        handle_mode[mode[i]](serv, channel, mode, buffer, sd);
-	    	    if (mode[i] == 'k' || mode[i] == 'l')
+	    	    if (/*mode[i] == 'k' || */mode[i] == 'l')
 			        deleted_mode += mode[i];
 	        }
 	        else if (channel_mode.find(mode[i]) != std::string::npos)
@@ -302,9 +308,11 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
             }
         }
         channel->set_mode(channel_mode);
+        
         std::string user_answer = user_output(FIND_USER(sd));
-        if (channel->get_mode().find("a") != std::string::npos)
-            user_answer = anonymous_output();
+        ////    +/- a :: anonymous mode (draft)
+        // if (channel->get_mode().find("a") != std::string::npos)
+        //     user_answer = anonymous_output();
         if (!deleted_mode.empty())
             user_answer += "MODE " + channel->get_channelname() + " -" + deleted_mode;
         if (user_answer.find("MODE") != std::string::npos)
@@ -326,7 +334,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
             else if (available_modes(mode[i], "ovbkl") == true)
             {
                 handle_mode[mode[i]](serv, channel, mode, buffer, sd);
-                if ((mode[i] == 'k' && channel->get_key() != "") || mode[i] == 'l')
+                if (/*(mode[i] == 'k' && channel->get_key() != "") || */mode[i] == 'l')
                     added_mode += mode[i];
             }
             else if (channel_mode.find(mode[i]) == std::string::npos)
@@ -334,8 +342,9 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
         }
         channel->set_mode(channel_mode + added_mode);
         std::string user_answer = user_output(FIND_USER(sd));
-        if (channel->get_mode().find("a") != std::string::npos)
-            user_answer = anonymous_output();
+        ////    +/- a :: anonymous mode (draft)
+        // if (channel->get_mode().find("a") != std::string::npos)
+        //     user_answer = anonymous_output();
         if (!added_mode.empty())
             user_answer += "MODE " + channel->get_channelname() + " +" + added_mode;
         if (user_answer.find("MODE") != std::string::npos)

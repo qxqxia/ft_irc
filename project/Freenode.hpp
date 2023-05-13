@@ -42,9 +42,9 @@
 # define OPER_PASS "1007"
 
 # define USER_MODE \
-				"roi"
+				"ro" // "roi"
 # define CHANNEL_MODE \
-				"malvonkb" // "maltvonkb"
+				"mlvonkb" // "malvonkb" // "maltvonkb"
 
 # define FIND_CHANNEL(channel_name) \
 		serv->get_channels().find(channel_name)->second

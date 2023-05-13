@@ -217,7 +217,7 @@ bool Channel::is_banned(std::string nickname)
 
 /// Added
 
-bool    Channel::get_bot() const
+bool    Channel::is_bot_in_channel() const
 {
     return (this->m_bot_in_channel);
 }

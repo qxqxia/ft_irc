@@ -63,10 +63,11 @@ void kick(Server *serv, std::string buffer, int sd)
                         Broadcast(get_RPL_ERR(403, serv, FIND_USER(sd), channel_name, ""), sd);
                     continue ;
                 }
-                if (FIND_CHANNEL(channel_name)->get_mode().find("a") != std::string::npos)
-                {
-                    continue ;
-                }
+                ////    +/- a :: anonymous mode (draft)
+                // if (FIND_CHANNEL(channel_name)->get_mode().find("a") != std::string::npos)
+                // {
+                //     continue ;
+                // }
                 if (FIND_CHANNEL(channel_name)->search_user_by_nickname(FIND_USER(sd)->get_nickname()) == -1)
                 {
                     Broadcast(get_RPL_ERR(442, serv, FIND_USER(sd), channel_name, ""), sd);

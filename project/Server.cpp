@@ -780,7 +780,7 @@ void Server::Forward_MOTD_Doh(int socket_fd)
 	Broadcast("                                                   ", socket_fd);
 }
 
-Bot		*Server::get_bot() const
+Bot		*Server::is_bot_in_channel() const
 {
 	return (this->m_bot);
 }
