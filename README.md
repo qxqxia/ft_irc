@@ -113,8 +113,8 @@ __+/- a__    |        | anonymous mode (to be deprecated)
 __+/- l__    | &nbsp; | set limit
 &nbsp;       | irssi  | `/mode #room +l 1`
 &nbsp;       |        |
-__+/- t__    | &nbsp; | topic settable by channel operator only
-&nbsp;       | irssi  | `/mode #room +t`
+__+/- t__    | &nbsp;     | ~~topic settable by channel operator only~~
+&nbsp;       | ~~irssi~~  | ~~`/mode #room +t`~~
 &nbsp;       |        | 
 __+/- o__    |        | grand operator role to someone 
 &nbsp;       | irssi  | `/mode #chan +o user1`
@@ -167,7 +167,7 @@ __/mode__    | &nbsp; | _channel mode_
 &nbsp;       |
 __/part__    | irssi  | `/part <#room>`
 &nbsp;       |        |
-__/topic__   | &nbsp; | `/topic` | `topic <topic>`
+__~~~~/topic~~~~__   | &nbsp; | ~~`/topic` | `topic <topic>`~~~~
 &nbsp;       | &nbsp; | :red_circle: _Not working_
 &nbsp;       | &nbsp; | _::: topic updated only at re-joining_
 &nbsp;       | &nbsp; | _::: topic unchanged at quiting_
