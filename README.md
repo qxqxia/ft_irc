@@ -106,9 +106,9 @@ __+/- v__    |        | give someone a voice in a moderated room
 &nbsp;       | irssi  | `/mode #chan +v user`
 &nbsp;       |        | `/say something else` (now user2 can talk)
 &nbsp;       |        | 
-__+/- a__    |        | anonymous mode (to be deprecated)
-&nbsp;       | irssi  | `/mode #channel +a`
-&nbsp;       |        | :red_circle: `-a` does not work
+~~__+/- a__~~| irssi  | ~~anonymous mode (to be deprecated)~~
+&nbsp;       |        | ~~`/mode #channel +a`~~
+&nbsp;       |        | ~~:red_circle: `-a` does not work~~
 &nbsp;       |        | 
 __+/- l__    | &nbsp; | set limit
 &nbsp;       | irssi  | `/mode #room +l 1`
