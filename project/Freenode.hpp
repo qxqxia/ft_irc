@@ -42,7 +42,7 @@
 # define OPER_PASS "1007"
 
 # define USER_MODE \
-				"roi"
+				"ro" // "roi"
 # define CHANNEL_MODE \
 				"malvonkb" // "maltvonkb"
 
