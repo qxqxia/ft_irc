@@ -142,8 +142,8 @@ PRIVMSG      | nc     | `PRIVMSG #room hello world`
 # Q&A
 
 ### NAMES, `/names`, `/n`
-- on connection to a channel, without using /NAMES
-  - the client (IRSSI) sends an initial NAMES command to the our server to retrieve a list of users in the current channel
+- on connection to a channel, w/o explicitly sending /NAMES
+  - the client (IRSSI) sends an initial NAMES command to retrieve a list of users in the current channel
   - this is the first thing the client does, even if we don't have the NAMES command
 - on receiving a NAMES command from client (IRSSI)
   - Even though our server does not implement the NAMES command, Irssi stills function normally and display the user list because it ignores the error message returned by the server
