@@ -12,7 +12,6 @@ __+/- i__    |        | toggle *invisible* a user
 &nbsp;       | &nbsp; | &nbsp;
 __+/- r__    |        | restrict mode
 &nbsp;       | irssi  | `/mode user2 -r`
-&nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 
 
