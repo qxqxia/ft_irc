@@ -18,9 +18,8 @@ Server::Server(const std::string & port, const std::string & password)
 	this->m_commands["PRIVMSG"] = & privmsg;
 	this->m_commands["NOTICE"] = & privmsg;
 	this->m_commands["PING"] = & ping;
-	this->m_commands["PING"] = & pong;
 	this->m_commands["PART"] = & part;
-	this->m_commands["TOPIC"] = & topic;
+	// this->m_commands["TOPIC"] = & topic;
 	this->m_commands["KICK"] = & kick;
 	this->m_commands["MODE"] = & mode;
 	this->m_commands["OPER"] = & oper;
@@ -340,13 +339,17 @@ void Server::new_connection()
 				if (!nickname_is_validated(nick))
 				{
 					Broadcast(get_RPL_ERR(432, this, NULL, nick, ""), this->m_socket_incoming);
-					close(this->m_socket_incoming);	
+					close (
+						this->m_socket_incoming
+					);	
 				}
 				else if (nickname_is_in_use(this, nick))
 				{
 					Broadcast(get_RPL_ERR(433, this, NULL, nick, ""), this->m_socket_incoming);
 					Broadcast("Please try reconnect with an available nickname.", this->m_socket_incoming);
-					close(this->m_socket_incoming);
+					close (
+						this->m_socket_incoming
+					);
 				}
 				else
 				{
@@ -375,7 +378,10 @@ void Server::new_connection()
 					Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_socket_incoming);
 				else
 				{
-					user = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
+					user = ret.substr(
+						first_occurrence,
+						(i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence
+					);
 
 					//	hostname
 
@@ -383,7 +389,10 @@ void Server::new_connection()
 						Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_socket_incoming);
 					else
 					{
-						host = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
+						host = ret.substr(
+							first_occurrence,
+							(i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence
+						);
 
 						//	server_name
 
@@ -399,8 +408,15 @@ void Server::new_connection()
 								Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_socket_incoming);
 							else
 							{
-								real_name = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
-								real_name = real_name.substr(0, real_name.find_last_not_of(SEP_CHARSET, real_name.size()) + 1);
+								real_name = ret.substr(
+									first_occurrence,
+									(i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence
+								);
+
+								real_name = real_name.substr(
+									0,
+									real_name.find_last_not_of(SEP_CHARSET, real_name.size()) + 1
+								);
 							}
 						}
 					}
@@ -416,7 +432,12 @@ void Server::new_connection()
 		}
 	}
 	// if (password_is_valid == true && m_users.size() < 10 && nickname_is_valid == true && username_is_valid == true && g_server_is_alive == true)
-	if (password_is_valid == true && m_users.size() < 4 && nickname_is_valid == true && username_is_valid == true && g_server_is_alive == true)
+	if (
+		password_is_valid == true && 
+		m_users.size() < 4 && nickname_is_valid == true && 
+		username_is_valid == true && 
+		g_server_is_alive == true
+	)
 	{
 		this->m_server_name = server_name;
 		User *newUser = new User(nick, user, host, real_name);
