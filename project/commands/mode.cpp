@@ -295,7 +295,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
 		        std::string stringMode(1, mode[i]);
                 Broadcast(get_RPL_ERR(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
 	        }
-            else if (available_modes(mode[i], "ovbkl") == true)
+            else if (available_modes(mode[i], "bolv"/*"ovbkl"*/) == true)
 	        {
 		        handle_mode[mode[i]](serv, channel, mode, buffer, sd);
 	    	    if (/*mode[i] == 'k' || */mode[i] == 'l')
