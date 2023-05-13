@@ -115,7 +115,7 @@ __+/- v__    |        | give someone a voice in a moderated room
 __+/- l__    | &nbsp; | set limit
 &nbsp;       | irssi  | `/mode #room +l 1`
 &nbsp;       |        |
-__+/- t__    |~~irssi~~| ~~topic settable by channel operator only~~
+~~__+/- t__~~|~~irssi~~| ~~topic settable by channel operator only~~
 &nbsp;       |        | ~~`/mode #room +t`~~
 &nbsp;       | &nbsp; | bugs stated below in command session
 &nbsp;       | &nbsp; | _::: topic updated only at re-joining_
@@ -125,7 +125,7 @@ __+/- o__    |        | grand operator role to someone
 &nbsp;       | irssi  | `/mode #chan +o user1`
 &nbsp;       |        | `/kick user2` (user1)
 &nbsp;       |        | 
-__+/- n__    |        | (deprecated)
+~~__+/- n__~~|        | (deprecated)
 &nbsp;       |        | 
 ~~__+/- k__~~|~~irssi~~| ~~set token/key for room~~ _deprecated_
 &nbsp;       |        | ~~`/mode #room +k <key>`~~
