@@ -278,8 +278,9 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
 	handle_mode.insert(std::make_pair('o', &mode_o));
 	handle_mode.insert(std::make_pair('v', &mode_v));
 	handle_mode.insert(std::make_pair('b', &mode_b));
-    handle_mode.insert(std::make_pair('k', &mode_k));
     handle_mode.insert(std::make_pair('l', &mode_l));
+    ////    +/- k :: key    (draft)
+    // handle_mode.insert(std::make_pair('k', &mode_k));
 
     if (mode[0] == '-')
     {
@@ -297,7 +298,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
             else if (available_modes(mode[i], "ovbkl") == true)
 	        {
 		        handle_mode[mode[i]](serv, channel, mode, buffer, sd);
-	    	    if (mode[i] == 'k' || mode[i] == 'l')
+	    	    if (/*mode[i] == 'k' || */mode[i] == 'l')
 			        deleted_mode += mode[i];
 	        }
 	        else if (channel_mode.find(mode[i]) != std::string::npos)
@@ -333,7 +334,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
             else if (available_modes(mode[i], "ovbkl") == true)
             {
                 handle_mode[mode[i]](serv, channel, mode, buffer, sd);
-                if ((mode[i] == 'k' && channel->get_key() != "") || mode[i] == 'l')
+                if (/*(mode[i] == 'k' && channel->get_key() != "") || */mode[i] == 'l')
                     added_mode += mode[i];
             }
             else if (channel_mode.find(mode[i]) == std::string::npos)

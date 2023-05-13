@@ -94,20 +94,24 @@ void join(Server *serv, std::string buffer, int sd)
                 continue ;
             }
         }
-        if (FIND_CHANNEL(channel_name)->get_mode().find("k") != std::string::npos)
-        {
-            if (key.empty())
-            {
-                Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
-                return ;
-            }
-            // if (FIND_CHANNEL(channel_name)->get_key().compare(key) != 0)
-            if (FIND_CHANNEL(channel_name)->get_key() != key)
-            {
-                Broadcast(get_RPL_ERR(475, serv, FIND_USER(sd), channel_name, ""), sd);
-                continue ;
-            }
-        }
+
+        ////    +/- k :: key    (draft)
+        
+        // if (FIND_CHANNEL(channel_name)->get_mode().find("k") != std::string::npos)
+        // {
+        //     if (key.empty())
+        //     {
+        //         Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
+        //         return ;
+        //     }
+        //     // if (FIND_CHANNEL(channel_name)->get_key().compare(key) != 0)
+        //     if (FIND_CHANNEL(channel_name)->get_key() != key)
+        //     {
+        //         Broadcast(get_RPL_ERR(475, serv, FIND_USER(sd), channel_name, ""), sd);
+        //         continue ;
+        //     }
+        // }
+        
         if (FIND_CHANNEL(channel_name)->get_mode().find("l") != std::string::npos)
         {
             if (FIND_CHANNEL(channel_name)->get_maximum_users() <= FIND_CHANNEL(channel_name)->get_user_number())
