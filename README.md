@@ -1,5 +1,13 @@
 ![](https://img.shields.io/badge/C++-Internet&nbsp;Relay&nbsp;Chat-red.svg?style=flat&logo=c%2B%2B)
 
+# Todos:
+- [ ] Makefile :: add usage
+  - Run server side:\
+`$ ./ircserv <port> <pass>`
+  - Run client side:\
+`$ ./irssi` then `_ /connect <host> <port> <pass>` or\
+`$ nc <hostip> <port> <pass>`
+
 
 # User mode
 
