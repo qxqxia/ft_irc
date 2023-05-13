@@ -76,10 +76,13 @@ void mode_o(Server *serv, Channel *channel, std::string mode, std::string buffer
 
     std::string user_answer = user_output(FIND_USER(sd));
 
-    if (channel->get_mode().find('a') != std::string::npos)
-    {
-        user_answer = anonymous_output();
-    }
+    ////    +/- a :: anonymous mode (draft)
+
+    // if (channel->get_mode().find('a') != std::string::npos)
+    // {
+    //     user_answer = anonymous_output();
+    // }
+
     user_answer += "MODE " + channel->get_channelname() + " " + mode + " " + name;
     Broadcast(user_answer, user_socket_fd);
 }
@@ -125,10 +128,12 @@ void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer
 
     std::string user_answer = user_output(FIND_USER(sd));
 
-    if (channel->get_mode().find('a') != std::string::npos)
-    {
-        user_answer = anonymous_output();
-    }
+    ////    +/- a :: anonymous mode (draft)
+
+    // if (channel->get_mode().find('a') != std::string::npos)
+    // {
+    //     user_answer = anonymous_output();
+    // }
 
     user_answer += "MODE " + channel->get_channelname() + " " + mode + " " + name;
     Broadcast(user_answer, sd);
