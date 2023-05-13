@@ -8,6 +8,7 @@
   - Run client side:\
 `$ ./irssi` then `/connect <host> <port> <pass>` or\
 `$ nc <hostip> <port> <pass>`
+- [ ] Try `CAP LS` 
 
 
 # User mode
