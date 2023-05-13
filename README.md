@@ -1,5 +1,6 @@
 ![](https://img.shields.io/badge/C++-Internet&nbsp;Relay&nbsp;Chat-red.svg?style=flat&logo=c%2B%2B)
 
+
 # Todos:
 - [ ] Makefile :: add usage
   - Run server side:\
@@ -20,8 +21,7 @@ __+/- i__    |        | toggle *invisible* a user
 &nbsp;       |        | 
 __+/- r__    |        | restrict mode
 &nbsp;       | irssi  | `/mode user2 -r`
-&nbsp;       | &nbsp; | &nbsp;
-
+&nbsp;       | 
 
 
 # Channel mode
@@ -35,17 +35,14 @@ __+/- m__    |        | channel moderation
 &nbsp;       | irssi  | `/mode #chan +m`
 &nbsp;       |        | `/say something` (user2 can't talk)
 &nbsp;       |        | 
-&nbsp;       |
 __+/- v__    |        | give someone a voice in a moderated room
 &nbsp;       | irssi  | `/mode #chan +v user`
 &nbsp;       |        | `/say something else` (now user2 can talk)
 &nbsp;       |        | 
-&nbsp;       |
 __+/- a__    |        | anonymous mode (to be deprecated)
 &nbsp;       | irssi  | `/mode #channel +a`
 &nbsp;       |        | :red_circle: `-a` does not work
 &nbsp;       |        | 
-&nbsp;       |
 __+/- l__    | &nbsp; | set limit
 &nbsp;       | irssi  | `/mode #room +l 1`
 &nbsp;       |        |
@@ -56,19 +53,16 @@ __+/- o__    |        | grand operator role to someone
 &nbsp;       | irssi  | `/mode #chan +o user1`
 &nbsp;       |        | `/kick user2` (user1)
 &nbsp;       |        | 
-&nbsp;       |
 __+/- n__    |        | (deprecated)
 &nbsp;       |        | 
-&nbsp;       |
 __+/- k__    | &nbsp; | set token/key for room (to be deprecated)
 &nbsp;       | irssi  | `/mode #room +k <key>`
 &nbsp;       | &nbsp; | :green_circle: works fine w/ a key
 &nbsp;       | &nbsp; | :red_circle: still available w/o a key
-&nbsp;       |        | &nbsp;
+&nbsp;       |
 __+/- b__    | &nbsp; | ban someone (#room cannot send to channel)
 &nbsp;       | irssi  | `/mode #room +b user1`
-&nbsp;       |        | &nbsp;
-
+&nbsp;       |
 
 
 # Command mode
@@ -95,7 +89,7 @@ __/kick__    | &nbsp; | _must be done inside a channel_
 &nbsp;       |        | cannot `/part`
 &nbsp;       | nc     | `OPER user1 OPER_PASS`
 &nbsp;       |        | `KICK #room nuo misbehaving`
-&nbsp;       | &nbsp; | &nbsp;
+&nbsp;       | 
 __/mode__    | &nbsp; | _channel mode_
 &nbsp;       | irssi  | `/oper user1 OPER_PASS`
 &nbsp;       |        | `/mode #room +o user1`
@@ -109,33 +103,31 @@ __/topic__   | &nbsp; | `/topic` | `topic <topic>`
 &nbsp;       | &nbsp; | _::: topic unchanged at quiting_
 &nbsp;       | nc     | `TOPIC #room :no`
 &nbsp;       |        | `TOPIC #room :yes`
-&nbsp;       | &nbsp; | &nbsp;
+&nbsp;       | 
 __/restart__ | irssi  | `/oper user1 OPER_PASS`
 &nbsp;       |        | `/restart`
-&nbsp;       | &nbsp; | &nbsp;
+&nbsp;       | 
 __/notice__  | irssi  | `/notice @xqin hello, world`
 &nbsp;       |        | `/notice #room hello, world` :yellow_circle:
 &nbsp;       | &nbsp; | _::: by default a private msg to oneself ..._
 &nbsp;       | &nbsp; | _::: and not to the entire channel (to prevent flooding)_
 &nbsp;       | nc     | `PRIVMSG #room <msg>`
-&nbsp;       | &nbsp; | &nbsp;
+&nbsp;       | 
 __CAP LS__   | nc     | _list the capabilities supported by server_ 
-&nbsp;       | &nbsp; | &nbsp;
+&nbsp;       | 
 __/say__     | &nbsp; | (IRSSI built-in)
 &nbsp;       | irssi  | `/say something`
-&nbsp;       | &nbsp; | &nbsp;
+&nbsp;       | 
 __/names__   | &nbsp; | (IRSSI built-in)
 &nbsp;       | irssi  | `/n` or `/name`
 &nbsp;       | nc     | no `NAME #room` for nc :yellow_circle:
-&nbsp;       | &nbsp; | &nbsp;
+&nbsp;       | 
 PRIVMSG      | nc     | `PRIVMSG #room hello world`
 &nbsp;       |        | `PRIVMSG nuo hi, how r u？`
-&nbsp;       | &nbsp; | &nbsp;
-
+&nbsp;       | 
 
 
 # Q&A
-
 
 ### NAMES, `/names`, `/n`
 
