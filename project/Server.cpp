@@ -312,18 +312,26 @@ void Server::new_connection()
 	else
 	{
 		Broadcast("You need to enter a pass!", this->m_socket_incoming);
-		close(this->m_socket_incoming);
+		close(
+			this->m_socket_incoming
+		);
 	}
+
 	if (password_is_valid == true)
 	{
 		if (ret.find("NICK ") == std::string::npos)
+		{
 			ret = this->get_input_from_client_sfd(this->m_socket_incoming);
+		}
 		if ((occ = ret.find("NICK ")) != std::string::npos)
 		{
 			if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
 			{
 				Broadcast(get_RPL_ERR(432, this, NULL, nick, ""), this->m_socket_incoming);
-				close(this->m_socket_incoming);
+
+				close(
+					this->m_socket_incoming
+				);
 			}
 			else
 			{
@@ -354,7 +362,9 @@ void Server::new_connection()
 		if (username_is_valid == false && nickname_is_valid == true)
 		{
 			if (ret.find("USER ") == std::string::npos)
+			{
 				ret = this->get_input_from_client_sfd(this->m_socket_incoming);
+			}
 			if ((occ = ret.find("USER ")) != std::string::npos)
 			{
 				int i = 0;
