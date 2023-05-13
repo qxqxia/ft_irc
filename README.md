@@ -7,8 +7,8 @@ __Makefile__ :: add usage
 - [ ] Run server side:
   - `$ ./ircserv <port> <pass>`
 - [ ] Run client side:
-  - `$ ./irssi` then `/connect <host> <port> <pass>` or\
-  - `$ nc <hostip> <port> <pass>`
+  - Irssi - `$ ./irssi` then `/connect <host> <port> <pass>`
+  - Netcat - `$ nc <hostip> <port> <pass>`
 
 __command__ :: `CAP LS` 
 - [ ] using nc
