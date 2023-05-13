@@ -79,8 +79,8 @@ eg. `john!johndoe@example.com`
 USER         | client | syntax
 :----------- | :----: | :-
 &nbsp;       |
-__+/- i__    |        | ~~toggle *invisible* a user~~ _deprecated_
-&nbsp;       | irssi  | ~~`/mode user1 +i`~~
+~~__+/- i__~~|~~irssi~~| ~~toggle *invisible* a user~~ _deprecated_
+&nbsp;       |        | ~~`/mode user1 +i`~~
 &nbsp;       | &nbsp; | ~~:red_circle: _modified, nothing happens_~~
 &nbsp;       |        | 
 __+/- r__    |        | restrict mode
