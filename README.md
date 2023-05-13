@@ -15,6 +15,8 @@ __+/- r__    |        | restrict mode
 &nbsp;       | nc     | 
 &nbsp;       | &nbsp; | &nbsp;
 
+
+
 # Channel mode
 
 CHANNEL      | client | syntax
@@ -68,6 +70,7 @@ __+/- b__    | &nbsp; | ban someone (#room cannot send to channel)
 &nbsp;       | irssi  | `/mode #room +b user1`
 &nbsp;       | nc     | 
 &nbsp;       |        | &nbsp;
+
 
 
 # Command mode
@@ -133,5 +136,26 @@ __/names__   | &nbsp; | (IRSSI built-in)
 PRIVMSG      | nc     | `PRIVMSG #room hello world`
 &nbsp;       |        | `PRIVMSG nuo hi, how r u？`
 &nbsp;       | &nbsp; | &nbsp;
+
+
+
+# Q&A
+
+### About user
+- anonymous!anonymous@anonymous
+- eg. `john!johndoe@example.com`
+  - The 1st "anonymous" refers to the user's nickname
+  - The 2nd "anonymous" refers to the username
+  - The 3rd "anonymous" refers to the hostname
+
+
+### Valid port
+- `[6660, 6669]`, `6679`, `6697`
+- standard port: `6667` (standard port for IRC connection)
+- typical range: `[6660, 6669]` or `[6660, 7000]`
+- for secure connections
+  - 6697 = standard port for SSL-encrypted IRC connections
+  - 6679 = an alternative port for SSL connections
+- `[*, 1024]` = "well-known ports" reserved for specific services or applications
 
 
