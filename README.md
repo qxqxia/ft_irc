@@ -81,7 +81,7 @@ USER         | client | syntax
 &nbsp;       |
 ~~__+/- i__~~|~~irssi~~| ~~toggle *invisible* a user~~ _deprecated_
 &nbsp;       |        | ~~`/mode user1 +i`~~
-&nbsp;       | &nbsp; | ~~:red_circle: _modified, nothing happens_~~
+&nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_
 &nbsp;       |        | 
 __+/- r__    |        | restrict mode
 &nbsp;       | irssi  | `/mode user2 -r`
@@ -110,13 +110,16 @@ __+/- v__    |        | give someone a voice in a moderated room
 &nbsp;       |        | 
 ~~__+/- a__~~| irssi  | ~~anonymous mode (to be deprecated)~~
 &nbsp;       |        | ~~`/mode #channel +a`~~
-&nbsp;       |        | ~~:red_circle: `-a` does not work~~
+&nbsp;       |        | :red_circle: `-a` does not work
 &nbsp;       |        | 
 __+/- l__    | &nbsp; | set limit
 &nbsp;       | irssi  | `/mode #room +l 1`
 &nbsp;       |        |
-__+/- t__    | &nbsp;     | ~~topic settable by channel operator only~~
-&nbsp;       | ~~irssi~~  | ~~`/mode #room +t`~~
+__+/- t__    |~~irssi~~| ~~topic settable by channel operator only~~
+&nbsp;       |        | ~~`/mode #room +t`~~
+&nbsp;       | &nbsp; | bugs stated below in command session
+&nbsp;       | &nbsp; | _::: topic updated only at re-joining_
+&nbsp;       | &nbsp; | _::: topic unchanged at quiting_
 &nbsp;       |        | 
 __+/- o__    |        | grand operator role to someone 
 &nbsp;       | irssi  | `/mode #chan +o user1`
@@ -124,8 +127,8 @@ __+/- o__    |        | grand operator role to someone
 &nbsp;       |        | 
 __+/- n__    |        | (deprecated)
 &nbsp;       |        | 
-__+/- k__    | &nbsp; | set token/key for room (to be deprecated)
-&nbsp;       | irssi  | `/mode #room +k <key>`
+~~__+/- k__~~|~~irssi~~| ~~set token/key for room~~ _deprecated_
+&nbsp;       |        | ~~`/mode #room +k <key>`~~
 &nbsp;       | &nbsp; | :green_circle: works fine w/ a key
 &nbsp;       | &nbsp; | :red_circle: still available w/o a key
 &nbsp;       |
