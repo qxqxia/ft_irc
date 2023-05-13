@@ -14,8 +14,8 @@ private:
 	std::map<int, User*>	m_users;
 	std::map<int, User*>	m_chanops;
 	std::map<int, User*>	m_voices;
-	std::string		m_channelname;
-	std::string		m_topic;
+
+	std::string		m_channelname;	
 	std::string		m_mode;
 	std::string		m_key;
 
@@ -25,6 +25,7 @@ private:
 
 	bool	m_bot_in_channel; // added
 
+	// std::string		m_topic;
 
 public:
 	Channel(std::string);
@@ -37,7 +38,7 @@ public:
 	std::map<int, User*>	& get_chanops();
 	std::map<int, User*>	& get_voices();
 
-	std::string	get_topic() const;
+	
 	std::string	get_channelname() const;
 	std::string	get_mode() const;
 	std::string	get_key() const;
@@ -53,7 +54,7 @@ public:
 	bool	is_voice(int sd);
 	bool	is_banned(std::string nick);
 
-	void	set_topic(std::string top);
+	
 	void	set_mode(std::string mod);
 	void	set_key(std::string key);
 	void	set_maximum_users(int max);
@@ -67,6 +68,12 @@ public:
 
 	bool	get_bot() const ;
 	void	set_bot();
+
+
+	//	Topic draft :: prototyping :: getter setter
+
+	// std::string	get_topic() const;
+	// void	set_topic(std::string top);
 
 };
 

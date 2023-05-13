@@ -140,10 +140,9 @@ void join(Server *serv, std::string buffer, int sd)
         {
             send_everyone_in_channel(user_answer, FIND_CHANNEL(channel_name));
         }
-        if (FIND_CHANNEL(channel_name)->get_topic() == "")
-        {
-            Broadcast(get_RPL_ERR(331, serv, FIND_USER(sd), channel_name, ""), sd);
-        }
+        // if (FIND_CHANNEL(channel_name)->get_topic() == ""){
+        //     Broadcast(get_RPL_ERR(331, serv, FIND_USER(sd), channel_name, ""), sd);
+        // }
         else
         {
             Broadcast(get_RPL_ERR(332, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_topic()), sd);
