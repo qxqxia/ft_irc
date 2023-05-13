@@ -44,7 +44,7 @@
 # define USER_MODE \
 				"ro" // "roi"
 # define CHANNEL_MODE \
-				"mlvonkb" // "malvonkb" // "maltvonkb"
+				"mvblo" // "maltvonkb"
 
 # define FIND_CHANNEL(channel_name) \
 		serv->get_channels().find(channel_name)->second
