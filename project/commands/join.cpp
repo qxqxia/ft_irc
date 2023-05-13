@@ -136,10 +136,15 @@ void join(Server *serv, std::string buffer, int sd)
         std::string user_answer = user_output(FIND_USER(sd));
         user_answer += "JOIN " + channel_name;
 
-        if (FIND_CHANNEL(channel_name)->get_mode().find("a") == std::string::npos)
-        {
-            send_everyone_in_channel(user_answer, FIND_CHANNEL(channel_name));
-        }
+        ////    +/- a :: anonymous mode (draft)
+
+        // if (FIND_CHANNEL(channel_name)->get_mode().find("a") == std::string::npos)
+        // {
+        //     send_everyone_in_channel(user_answer, FIND_CHANNEL(channel_name));
+        // }
+
+
+        ////  Topic related
 
         // if (FIND_CHANNEL(channel_name)->get_topic() == ""){
         //     Broadcast(get_RPL_ERR(331, serv, FIND_USER(sd), channel_name, ""), sd);
@@ -152,11 +157,13 @@ void join(Server *serv, std::string buffer, int sd)
 
         std::string listOfUser = FIND_CHANNEL(channel_name)->get_list_of_users_in_channel();
 
-        if (FIND_CHANNEL(channel_name)->get_mode().find("a") == std::string::npos)
-        {
-            Broadcast(get_RPL_ERR(353, serv, FIND_USER(sd), channel_name, listOfUser), sd);
-            Broadcast(get_RPL_ERR(366, serv, FIND_USER(sd), channel_name, ""), sd);
-        }
+
+        ////    +/- a :: anonymous mode (draft)
+        // if (FIND_CHANNEL(channel_name)->get_mode().find("a") == std::string::npos)
+        // {
+        //     Broadcast(get_RPL_ERR(353, serv, FIND_USER(sd), channel_name, listOfUser), sd);
+        //     Broadcast(get_RPL_ERR(366, serv, FIND_USER(sd), channel_name, ""), sd);
+        // }
         if (!FIND_CHANNEL(channel_name)->get_mode().empty())
         {
             Broadcast(get_RPL_ERR(324, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_mode()), sd);

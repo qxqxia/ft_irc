@@ -40,14 +40,15 @@ void    part(Server *serv, std::string buffer, int sd)
         {
             std::string user_answer = user_output(FIND_USER(sd));
             user_answer += "PART " + channel_name + " " + message;
-            if (FIND_CHANNEL(channel_name)->get_mode().find("a") == std::string::npos)
-            {
-                send_everyone_in_channel(user_answer, FIND_CHANNEL(channel_name));
-            }
-            else
-            {
-                Broadcast(user_answer, sd);
-            }
+            ////    +/- a :: anonymous mode (draft)
+            // if (FIND_CHANNEL(channel_name)->get_mode().find("a") == std::string::npos)
+            // {
+            //     send_everyone_in_channel(user_answer, FIND_CHANNEL(channel_name));
+            // }
+            // else
+            // {
+                Broadcast(user_answer, sd); // Keep this line
+            // }
             FIND_CHANNEL(channel_name)->left_user_of_what_use(sd);
             if (FIND_CHANNEL(channel_name)->get_user_number() == 0)
             {

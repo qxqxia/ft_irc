@@ -74,11 +74,12 @@ void privmsg(Server *serv, std::string buffer, int sd)
             std::string command = buffer.substr(buffer.find('!') + 1, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - (buffer.find('!') + 1) : buffer.length() - 1 - (buffer.find('!') + 1));
             serv->is_bot_in_channel()->find_command(serv, FIND_CHANNEL(target), sd, command);
         }
-        else if ((FIND_CHANNEL(target)->get_mode().find("a") != std::string::npos))
-        {
-            user_answer = anonymous_output() + "PRIVMSG " + target + " " + msg;
-            send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
-        }
+        ////    +/- a :: anonymous mode (draft)
+        // else if ((FIND_CHANNEL(target)->get_mode().find("a") != std::string::npos))
+        // {
+        //     user_answer = anonymous_output() + "PRIVMSG " + target + " " + msg;
+        //     send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
+        // }
         else
         {
             send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);

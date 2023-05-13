@@ -307,9 +307,11 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
             }
         }
         channel->set_mode(channel_mode);
+        
         std::string user_answer = user_output(FIND_USER(sd));
-        if (channel->get_mode().find("a") != std::string::npos)
-            user_answer = anonymous_output();
+        ////    +/- a :: anonymous mode (draft)
+        // if (channel->get_mode().find("a") != std::string::npos)
+        //     user_answer = anonymous_output();
         if (!deleted_mode.empty())
             user_answer += "MODE " + channel->get_channelname() + " -" + deleted_mode;
         if (user_answer.find("MODE") != std::string::npos)
@@ -339,8 +341,9 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
         }
         channel->set_mode(channel_mode + added_mode);
         std::string user_answer = user_output(FIND_USER(sd));
-        if (channel->get_mode().find("a") != std::string::npos)
-            user_answer = anonymous_output();
+        ////    +/- a :: anonymous mode (draft)
+        // if (channel->get_mode().find("a") != std::string::npos)
+        //     user_answer = anonymous_output();
         if (!added_mode.empty())
             user_answer += "MODE " + channel->get_channelname() + " +" + added_mode;
         if (user_answer.find("MODE") != std::string::npos)
