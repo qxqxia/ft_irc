@@ -20,9 +20,14 @@ __command__ :: `CAP LS`
 
 # Q&A
 
-### `netcat` :: if no password is entered using
-- will show msg :: "You need to enter a pass!"
-- will close client :: `close( this.m_socket_incoming ) ;`
+### `netcat`
+- if no password is entered using
+  - will show msg :: "You need to enter a pass!"
+  - will close client :: `close( this.m_socket_incoming ) ;`
+- if nothing follows a `NICK ` or nick is taken
+  - will send RPL `ERR_ERRONEUSNICKNAME`
+  - will close client
+
 
 ### NAMES, `/names`, `/n`
 
