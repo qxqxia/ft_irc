@@ -130,6 +130,10 @@ PRIVMSG      | nc     | `PRIVMSG #room hello world`
 
 # Q&A
 
+### `netcat` :: if no password is entered using
+- will show msg :: "You need to enter a pass!"
+- will close client :: `close( this.m_socket_incoming ) ;`
+
 ### NAMES, `/names`, `/n`
 
 - on connection to a channel, w/o explicitly sending /NAMES
