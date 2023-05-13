@@ -141,13 +141,12 @@ PRIVMSG      | nc     | `PRIVMSG #room hello world`
 
 # Q&A
 
-### About user
-- anonymous!anonymous@anonymous
-- eg. `john!johndoe@example.com`
-  - The 1st "anonymous" refers to the user's nickname
-  - The 2nd "anonymous" refers to the username
-  - The 3rd "anonymous" refers to the hostname
-
+### NAMES, `/names`, `/n`
+- on connection to a channel, without using /NAMES
+  - the client (IRSSI) sends an initial NAMES command to the our server to retrieve a list of users in the current channel
+  - this is the first thing the client does, even if we don't have the NAMES command
+- on receiving a NAMES command from client (IRSSI)
+  - Even though our server does not implement the NAMES command, Irssi stills function normally and display the user list because it ignores the error message returned by the server
 
 ### Valid port
 - `[6660, 6669]`, `6679`, `6697`
@@ -158,4 +157,9 @@ PRIVMSG      | nc     | `PRIVMSG #room hello world`
   - 6679 = an alternative port for SSL connections
 - `[*, 1024]` = "well-known ports" reserved for specific services or applications
 
-
+### About user
+- anonymous!anonymous@anonymous
+- eg. `john!johndoe@example.com`
+  - The 1st "anonymous" refers to the user's nickname
+  - The 2nd "anonymous" refers to the username
+  - The 3rd "anonymous" refers to the hostname
