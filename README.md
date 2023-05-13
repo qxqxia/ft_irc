@@ -163,3 +163,13 @@ PRIVMSG      | nc     | `PRIVMSG #room hello world`
   - "!anonymous" refers to Username
   - "@anonymous" refers to Hostname
 - eg. `john!johndoe@example.com`
+
+### Separator set
+- `:` - Used to indicate the start of the message body or the text of a message
+- `!` - Used to separate a user's nickname from their username or hostname
+- `@` - Used to separate a user's username from their hostname
+- `#` - Used to indicate a channel name
+- `&` - Used to indicate a channel name for networks that support both channels and groups
+- `+` - Used to indicate a mode change to grant a user voice in a channel
+- `%` - Used to indicate a mode change to grant a user operator status in a channel
+- `.` - Used in some commands to separate the server name from the command or argument
