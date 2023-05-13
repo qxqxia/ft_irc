@@ -5,7 +5,7 @@
   - Run server side:\
 `$ ./ircserv <port> <pass>`
   - Run client side:\
-`$ ./irssi` then `_ /connect <host> <port> <pass>` or\
+`$ ./irssi` then `/connect <host> <port> <pass>` or\
 `$ nc <hostip> <port> <pass>`
 
 
@@ -132,6 +132,8 @@ __/notice__  | irssi  | `/notice @xqin hello, world`
 &nbsp;       | &nbsp; | _::: by default a private msg to oneself ..._
 &nbsp;       | &nbsp; | _::: and not to the entire channel (to prevent flooding)_
 &nbsp;       | nc     | `PRIVMSG #room <msg>`
+&nbsp;       | &nbsp; | &nbsp;
+__CAP LS__   | nc     | _list the capabilities supported by server_ 
 &nbsp;       | &nbsp; | &nbsp;
 __/say__     | &nbsp; | (IRSSI built-in)
 &nbsp;       | irssi  | `/say something`
