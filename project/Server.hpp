@@ -11,7 +11,7 @@ public:
 
 private:
 	int	m_server_socket;
-	int	m_sock_coming;
+	int	m_socket_incoming;
 
 	Bot		*m_bot; // Added
 	// Bot		*get_bot() const ; // Added // should be public
