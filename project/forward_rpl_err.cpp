@@ -1,6 +1,6 @@
 #include "Freenode.hpp"
 
-std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg1, std::string arg2)
+std::string Get_RPL_ERR(int code, Server *serv, User *user, std::string arg1, std::string arg2)
 {
     std::stringstream ss;
     ss << code;
@@ -135,8 +135,8 @@ std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg1, st
     }
 
 
-    // std::cout << "(dbg) get_RPL_ERR: " << res << std::endl;
-    std::cout << YELLOW "(dbg)(get_RPL_ERR): " RESET << (
+    // std::cout << "(dbg) Get_RPL_ERR: " << res << std::endl;
+    std::cout << YELLOW "(dbg)(Get_RPL_ERR): " RESET << (
         (res.empty()) ? "(None)" : res
     ) << nl;
 

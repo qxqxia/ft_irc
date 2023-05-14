@@ -92,7 +92,7 @@ void Channel::add_voice(int sd, User *user)
     this->m_voices.insert(std::make_pair(sd, user));
 }
 
-void Channel::left_user_of_what_use(int sd)
+void Channel::clear_user_possible_privilege(int sd)
 {
     std::map<int, User*>::iterator it;
 
@@ -100,6 +100,8 @@ void Channel::left_user_of_what_use(int sd)
     {
         this->m_users.erase(it);
     }
+    // About ELSE :: 
+    //  might not use both of the following `else`-s
     else if ((it = this->m_chanops.find(sd)) != this->m_chanops.end())
     {
         this->m_chanops.erase(it);

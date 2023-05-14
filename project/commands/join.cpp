@@ -5,7 +5,9 @@
 
 bool is_invalid_character(char c)
 {
-    return (c == '\0' || c == '\a' || c == '\r' || c == '\n' || c == ' ' || c == ',' || c == ':');
+    return (
+        c == '\0' || c == '\a' || c == '\r' || c == '\n' || c == ' ' || c == ',' || c == ':'
+    );
 }
 
 bool is_invalid_channel_name(std::string name)
@@ -14,8 +16,9 @@ bool is_invalid_channel_name(std::string name)
     std::string             channel_prefixes;
 
     channel_prefixes = "#&+";
+    //  chan_prefixe = "&+"; // # -- Public room . & -- Private Club . `+` -- Secret Club 
 
-    if (name.size() > 50)
+    if (name.size() > 64)
     {
         return (false);
     }
@@ -26,7 +29,7 @@ bool is_invalid_channel_name(std::string name)
 
     it = name.begin();
 
-    while (it != name.end() && !is_invalid_character(*it))
+    while (it != name.end() && ! is_invalid_character(*it))
     {
         ++it;
     }
@@ -47,7 +50,7 @@ void join(Server *serv, std::string buffer, int sd)
     }
     if (channel_list_str.empty())
     {
-        Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
+        Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
         return ;
     }
 
@@ -67,7 +70,7 @@ void join(Server *serv, std::string buffer, int sd)
 
         if (!(FIND_USER(sd)->get_channels_size() < MAX_CLIENTS /* 10 */))
         {
-            Broadcast(get_RPL_ERR(405, serv, FIND_USER(sd), channel_name, ""), sd);
+            Broadcast(Get_RPL_ERR(405, serv, FIND_USER(sd), channel_name, ""), sd);
             break ;
         }
 
@@ -90,7 +93,7 @@ void join(Server *serv, std::string buffer, int sd)
         {
             if (FIND_CHANNEL(channel_name)->is_banned(FIND_USER(sd)->get_nickname()) == true)
             {
-                Broadcast(get_RPL_ERR(474, serv, FIND_USER(sd), channel_name, ""), sd);
+                Broadcast(Get_RPL_ERR(474, serv, FIND_USER(sd), channel_name, ""), sd);
                 continue ;
             }
         }
@@ -101,13 +104,13 @@ void join(Server *serv, std::string buffer, int sd)
         // {
         //     if (key.empty())
         //     {
-        //         Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
+        //         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
         //         return ;
         //     }
         //     // if (FIND_CHANNEL(channel_name)->get_key().compare(key) != 0)
         //     if (FIND_CHANNEL(channel_name)->get_key() != key)
         //     {
-        //         Broadcast(get_RPL_ERR(475, serv, FIND_USER(sd), channel_name, ""), sd);
+        //         Broadcast(Get_RPL_ERR(475, serv, FIND_USER(sd), channel_name, ""), sd);
         //         continue ;
         //     }
         // }
@@ -116,7 +119,7 @@ void join(Server *serv, std::string buffer, int sd)
         {
             if (FIND_CHANNEL(channel_name)->get_maximum_users() <= FIND_CHANNEL(channel_name)->get_user_number())
             {
-                Broadcast(get_RPL_ERR(471, serv, FIND_USER(sd), channel_name, ""), sd);
+                Broadcast(Get_RPL_ERR(471, serv, FIND_USER(sd), channel_name, ""), sd);
                 continue ;
             }
         }
@@ -151,12 +154,12 @@ void join(Server *serv, std::string buffer, int sd)
         ////  Topic related
 
         // if (FIND_CHANNEL(channel_name)->get_topic() == ""){
-        //     Broadcast(get_RPL_ERR(331, serv, FIND_USER(sd), channel_name, ""), sd);
+        //     Broadcast(Get_RPL_ERR(331, serv, FIND_USER(sd), channel_name, ""), sd);
         // }
 
         // else
         // {
-        //     Broadcast(get_RPL_ERR(332, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_topic()), sd);
+        //     Broadcast(Get_RPL_ERR(332, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_topic()), sd);
         // }
 
         std::string listOfUser = FIND_CHANNEL(channel_name)->get_list_of_users_in_channel();
@@ -165,12 +168,12 @@ void join(Server *serv, std::string buffer, int sd)
         ////    +/- a :: anonymous mode (draft)
         // if (FIND_CHANNEL(channel_name)->get_mode().find("a") == std::string::npos)
         // {
-        //     Broadcast(get_RPL_ERR(353, serv, FIND_USER(sd), channel_name, listOfUser), sd);
-        //     Broadcast(get_RPL_ERR(366, serv, FIND_USER(sd), channel_name, ""), sd);
+        //     Broadcast(Get_RPL_ERR(353, serv, FIND_USER(sd), channel_name, listOfUser), sd);
+        //     Broadcast(Get_RPL_ERR(366, serv, FIND_USER(sd), channel_name, ""), sd);
         // }
         if (!FIND_CHANNEL(channel_name)->get_mode().empty())
         {
-            Broadcast(get_RPL_ERR(324, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_mode()), sd);
+            Broadcast(Get_RPL_ERR(324, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_mode()), sd);
         }
     }
 }

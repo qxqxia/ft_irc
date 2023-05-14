@@ -63,7 +63,7 @@ public:
 	void	add_chanop(int sd, User *u);
 	void	add_voice(int sd, User *u);
 
-	void	left_user_of_what_use(int sd);
+	void	clear_user_possible_privilege(int sd);
 	int	search_user_by_nickname(std::string nick);
 
 	bool	is_bot_in_channel() const ;
