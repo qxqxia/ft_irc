@@ -348,7 +348,9 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
                 added_mode += mode[i];
         }
         channel->set_mode(channel_mode + added_mode);
-        std::string user_answer = user_output(FIND_USER(sd));
+        std::string     user_answer;
+
+        user_answer = user_output(FIND_USER(sd));
         ////    +/- a :: anonymous mode (draft)
         // if (channel->get_mode().find("a") != std::string::npos)
         //     user_answer = anonymous_output();
@@ -378,10 +380,14 @@ void user_mode(Server *serv, User *user, std::string mode, int sd)
             }
             else if (user_mode.find(mode[i]) != std::string::npos)
             {
+                //  ERR :: no o mode on User
+                //      "Permission Denied --- Not an IRC OP"
                 if (mode[i] == 'o' && user->get_nickname() != FIND_USER(sd)->get_nickname())
                 {
                     Broadcast(Get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
                 }
+                //  ERR :: User is on r mode
+                //      "Permission Denied --- Not an IRC OP as User on r mode"
                 else if (mode[i] == 'r' && ((FIND_USER(sd)->get_mode().find('r') != std::string::npos) || (FIND_USER(sd)->get_mode().find('o') == std::string::npos )))
                 {
                     Broadcast(Get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
@@ -414,6 +420,8 @@ void user_mode(Server *serv, User *user, std::string mode, int sd)
             }
             else if (user_mode.find(mode[i]) == std::string::npos)
             {
+                //  ERR :: no o mode on User
+                //      "Permission Denied --- Not an IRC OP"
                 if (mode[i] == 'o' && FIND_USER(sd)->get_mode().find('o') == std::string::npos)
                 {
                     Broadcast(Get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
@@ -422,6 +430,8 @@ void user_mode(Server *serv, User *user, std::string mode, int sd)
                 {
                     added_mode += mode[i];
                 }
+                //  ERR :: User is on r mode
+                //      "Permission Denied --- Not an IRC OP as User on r mode"
                 else if (mode[i] == 'r' && ((FIND_USER(sd)->get_mode().find('r') != std::string::npos) || (FIND_USER(sd)->get_mode().find('o') == std::string::npos)))
                 {
                     Broadcast(Get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
