@@ -63,6 +63,12 @@ void join(Server *serv, std::string buffer, int sd)
         keys_for_chans = buf.substr(j, (buf.find_first_of(SEP_CHARSET, j) - j));
     }
 
+
+    //  ~~TODO~~ DBG To Delete on Submit
+    std::cout << CYAN "(dbg)(JOIN)(chan_list_str): " << channel_list_str << nlreset;
+    std::cout << YELLOW "(dbg)(JOIN)(keys_for_chan): " << keys_for_chans << nlreset;
+
+
     for (int _ = 0; _ < total_chans; _++)
     {
         std::string channel_name = channel_list_str.substr(0, channel_list_str.find(","));
