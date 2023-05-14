@@ -87,10 +87,13 @@ void mode_o(Server *serv, Channel *channel, std::string mode, std::string buffer
     Broadcast(user_answer, user_socket_fd);
 }
 
+
+//  Give someone a voice over the moderated room
 void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer, int sd)
 {
+    int     i = -1;
+    int     j = 0;
 
-    int i = -1, j = 0;
     while (buffer[++i] && j < 3)
     {
         if (buffer[i] == ' ' || buffer[i] == '\t')
@@ -102,8 +105,11 @@ void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer
         }
     }
 
-    std::string name = buffer.substr(i, (buffer.find_first_of(SEP_CHARSET, i) - i));
-    int user_socket_fd = channel->search_user_by_nickname(name);
+    std::string name;
+    int user_socket_fd;
+
+    user_socket_fd = channel->search_user_by_nickname(name);
+    name = buffer.substr(i, (buffer.find_first_of(SEP_CHARSET, i) - i));
 
     if (user_socket_fd == -1)
     {
@@ -111,6 +117,7 @@ void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer
         return ;
     }
     if (channel->is_chanop(user_socket_fd) == true)
+
     {
         return ;
     }
@@ -440,44 +447,85 @@ void user_mode(Server *serv, User *user, std::string mode, int sd)
 
 void mode(Server *serv, std::string buffer, int sd)
 {
-    std::string buf(buffer);
+    std::string     buf(buffer);
+    std::string     msgtarget = "";
+
     int j = 0;
     size_t i;
-    std::string msgtarget = "";
+
     if ((i = buf.find_first_not_of(SEP_CHARSET, 5)) != std::string::npos)
+    {
         msgtarget = buf.substr(i, ((j = buf.find_first_of(SEP_CHARSET, i)) - i));
+    }
     if (msgtarget.empty())
     {
         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "MODE", ""), sd);
         return ;
     }
-    std::string idOfChannel = "#&+";
+    std::string     channel_prefixes = "#&+";
+
     j = buf.find_first_not_of(SEP_CHARSET, j);
     std::string mode = "";
+
     if (buf.find_first_of(SEP_CHARSET, j) != std::string::npos)
-        mode = buf.substr(j, (buf.find_first_of(SEP_CHARSET, j) - j));
-    if (!msgtarget.empty() && idOfChannel.find(msgtarget[0]) != std::string::npos)
     {
-        if (serv->get_channels().find(msgtarget) == serv->get_channels().end())
-            Broadcast(Get_RPL_ERR(403, serv, FIND_USER(sd), msgtarget, ""), sd);
-        else if (FIND_USER(sd)->get_mode().find('r') != std::string::npos)
-            Broadcast(Get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
-        else if (FIND_CHANNEL(msgtarget)->get_chanops().find(sd) == FIND_CHANNEL(msgtarget)->get_chanops().end())
-            Broadcast(Get_RPL_ERR(482, serv, FIND_USER(sd), msgtarget, ""), sd);
-        else
-            channel_mode(serv, FIND_CHANNEL(msgtarget), mode, sd, buffer);
+        mode = buf.substr(j, (buf.find_first_of(SEP_CHARSET, j) - j));
     }
+    //  Correct channel mode format
+    //      :: (channel name follows #|&|+room && room is not EMPTY)
+    if (!msgtarget.empty() && channel_prefixes.find(msgtarget[0]) != std::string::npos)
+    {
+        //  ERR :: Chan not found -- ":No such channel"
+        if (serv->get_channels().find(msgtarget) == serv->get_channels().end())
+        {
+            Broadcast(Get_RPL_ERR(403, serv, FIND_USER(sd), msgtarget, ""), sd);
+        }
+        //  ERR :: User has r mode -- ": Ur connection is restricted"
+        else if (FIND_USER(sd)->get_mode().find('r') != std::string::npos)
+        {
+            Broadcast(Get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
+        }
+        //  ERR :: User has no o mode -- "User is not ChanOP"
+        else if (FIND_CHANNEL(msgtarget)->get_chanops().find(sd) == FIND_CHANNEL(msgtarget)->get_chanops().end())
+        {
+            Broadcast(Get_RPL_ERR(482, serv, FIND_USER(sd), msgtarget, ""), sd);
+        }
+        //  Set mode using `channel_mode(serv, chan, mdoe, socket_fd, buff)` after checkup
+        else
+        {
+            //  Here buffer should include +/-  eg. +o OR -i
+
+            channel_mode(serv, FIND_CHANNEL(msgtarget), mode, sd, buffer);
+        }
+    }
+    //  Not channel mode format
+    //      :: should be one of User modes or ERR
     else
     {
-        int user_socket_fd;
+        int     user_socket_fd;
+
+        //  ERR :: No such nickname
         if ((user_socket_fd = serv->search_user_by_nickname(msgtarget)) == -1)
+        {
             Broadcast(Get_RPL_ERR(401, serv, FIND_USER(sd), msgtarget, ""), sd);
+        }
         else if (mode.empty() && !FIND_USER(user_socket_fd)->get_mode().empty())
+        {
             Broadcast(Get_RPL_ERR(221, serv, FIND_USER(user_socket_fd), '+' + FIND_USER(user_socket_fd)->get_mode(), ""), sd);
+        }
+        //  Up to user implementation
+        //    --> : should simple apply the mode change as requested
+        //      Here: ~~simple~~ should not apply the mode change as requested
         else if (mode.empty() && FIND_USER(user_socket_fd)->get_mode().empty())
+        {
             Broadcast("This user don't have any modes!", sd);
+        }
         else
+        {
+            //  Here buffer should include +/-  eg. +o OR -i
+
             user_mode(serv, FIND_USER(user_socket_fd), mode, sd);
+        }
     }
     
 }

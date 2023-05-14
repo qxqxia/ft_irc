@@ -48,6 +48,8 @@ void join(Server *serv, std::string buffer, int sd)
     {
         channel_list_str = buf.substr(i, ((j = buf.find_first_of(SEP_CHARSET, i)) - i));
     }
+
+    //  ERR :: No chanlist means empty params
     if (channel_list_str.empty())
     {
         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
@@ -91,12 +93,14 @@ void join(Server *serv, std::string buffer, int sd)
         key = keys_for_chans.substr(0, keys_for_chans.find(","));
         keys_for_chans.erase(0, keys_for_chans.find(",") + 1);
 
+        //  Create new channel if channame does not exist yet
         if (serv->get_channels().find(channel_name) == serv->get_channels().end())
         {
             Channel *chan = new Channel(channel_name);
             serv->get_channels(channel_name, chan);
         }
 
+        //  ERR if channel's ban mode is ON and User is banned
         if (FIND_CHANNEL(channel_name)->get_mode().find("b") != std::string::npos)
         {
             if (FIND_CHANNEL(channel_name)->is_banned(FIND_USER(sd)->get_nickname()) == true)
