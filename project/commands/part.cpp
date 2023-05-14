@@ -11,7 +11,7 @@ void    part(Server *serv, std::string buffer, int sd)
         channelsName = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
     if (channelsName.empty())
     {
-        Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "PART", ""), sd);
+        Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "PART", ""), sd);
         return ;
     }
     std::string message = "";
@@ -33,9 +33,9 @@ void    part(Server *serv, std::string buffer, int sd)
         std::string channel_name = channelsName.substr(0, channelsName.find(","));
         channelsName.erase(0, channelsName.find(",") + 1);
         if (serv->get_channels().find(channel_name) == serv->get_channels().end())
-            Broadcast(get_RPL_ERR(403, serv, FIND_USER(sd), channel_name, ""), sd);
+            Broadcast(Get_RPL_ERR(403, serv, FIND_USER(sd), channel_name, ""), sd);
         else if (FIND_USER(sd)->get_channels().find(channel_name) == FIND_USER(sd)->get_channels().end())
-            Broadcast(get_RPL_ERR(442, serv, FIND_USER(sd), channel_name, ""), sd);
+            Broadcast(Get_RPL_ERR(442, serv, FIND_USER(sd), channel_name, ""), sd);
         else
         {
             std::string user_answer = user_output(FIND_USER(sd));

@@ -6,7 +6,7 @@ void restart(Server *serv, std::string buffer, int sd)
 
 	if (FIND_USER(sd)->get_mode().find('o') == std::string::npos)
     {
-		Broadcast(get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
+		Broadcast(Get_RPL_ERR(481, serv, FIND_USER(sd), "", ""), sd);
 	}
 	else
 	{
