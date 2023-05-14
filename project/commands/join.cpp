@@ -80,7 +80,9 @@ void join(Server *serv, std::string buffer, int sd)
             continue ;
         }
 
-        std::string key = keys_for_chans.substr(0, keys_for_chans.find(","));
+        std::string     key;
+        
+        key = keys_for_chans.substr(0, keys_for_chans.find(","));
         keys_for_chans.erase(0, keys_for_chans.find(",") + 1);
 
         if (serv->get_channels().find(channel_name) == serv->get_channels().end())

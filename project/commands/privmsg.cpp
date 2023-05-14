@@ -34,20 +34,25 @@ void privmsg(Server *serv, std::string buffer, int sd)
         msg = buf.substr(j, (buf.find_first_of(BUFFER_ENDS, j) - j));
     }
 
-    std::cout << LOWKEY "PRVMG buf: " RESET << target << nl;
-    std::cout << LOWKEY "PRVMG msg: " RESET << target << nl2;
+
+    //  (DBG -- to comment out on submit)
+
+    // std::cout << LOWKEY "PRVMG buf: " RESET << target << nl;
+    // std::cout << LOWKEY "PRVMG msg: " RESET << target << nl2;
 
     std::string channel_prefixes = "#&+";
     std::string user_answer;
 
-    int user_to_send_socket_fd;
-
+    int     user_to_send_socket_fd;
 
     user_answer = user_output(FIND_USER(sd));
     user_answer += "PRIVMSG " + target + " " + msg;
 
-    std::cout << MAG "PRVMG 1 target: " RESET << target << nl;
-    std::cout << MAG "PRVMG 1 usranswer: " RESET << user_answer << nl2;
+
+    //  (DBG -- to comment out on submit)
+
+    // std::cout << MAG "PRVMG 1 target: " RESET << target << nl;
+    // std::cout << MAG "PRVMG 1 usranswer: " RESET << user_answer << nl2;
 
     if (!target.empty() && channel_prefixes.find(target[0]) != std::string::npos)
     {
@@ -75,11 +80,13 @@ void privmsg(Server *serv, std::string buffer, int sd)
             serv->is_bot_in_channel()->find_command(serv, FIND_CHANNEL(target), sd, command);
         }
         ////    +/- a :: anonymous mode (draft)
-        // else if ((FIND_CHANNEL(target)->get_mode().find("a") != std::string::npos))
-        // {
-        //     user_answer = anonymous_output() + "PRIVMSG " + target + " " + msg;
-        //     send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
-        // }
+        /*
+        else if ((FIND_CHANNEL(target)->get_mode().find("a") != std::string::npos))
+        {
+            user_answer = anonymous_output() + "PRIVMSG " + target + " " + msg;
+            send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
+        }
+        */
         else
         {
             send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
@@ -114,12 +121,19 @@ void privmsg(Server *serv, std::string buffer, int sd)
             {
                 word = buffer.substr(j, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - j : buffer.length() - 1 - j);
             }
+
+            ////    +/- a :: anonymous mode (draft)
+
             std::cout << MAG "PRVMG 2 : " RESET << word << nl;
         }
         else if ((user_to_send_socket_fd = serv->search_user_by_nickname(target)) == -1)
         {
-            Broadcast(RED "HERE" RESET, sd);
+
+            ////    +/- a :: anonymous mode (draft)
+            // Broadcast(RED "HERE" RESET, sd);
+
             Broadcast(Get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
+
         }
         else
         {
