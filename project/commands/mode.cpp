@@ -260,13 +260,13 @@ void mode_l(Server *serv, Channel *channel, std::string mode, std::string buffer
         }
     }
     std::string name = buffer.substr(i, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - i : buffer.length() - 1 - i);
-    int maxUser = std::strtoul(name.c_str(), NULL, 0);
-    if (maxUser < 0)
+    int max_user = std::strtoul(name.c_str(), NULL, 0);
+    if (max_user < 0)
     {
 	    Broadcast("Max user key must be superior to 0.", sd);
 	    return ;
     }
-    channel->set_maximum_users(maxUser);
+    channel->set_maximum_users(max_user);
 }
 
 bool available_modes(char c, std::string available_modes)
@@ -282,10 +282,11 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
 
     std::map<char, modes> handle_mode;
 
-	handle_mode.insert(std::make_pair('o', &mode_o));
-	handle_mode.insert(std::make_pair('v', &mode_v));
-	handle_mode.insert(std::make_pair('b', &mode_b));
-    handle_mode.insert(std::make_pair('l', &mode_l));
+	handle_mode.insert(std::make_pair('o', & mode_o));
+	handle_mode.insert(std::make_pair('v', & mode_v));
+	handle_mode.insert(std::make_pair('b', & mode_b));
+    handle_mode.insert(std::make_pair('l', & mode_l));
+
     ////    +/- k :: key    (draft)
     // handle_mode.insert(std::make_pair('k', &mode_k));
 
@@ -299,12 +300,14 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
         {
             if (available_modes(mode[i], CHANNEL_MODE) == false)
 	        {
-		        std::string stringMode(1, mode[i]);
-                Broadcast(Get_RPL_ERR(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
+		        std::string     mode_string(1, mode[i]);
+
+                Broadcast(Get_RPL_ERR(472, serv, FIND_USER(sd), mode_string, channel->get_channelname()), sd);
 	        }
-            else if (available_modes(mode[i], "bolv"/*"ovbkl"*/) == true)
+            else if (available_modes(mode[i], "vblo"/*"ovbkl"*/) == true)
 	        {
 		        handle_mode[mode[i]](serv, channel, mode, buffer, sd);
+
 	    	    if (/*mode[i] == 'k' || */mode[i] == 'l')
 			        deleted_mode += mode[i];
 	        }
@@ -335,10 +338,10 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
         {
             if (available_modes(mode[i], CHANNEL_MODE) == false)
             {
-                std::string stringMode(1, mode[i]);
-                Broadcast(Get_RPL_ERR(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
+                std::string mode_string(1, mode[i]);
+                Broadcast(Get_RPL_ERR(472, serv, FIND_USER(sd), mode_string, channel->get_channelname()), sd);
             }
-            else if (available_modes(mode[i], "ovbkl") == true)
+            else if (available_modes(mode[i], "vblo") == true)
             {
                 handle_mode[mode[i]](serv, channel, mode, buffer, sd);
                 if (/*(mode[i] == 'k' && channel->get_key() != "") || */mode[i] == 'l')
