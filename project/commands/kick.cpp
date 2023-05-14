@@ -96,7 +96,7 @@ void kick(Server *serv, std::string buffer, int sd)
                 user_answer += "PART " + channel_name;
 
                 send_everyone_in_channel(user_answer, FIND_CHANNEL(channel_name));
-                FIND_CHANNEL(channel_name)->left_user_of_what_use(socket_fd_user_to_kick);
+                FIND_CHANNEL(channel_name)->clear_user_possible_privilege(socket_fd_user_to_kick);
 
                 if (FIND_CHANNEL(channel_name)->get_user_number() == 0)
                 {

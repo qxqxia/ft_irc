@@ -10,6 +10,6 @@ void restart(Server *serv, std::string buffer, int sd)
 	}
 	else
 	{
-		serv->set_is_restarting();
+		serv->toggle_is_restarting();
 	}
 }

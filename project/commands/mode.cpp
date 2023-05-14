@@ -63,7 +63,7 @@ void mode_o(Server *serv, Channel *channel, std::string mode, std::string buffer
         return ;
     }
 
-    channel->left_user_of_what_use(user_socket_fd);
+    channel->clear_user_possible_privilege(user_socket_fd);
 
     if (mode[0] == '-')
     {
@@ -115,7 +115,7 @@ void mode_v(Server *serv, Channel *channel, std::string mode, std::string buffer
         return ;
     }
 
-    channel->left_user_of_what_use(user_socket_fd);
+    channel->clear_user_possible_privilege(user_socket_fd);
 
     if (mode[0] == '-')
     {

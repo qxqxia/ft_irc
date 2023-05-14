@@ -556,7 +556,7 @@ void Server::set_users(int socket_fd, User *user)
 	this->m_users.insert(std::make_pair(socket_fd, user));
 }
 
-void Server::set_is_restarting()
+void Server::toggle_is_restarting()
 {
 	this->m_is_restarting = !this->m_is_restarting;
 }

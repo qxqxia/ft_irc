@@ -49,7 +49,7 @@ public:
 
 	void	get_channels(std::string channel_name, Channel *);
 	void	set_users(int sd, User *);
-	void	set_is_restarting();
+	void	toggle_is_restarting();
 
 	Bot		*is_bot_in_channel() const ; /// Added
 

@@ -19,7 +19,7 @@ void disconnect_user(Server* serv, int sd)
         std::string user_answer = user_output(FIND_USER(sd));
         user_answer += "PART " + *it;
         send_everyone_in_channel(user_answer, FIND_CHANNEL(*it));
-        FIND_CHANNEL(*it)->left_user_of_what_use(sd);
+        FIND_CHANNEL(*it)->clear_user_possible_privilege(sd);
         if (FIND_CHANNEL(*it)->get_user_number() == 0)
         {
             delete  serv->get_channels().find(*it)->second;
