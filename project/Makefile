@@ -7,7 +7,6 @@ srcs	=	Freenode.cpp  \
 		commands/restart.cpp  \
 		commands/privmsg.cpp  \
 		commands/join.cpp  \
-		commands/topic.cpp  \
 		commands/quit.cpp  \
 		commands/nick.cpp  \
 		commands/part.cpp  \

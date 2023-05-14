@@ -16,24 +16,24 @@ void oper(Server *serv, std::string buffer, int sd)
     }
     if (user == "")
     {
-        Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "OPER", ""), sd);
+        Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "OPER", ""), sd);
         return ;
     }
     if (serv->search_user_by_nickname(user) == -1)
     {
-        Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), user, ""), sd);
+        Broadcast(Get_RPL_ERR(401, serv, FIND_USER(sd), user, ""), sd);
         return ;
     }
     j = buf.find_first_not_of(SEP_CHARSET, j);
     password = buf.substr(j, (buf.find_first_of(SEP_CHARSET, j) - j));
     if (password == "")
     {
-        Broadcast(get_RPL_ERR(461, serv, FIND_USER(sd), "OPER", ""), sd);
+        Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "OPER", ""), sd);
         return ;
     }
     if (password != OPER_PASS)
     {
-        Broadcast(get_RPL_ERR(464, serv, FIND_USER(serv->search_user_by_nickname(user)), "", ""), sd);
+        Broadcast(Get_RPL_ERR(464, serv, FIND_USER(serv->search_user_by_nickname(user)), "", ""), sd);
         return ;
     }
 
@@ -48,7 +48,7 @@ void oper(Server *serv, std::string buffer, int sd)
     );
 
     Broadcast(user_answer, serv->search_user_by_nickname(user));
-    Broadcast(get_RPL_ERR(381, serv, FIND_USER(serv->search_user_by_nickname(user)), "", ""), serv->search_user_by_nickname(user));
+    Broadcast(Get_RPL_ERR(381, serv, FIND_USER(serv->search_user_by_nickname(user)), "", ""), serv->search_user_by_nickname(user));
 
     // }
 
