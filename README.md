@@ -15,61 +15,6 @@ __command__ :: `CAP LS`
 - [ ] using irssi
 
 
----
-
-
-# Q&A
-
-### `netcat`
-- if no password is entered using
-  - will show msg :: "You need to enter a pass!"
-  - will close client :: `close( this.m_socket_incoming ) ;`
-- if nothing follows a `NICK ` or nick is taken
-  - will send RPL `ERR_ERRONEUSNICKNAME`
-  - will close client
-
-
-### NAMES, `/names`, `/n`
-
-- on connection to a channel, w/o explicitly sending /NAMES
-  - the client (IRSSI) sends an initial NAMES command to retrieve a list of users in the current channel
-  - this is the first thing the client does, even if we don't have the NAMES command
-- on receiving a NAMES command from client (IRSSI)
-  - Even though our server does not implement the NAMES command, Irssi stills function normally and display the user list because it ignores the error message returned by the server
-
-
-### Valid port
-
-- `[6660, 6669]`, `6679`, `6697`
-- standard port: `6667` (standard port for IRC connection)
-- typical range: `[6660, 6669]` or `[6660, 7000]`
-- for secure connections
-  - 6697 = standard port for SSL-encrypted IRC connections
-  - 6679 = an alternative port for SSL connections
-- `[*, 1024]` = "well-known ports" reserved for specific services or applications
-
-
-### About user
-
-anonymous!anonymous@anonymous
-- "anonymous" (1st one) refers to the user's Nickname
-- "!anonymous" refers to Username
-- "@anonymous" refers to Hostname
-
-eg. `john!johndoe@example.com`
-
-
-### Separator set
-
-- `:` - Used to indicate the start of the message body or the text of a message
-- `!` - Used to separate a user's nickname from their username or hostname
-- `@` - Used to separate a user's username from their hostname
-- `#` - Used to indicate a channel name
-- `&` - Used to indicate a channel name for networks that support both channels and groups
-- `+` - Used to indicate a mode change to grant a user voice in a channel
-- `%` - Used to indicate a mode change to grant a user operator status in a channel
-- `.` - Used in some commands to separate the server name from the command or argument
-
 
 ---
 
@@ -202,3 +147,57 @@ PRIVMSG      | nc     | `PRIVMSG #room hello world`
 &nbsp;       | 
 
 
+---
+
+
+# Q&A
+
+### `netcat`
+- if no password is entered using
+  - will show msg :: "You need to enter a pass!"
+  - will close client :: `close( this.m_socket_incoming ) ;`
+- if nothing follows a `NICK ` or nick is taken
+  - will send RPL `ERR_ERRONEUSNICKNAME`
+  - will close client
+
+
+### NAMES, `/names`, `/n`
+
+- on connection to a channel, w/o explicitly sending /NAMES
+  - the client (IRSSI) sends an initial NAMES command to retrieve a list of users in the current channel
+  - this is the first thing the client does, even if we don't have the NAMES command
+- on receiving a NAMES command from client (IRSSI)
+  - Even though our server does not implement the NAMES command, Irssi stills function normally and display the user list because it ignores the error message returned by the server
+
+
+### Valid port
+
+- `[6660, 6669]`, `6679`, `6697`
+- standard port: `6667` (standard port for IRC connection)
+- typical range: `[6660, 6669]` or `[6660, 7000]`
+- for secure connections
+  - 6697 = standard port for SSL-encrypted IRC connections
+  - 6679 = an alternative port for SSL connections
+- `[*, 1024]` = "well-known ports" reserved for specific services or applications
+
+
+### About user
+
+anonymous!anonymous@anonymous
+- "anonymous" (1st one) refers to the user's Nickname
+- "!anonymous" refers to Username
+- "@anonymous" refers to Hostname
+
+eg. `john!johndoe@example.com`
+
+
+### Separator set
+
+- `:` - Used to indicate the start of the message body or the text of a message
+- `!` - Used to separate a user's nickname from their username or hostname
+- `@` - Used to separate a user's username from their hostname
+- `#` - Used to indicate a channel name
+- `&` - Used to indicate a channel name for networks that support both channels and groups
+- `+` - Used to indicate a mode change to grant a user voice in a channel
+- `%` - Used to indicate a mode change to grant a user operator status in a channel
+- `.` - Used in some commands to separate the server name from the command or argument
