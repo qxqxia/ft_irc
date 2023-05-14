@@ -54,31 +54,32 @@ void privmsg(Server *serv, std::string buffer, int sd)
         if (serv->get_channels().find(target) == serv->get_channels().end())
         {
             Broadcast(MAG "HERE" RESET, sd);
-            Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
+            Broadcast(Get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
         }
         else if ((FIND_CHANNEL(target)->get_mode().find("n") != std::string::npos) && (FIND_CHANNEL(target)->search_user_by_nickname(FIND_USER(sd)->get_nickname()) == -1))
         {
-            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
+            Broadcast(Get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
         }
         else if ((FIND_CHANNEL(target)->get_mode().find("m") != std::string::npos) && (!FIND_CHANNEL(target)->is_chanop(sd)) && (!FIND_CHANNEL(target)->is_voice(sd)))
         {
-            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
+            Broadcast(Get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
         }
         else if (FIND_CHANNEL(target)->is_banned(FIND_USER(sd)->get_nickname()) == true)
         {
-            Broadcast(get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
+            Broadcast(Get_RPL_ERR(404, serv, FIND_USER(sd), target, ""), sd);
         }
         /// Added following session for bot
         else if ( is_bot_command(buffer))
         {
             std::string command = buffer.substr(buffer.find('!') + 1, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - (buffer.find('!') + 1) : buffer.length() - 1 - (buffer.find('!') + 1));
-            serv->get_bot()->find_command(serv, FIND_CHANNEL(target), sd, command);
+            serv->is_bot_in_channel()->find_command(serv, FIND_CHANNEL(target), sd, command);
         }
-        else if ((FIND_CHANNEL(target)->get_mode().find("a") != std::string::npos))
-        {
-            user_answer = anonymous_output() + "PRIVMSG " + target + " " + msg;
-            send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
-        }
+        ////    +/- a :: anonymous mode (draft)
+        // else if ((FIND_CHANNEL(target)->get_mode().find("a") != std::string::npos))
+        // {
+        //     user_answer = anonymous_output() + "PRIVMSG " + target + " " + msg;
+        //     send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
+        // }
         else
         {
             send_everyone_in_channel_except_user(user_answer, FIND_CHANNEL(target), sd);
@@ -86,7 +87,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
     }
     else
     {
-        if (target == serv->get_bot()->get_name())
+        if (target == serv->is_bot_in_channel()->get_name())
         {
             int k = 0;
             int j = -1;
@@ -118,7 +119,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
         else if ((user_to_send_socket_fd = serv->search_user_by_nickname(target)) == -1)
         {
             Broadcast(RED "HERE" RESET, sd);
-            Broadcast(get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
+            Broadcast(Get_RPL_ERR(401, serv, FIND_USER(sd), target, ""), sd);
         }
         else
         {

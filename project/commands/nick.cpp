@@ -55,25 +55,25 @@ void nick(Server *serv, std::string buffer, int sd)
 
     if (new_nick.empty())
     {
-        Broadcast(get_RPL_ERR(431, serv, FIND_USER(sd), "", ""), sd);
+        Broadcast(Get_RPL_ERR(431, serv, FIND_USER(sd), "", ""), sd);
         return ;
     }
 
     if (FIND_USER(sd)->get_mode().find('r') != std::string::npos)
     {
-        Broadcast(get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
+        Broadcast(Get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
         return ;
     }
 
     if (!nickname_is_validated(new_nick))
     {
-        Broadcast(get_RPL_ERR(432, serv, FIND_USER(sd), new_nick, ""), sd);
+        Broadcast(Get_RPL_ERR(432, serv, FIND_USER(sd), new_nick, ""), sd);
         return ;
     }
 
     if (nickname_is_in_use(serv, new_nick))
     {
-        Broadcast(get_RPL_ERR(433, serv, FIND_USER(sd), new_nick, ""), sd);
+        Broadcast(Get_RPL_ERR(433, serv, FIND_USER(sd), new_nick, ""), sd);
         return ;
     }
 

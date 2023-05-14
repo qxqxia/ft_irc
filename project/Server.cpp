@@ -18,9 +18,8 @@ Server::Server(const std::string & port, const std::string & password)
 	this->m_commands["PRIVMSG"] = & privmsg;
 	this->m_commands["NOTICE"] = & privmsg;
 	this->m_commands["PING"] = & ping;
-	this->m_commands["PING"] = & pong;
 	this->m_commands["PART"] = & part;
-	this->m_commands["TOPIC"] = & topic;
+	// this->m_commands["TOPIC"] = & topic;
 	this->m_commands["KICK"] = & kick;
 	this->m_commands["MODE"] = & mode;
 	this->m_commands["OPER"] = & oper;
@@ -159,40 +158,59 @@ void Server::connect_to_server()
 					buf = get_input_from_client_sfd(socket_fd);
 					if ( ! buf.empty())
 					{
+						// TODO :: Delete the following DBG
+						
+						/*
 						std::cout << CYAN "(dgb)(input):\t" RESET << buf;
+						*/
 
 						std::string		command(buf);
 
 						int	L = buf.find_first_not_of(SEP_CHARSET, 0);
 
+
+
+						// Deprecated draft
 						// std::cout << CYAN "(dbg)(echo 0): " RESET << buf << nl;
 
 						buf = command.substr(L, buf.length() - L);
 						command = buf.substr(0, buf.find_first_of(SEP_CHARSET, 0));
 
+
+
+						// TODO :: Delete the following DBG
+						/*
 						std::cout << CYAN "(dbg)(echo 1):\t" RESET << (
 							(buf.empty()) ? "(None)" : buf
 						);
+						*/
 
+						// Deprecated draft
 						// if (buf.empty())
 						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << "(None)";
 						// else
 						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << buf;
 
+
+						// TODO :: Delete the following DBG
+						/*
 						std::cout << CYAN "(dbg)(echo 2):\t" RESET << (
 							(command.empty()) ? "(None)" : command
 						) << nl2;
+						*/
 
+						// Deprecated draft
 						// if (command.empty())	
 						// 	std::cout << CYAN "(dbg)(echo 2): " RESET << "(None)" << nl2;
 						// else
 						// 	std::cout << CYAN "(dbg)(echo 2): " RESET << command << nl2;
 
+
 						if (m_commands.find(command) != m_commands.end())
 						//{
 							(m_commands[command])(this, buf, socket_fd);
-							 // break ; // Greatest bug of all time
-						//} // Greatest bug of all time
+							 // break ; // Greatest bug of all time (line 1/2)
+						//} // Greatest bug of all time (line 2/2)
 						break ; // BUG FIX : re-added 
 					}
 				}
@@ -223,7 +241,7 @@ void Server::connect_to_server()
 void Server::new_connection()
 {
 	socklen_t csize = sizeof(m_server);
-	if ((this->m_sock_coming = accept(this->m_server_socket, (struct sockaddr *)& m_server, & csize)) < 0)
+	if ((this->m_socket_incoming = accept(this->m_server_socket, (struct sockaddr *)& m_server, & csize)) < 0)
 	{
 		perror("accept");
 		exit(EXIT_FAILURE);
@@ -232,7 +250,7 @@ void Server::new_connection()
 	//inform user of socket number - used in send and receive commands
 
 	std::cout
-	<< "New connection, socket fd is " << this->m_sock_coming
+	<< "New connection, socket fd is " << this->m_socket_incoming
 	<< " , ip is : " << inet_ntoa(m_server.sin_addr)
 	<< " , port : " <<  ntohs(m_server.sin_port)
 	<< nl /*std::endl*/;
@@ -255,15 +273,17 @@ void Server::new_connection()
 	std::string		real_name = "";
 	std::string		pass = "";
 
-	ret = this->get_input_from_client_sfd(this->m_sock_coming);
+	ret = this->get_input_from_client_sfd(this->m_socket_incoming);
 	if (((ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos) || (ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos && ret.find("NICK ") != std::string::npos)) && ret.find("USER ") == std::string::npos)
-		ret = this->get_input_from_client_sfd(this->m_sock_coming);
+	{
+		ret = this->get_input_from_client_sfd(this->m_socket_incoming);
+	}
 	if ((occ = ret.find("PASS ")) != std::string::npos)
 	{
 		if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
 		{
-			Broadcast(get_RPL_ERR(461, this, NULL, "PASS", ""), this->m_sock_coming);
-			close(this->m_sock_coming);
+			Broadcast(Get_RPL_ERR(461, this, NULL, "PASS", ""), this->m_socket_incoming);
+			close(this->m_socket_incoming);
 		}
 		else
 		{
@@ -276,13 +296,13 @@ void Server::new_connection()
 			}
 			if (pass.empty())
 			{
-				Broadcast(get_RPL_ERR(461, this, NULL, "PASS", ""), this->m_sock_coming);
-				close(this->m_sock_coming);
+				Broadcast(Get_RPL_ERR(461, this, NULL, "PASS", ""), this->m_socket_incoming);
+				close(this->m_socket_incoming);
 			}
 			else if (pass != this->m_pass)
 			{
-				Broadcast("WRONG PASSWORD", this->m_sock_coming);
-				close(this->m_sock_coming);
+				Broadcast("WRONG PASSWORD", this->m_socket_incoming);
+				close(this->m_socket_incoming);
 			}
 			else
 				password_is_valid = true;
@@ -290,19 +310,27 @@ void Server::new_connection()
 	}
 	else
 	{
-		Broadcast("You need to enter a pass!", this->m_sock_coming);
-		close(this->m_sock_coming);
+		Broadcast("You need to enter a pass!", this->m_socket_incoming);
+		close(
+			this->m_socket_incoming
+		);
 	}
+
 	if (password_is_valid == true)
 	{
 		if (ret.find("NICK ") == std::string::npos)
-			ret = this->get_input_from_client_sfd(this->m_sock_coming);
+		{
+			ret = this->get_input_from_client_sfd(this->m_socket_incoming);
+		}
 		if ((occ = ret.find("NICK ")) != std::string::npos)
 		{
 			if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
 			{
-				Broadcast(get_RPL_ERR(432, this, NULL, nick, ""), this->m_sock_coming);
-				close(this->m_sock_coming);
+				Broadcast(Get_RPL_ERR(432, this, NULL, nick, ""), this->m_socket_incoming);
+
+				close(
+					this->m_socket_incoming
+				);
 			}
 			else
 			{
@@ -310,14 +338,18 @@ void Server::new_connection()
 				nick = nick.substr(0, nick.find_last_not_of(SEP_CHARSET, nick.size()) + 1);
 				if (!nickname_is_validated(nick))
 				{
-					Broadcast(get_RPL_ERR(432, this, NULL, nick, ""), this->m_sock_coming);
-					close(this->m_sock_coming);	
+					Broadcast(Get_RPL_ERR(432, this, NULL, nick, ""), this->m_socket_incoming);
+					close (
+						this->m_socket_incoming
+					);	
 				}
 				else if (nickname_is_in_use(this, nick))
 				{
-					Broadcast(get_RPL_ERR(433, this, NULL, nick, ""), this->m_sock_coming);
-					Broadcast("Please try reconnect with an available nickname.", this->m_sock_coming);
-					close(this->m_sock_coming);
+					Broadcast(Get_RPL_ERR(433, this, NULL, nick, ""), this->m_socket_incoming);
+					Broadcast("Please try reconnect with an available nickname.", this->m_socket_incoming);
+					close (
+						this->m_socket_incoming
+					);
 				}
 				else
 				{
@@ -327,13 +359,15 @@ void Server::new_connection()
 		}
 		else
 		{
-			Broadcast("You have to enter a nickname\nUsage: NICK [nickname]", this->m_sock_coming);
-			close(this->m_sock_coming);
+			Broadcast("You have to enter a nickname\nUsage: NICK [nickname]", this->m_socket_incoming);
+			close(this->m_socket_incoming);
 		}
 		if (username_is_valid == false && nickname_is_valid == true)
 		{
 			if (ret.find("USER ") == std::string::npos)
-				ret = this->get_input_from_client_sfd(this->m_sock_coming);
+			{
+				ret = this->get_input_from_client_sfd(this->m_socket_incoming);
+			}
 			if ((occ = ret.find("USER ")) != std::string::npos)
 			{
 				int i = 0;
@@ -341,23 +375,29 @@ void Server::new_connection()
 				//username
 
 				if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
-					Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_sock_coming);
+					Broadcast(Get_RPL_ERR(461, this, NULL, "USER", ""), this->m_socket_incoming);
 				else
 				{
-					user = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
+					user = ret.substr(
+						first_occurrence,
+						(i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence
+					);
 
 					//	hostname
 
 					if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
-						Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_sock_coming);
+						Broadcast(Get_RPL_ERR(461, this, NULL, "USER", ""), this->m_socket_incoming);
 					else
 					{
-						host = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
+						host = ret.substr(
+							first_occurrence,
+							(i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence
+						);
 
 						//	server_name
 
 						if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
-							Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_sock_coming);
+							Broadcast(Get_RPL_ERR(461, this, NULL, "USER", ""), this->m_socket_incoming);
 						else
 						{
 							server_name = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
@@ -365,11 +405,18 @@ void Server::new_connection()
 							//	real_name
 
 							if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, i)) == std::string::npos)
-								Broadcast(get_RPL_ERR(461, this, NULL, "USER", ""), this->m_sock_coming);
+								Broadcast(Get_RPL_ERR(461, this, NULL, "USER", ""), this->m_socket_incoming);
 							else
 							{
-								real_name = ret.substr(first_occurrence, (i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence);
-								real_name = real_name.substr(0, real_name.find_last_not_of(SEP_CHARSET, real_name.size()) + 1);
+								real_name = ret.substr(
+									first_occurrence,
+									(i = ret.find_first_of(SEP_CHARSET, first_occurrence)) - first_occurrence
+								);
+
+								real_name = real_name.substr(
+									0,
+									real_name.find_last_not_of(SEP_CHARSET, real_name.size()) + 1
+								);
 							}
 						}
 					}
@@ -380,22 +427,27 @@ void Server::new_connection()
 		}
 		if (username_is_valid == false && nickname_is_valid == true)
 		{
-			Broadcast("Usage: USER [username] [hostname] [server_name] [real_name]", this->m_sock_coming);
-			close(this->m_sock_coming);
+			Broadcast("Usage: USER [username] [hostname] [server_name] [real_name]", this->m_socket_incoming);
+			close(this->m_socket_incoming);
 		}
 	}
 	// if (password_is_valid == true && m_users.size() < 10 && nickname_is_valid == true && username_is_valid == true && g_server_is_alive == true)
-	if (password_is_valid == true && m_users.size() < 4 && nickname_is_valid == true && username_is_valid == true && g_server_is_alive == true)
+	if (
+		password_is_valid == true && 
+		m_users.size() < 4 && nickname_is_valid == true && 
+		username_is_valid == true && 
+		g_server_is_alive == true
+	)
 	{
 		this->m_server_name = server_name;
 		User *newUser = new User(nick, user, host, real_name);
-		this->set_users(this->m_sock_coming, newUser);
+		this->set_users(this->m_socket_incoming, newUser);
 		std::cout << "Number of user connected on the server: " << this->m_users.size() << std::endl;
-		Broadcast(get_RPL_ERR(001, this, newUser, "", ""), this->m_sock_coming);
-		Broadcast(get_RPL_ERR(002, this, newUser, "", ""), this->m_sock_coming);
-		Broadcast(get_RPL_ERR(003, this, newUser, "", ""), this->m_sock_coming);
-		Broadcast(get_RPL_ERR(004, this, newUser, "", ""), this->m_sock_coming);
-		Forward_MOTD(this->m_sock_coming);
+		Broadcast(Get_RPL_ERR(001, this, newUser, "", ""), this->m_socket_incoming);
+		Broadcast(Get_RPL_ERR(002, this, newUser, "", ""), this->m_socket_incoming);
+		Broadcast(Get_RPL_ERR(003, this, newUser, "", ""), this->m_socket_incoming);
+		Broadcast(Get_RPL_ERR(004, this, newUser, "", ""), this->m_socket_incoming);
+		Forward_MOTD(this->m_socket_incoming);
 
 		//add new socket to array of sockets
 
@@ -407,13 +459,13 @@ void Server::new_connection()
 
 			if ( !g_server_client_socket[i])
 			{
-				g_server_client_socket[i] = this->m_sock_coming;
+				g_server_client_socket[i] = this->m_socket_incoming;
 				break ;
 			}
 		}
 	}
 	else if (password_is_valid == true && nickname_is_valid == true && g_server_is_alive == true && username_is_valid == true)
-		Broadcast(get_RPL_ERR(005, this, NULL, nick, ""), this->m_sock_coming);
+		Broadcast(Get_RPL_ERR(005, this, NULL, nick, ""), this->m_socket_incoming);
 }
 
 int Server::new_socket()
@@ -504,7 +556,7 @@ void Server::set_users(int socket_fd, User *user)
 	this->m_users.insert(std::make_pair(socket_fd, user));
 }
 
-void Server::set_is_restarting()
+void Server::toggle_is_restarting()
 {
 	this->m_is_restarting = !this->m_is_restarting;
 }
@@ -728,7 +780,7 @@ void Server::Forward_MOTD_Doh(int socket_fd)
 	Broadcast("                                                   ", socket_fd);
 }
 
-Bot		*Server::get_bot() const
+Bot		*Server::is_bot_in_channel() const
 {
 	return (this->m_bot);
 }
