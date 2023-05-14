@@ -20,6 +20,7 @@ __command__ :: `CAP LS`
 
 
 # User mode
+<kbd> {[+|-] |r|o} </kbd>
 
 USER         | client | syntax
 :----------- | :----: | :-
