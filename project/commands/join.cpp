@@ -5,7 +5,9 @@
 
 bool is_invalid_character(char c)
 {
-    return (c == '\0' || c == '\a' || c == '\r' || c == '\n' || c == ' ' || c == ',' || c == ':');
+    return (
+        c == '\0' || c == '\a' || c == '\r' || c == '\n' || c == ' ' || c == ',' || c == ':'
+    );
 }
 
 bool is_invalid_channel_name(std::string name)
@@ -14,8 +16,9 @@ bool is_invalid_channel_name(std::string name)
     std::string             channel_prefixes;
 
     channel_prefixes = "#&+";
+    //  chan_prefixe = "&+"; // # -- Public room . & -- Private Club . `+` -- Secret Club 
 
-    if (name.size() > 50)
+    if (name.size() > 64)
     {
         return (false);
     }
@@ -26,7 +29,7 @@ bool is_invalid_channel_name(std::string name)
 
     it = name.begin();
 
-    while (it != name.end() && !is_invalid_character(*it))
+    while (it != name.end() && ! is_invalid_character(*it))
     {
         ++it;
     }
