@@ -569,7 +569,6 @@ int Server::search_user_by_nickname(std::string nickname)
 	it = this->m_users.begin();
 	while (it != this->m_users.end())
 	{
-        // if (nickname.compare(it->second->get_nickname()) == 0)
 		if (it->second->get_nickname() == nickname)
             return it->first;
 		++it;

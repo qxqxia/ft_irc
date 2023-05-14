@@ -17,7 +17,9 @@ void kick(Server *serv, std::string buffer, int sd)
 
     std::string channel_names_str = "";
     if ((i = buf.find_first_not_of(SEP_CHARSET, 5)) != std::string::npos)
+    {
         channel_names_str = buf.substr(i, ((j = buf.find_first_of(SEP_CHARSET, i)) - i));
+    }
     if (channel_names_str.empty())
     {
         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "KICK", ""), sd);

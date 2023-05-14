@@ -109,7 +109,6 @@ void join(Server *serv, std::string buffer, int sd)
         //         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
         //         return ;
         //     }
-        //     // if (FIND_CHANNEL(channel_name)->get_key().compare(key) != 0)
         //     if (FIND_CHANNEL(channel_name)->get_key() != key)
         //     {
         //         Broadcast(Get_RPL_ERR(475, serv, FIND_USER(sd), channel_name, ""), sd);

@@ -7,7 +7,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
     int pos_following_command;
     std::string buf(buffer);
 
-    if (buf.compare(0, 6, "NOTICE") == 0)
+    if ( ! buf.compare(0, 6, "NOTICE") )
     // if (buf == "NOTICE")
     {
         pos_following_command = 7;
