@@ -1,8 +1,8 @@
 #include "Freenode.hpp"
 
 Channel::Channel(std::string channel_name) : 
+    // m_topic(""),
     m_channelname(channel_name),
-    m_topic(""),
     m_bot_in_channel(false) /* added for Bot*/
 {
     // ... 
@@ -21,10 +21,6 @@ int Channel::get_user_number() const
     return (this->m_users.size() + this->m_chanops.size() + this->m_voices.size());
 }
 
-std::string Channel::get_topic() const
-{
-    return this->m_topic;
-}
 
 std::string Channel::get_channelname() const
 {
@@ -66,11 +62,6 @@ int Channel::get_maximum_users() const
     return (this->m_maximum_users);
 }
 
-void Channel::set_topic(std::string topic)
-{
-    this->m_topic = topic;
-}
-
 void Channel::set_mode(std::string mode)
 {
     this->m_mode = mode;
@@ -101,7 +92,7 @@ void Channel::add_voice(int sd, User *user)
     this->m_voices.insert(std::make_pair(sd, user));
 }
 
-void Channel::left_user_of_what_use(int sd)
+void Channel::clear_user_possible_privilege(int sd)
 {
     std::map<int, User*>::iterator it;
 
@@ -109,6 +100,8 @@ void Channel::left_user_of_what_use(int sd)
     {
         this->m_users.erase(it);
     }
+    // About ELSE :: 
+    //  might not use both of the following `else`-s
     else if ((it = this->m_chanops.find(sd)) != this->m_chanops.end())
     {
         this->m_chanops.erase(it);
@@ -226,7 +219,7 @@ bool Channel::is_banned(std::string nickname)
 
 /// Added
 
-bool    Channel::get_bot() const
+bool    Channel::is_bot_in_channel() const
 {
     return (this->m_bot_in_channel);
 }
@@ -235,3 +228,16 @@ void    Channel::set_bot()
 {
     this->m_bot_in_channel = !(this->m_bot_in_channel);
 }
+
+
+//  Topic draft :: getter setter
+
+// void Channel::set_topic(std::string topic)
+// {
+//     this->m_topic = topic;
+// }
+
+// std::string Channel::get_topic() const
+// {
+//     return this->m_topic;
+// }

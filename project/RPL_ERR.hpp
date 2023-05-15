@@ -4,13 +4,13 @@
 
 # include "Freenode.hpp"
 
-std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std::string arg2);
+std::string Get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std::string arg2);
 
 //RPL
 
 //001
 # define RPL_WELCOME(n, u, h) \
-    (":\033[0;32mWelcome to the <FreeNode/Discord> Network " + n + "[!" + u + "@" + h + "]" + RESET)
+    (":" GREEN "Welcome to the <FreeNode/Discord> Network " + n + "[!" + u + "@" + h + "]" RESET)
 //    "<client> :Welcome to the <networkname> Network, <nick>[!<user>@<host>]"
 //    :server 001 <nick> :Welcome to the <network> Network, <nick>[!<user>@<host>]
 
@@ -35,18 +35,21 @@ std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std
 
 //221
 # define RPL_UMODEIS(arg) (arg)
+//  "<user mode string>"
+//  DOC ::
+
+/*
+221     RPL_UMODEIS
+        "<user mode string>"
+
+        - To answer a query about a client's own mode,
+            RPL_UMODEIS is sent back.
+*/
+
 
 //324
 # define RPL_CHANNELMODEIS(channel, modes) \
     (channel + " " + modes)
-
-//331
-# define RPL_NOTOPIC(channel) \
-    (channel + " :No topic is set")
-
-//332
-# define RPL_TOPIC(channel, topic) \
-    (channel + " :" + topic)
 
 //353
 # define RPL_NAMREPLY(channel, listOfUsers) \
@@ -159,3 +162,14 @@ std::string get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std
     (cmd + " :No such command.")
 
 #endif
+
+
+//	Topic draft :: related RPL
+
+// //331
+// # define RPL_NOTOPIC(channel) \
+//     (channel + " :No topic is set")
+
+// //332
+// # define RPL_TOPIC(channel, topic) \
+//     (channel + " :" + topic)
