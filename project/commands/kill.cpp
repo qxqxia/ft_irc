@@ -24,5 +24,6 @@ void kill(Server *serv, std::string buffer, int sd)
         Broadcast(Get_RPL_ERR(401, serv, FIND_USER(sd), name, ""), sd);
         return ;
     }
+
     disconnect_user(serv, serv->search_user_by_nickname(name));
 }

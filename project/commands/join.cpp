@@ -1,7 +1,7 @@
 #include "Freenode.hpp"
 
 //  /join #channel
-//  Joins the specified channel
+//      - Joins the specified channel
 
 bool is_invalid_character(char c)
 {
@@ -125,7 +125,7 @@ void join(Server *serv, std::string buffer, int sd)
             }
         }
 
-        //Adding client to server
+        //  add client to server
         if (FIND_CHANNEL(channel_name)->get_user_number() == 0)
         {
             FIND_CHANNEL(channel_name)->add_chanop(sd, FIND_USER(sd));

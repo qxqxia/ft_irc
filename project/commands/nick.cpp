@@ -1,7 +1,7 @@
 #include "Freenode.hpp"
 
 //  /nick nickname
-//  Changes your nickname to a new nickname
+//      - Changes your nickname to a new nickname
 
 bool nickname_is_validated(std::string nick)
 {
@@ -11,13 +11,15 @@ bool nickname_is_validated(std::string nick)
     std::string minus = "-";
     std::string first_char = alpha + nonalnum;
     std::string all = alpha + nonalnum + digit + minus;
+
     if (nick.size() > 9)
         return (false);
+
     if (first_char.find(nick[0]) == std::string::npos)
         return (false);
 
-
     int i = 0;
+
     while (nick[++i] && i < 9)
     {
         if (all.find(nick[i]) == std::string::npos)
