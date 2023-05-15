@@ -86,29 +86,31 @@ void Server::connect_to_server()
 
         FD_ZERO(& rfds);
 
-        // add master socket to set
+
+        ///		add master socket to set
 
         FD_SET(this->m_server_socket, & rfds);
         max_socket_fd = this->m_server_socket;
 
-        // add child sockets to set
 
+        ///		add child sockets to set
 
 		i = -1;
 		while (++i < MAX_CLIENTS)
         {
-            //socket descriptor
+            //		socket descriptor
 
             socket_fd = g_server_client_socket[i];
 
-            //if valid socket descriptor then add to read list
+            //		add valid socket fd to rfds set
 
             if (socket_fd > 0)
             {
 				FD_SET(socket_fd , & rfds);
 			}
 
-            //highest file descriptor number, need it for the select function
+            //	highest file descriptor number needed
+			//	for the select function
  
             if (socket_fd > max_socket_fd)
 			{
@@ -164,7 +166,7 @@ void Server::connect_to_server()
 						buf[0] != '\t'
 					)
 					{
-						// TODO :: Delete the following DBG
+						//		TODO :: Delete the following DBG
 
 						/*
 						std::cout << CYAN "(dgb)(input):\t" RESET << buf;
@@ -179,28 +181,28 @@ void Server::connect_to_server()
 						buf = command.substr(L, buf.length() - L);
 						command = buf.substr(0, buf.find_first_of(SEP_CHARSET, 0));
 
-						// TODO :: Delete the following DBG
+						//		TODO :: Delete the following DBG
 						/*
 						std::cout << CYAN "(dbg)(echo 1):\t" RESET << (
 							(buf.empty()) ? "(None)" : buf
 						);
 						*/
 
-						// Deprecated draft
+						//		Deprecated draft
 						// if (buf.empty())
 						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << "(None)";
 						// else
 						// 	std::cout << CYAN "(dbg)(echo 1): " RESET << buf;
 
 
-						// TODO :: Delete the following DBG
+						//		TODO :: Delete the following DBG
 						/*
 						std::cout << CYAN "(dbg)(echo 2):\t" RESET << (
 							(command.empty()) ? "(None)" : command
 						) << nl2;
 						*/
 
-						// Deprecated draft
+						//		Deprecated draft
 						// if (command.empty())	
 						// 	std::cout << CYAN "(dbg)(echo 2): " RESET << "(None)" << nl2;
 						// else
@@ -252,7 +254,7 @@ void Server::new_connection()
 		exit(EXIT_FAILURE);
 	}
 
-	//inform user of socket number - used in send and receive commands
+	//	inform user of socket number - used in Send/Receive commands
 
 	std::cout
 	<< "New connection, socket fd is " << this->m_sock_coming
@@ -262,7 +264,7 @@ void Server::new_connection()
 
 	std::string ret;
 
-	//send new connection greeting message
+	//		send greeting to newcomers
 
 	size_t occ;
 	size_t first_occurrence;
@@ -398,12 +400,15 @@ void Server::new_connection()
 					}
 				}
 				if (!(user.empty() || host.empty() || server_name.empty() || real_name.empty()))
+				{
 					username_is_valid = true;
+				}
 			}
 		}
 		if (username_is_valid == false && nickname_is_valid == true)
 		{
 			Broadcast("Usage: USER [username] [hostname] [server_name] [real_name]", this->m_sock_coming);
+
 			close(this->m_sock_coming);
 		}
 	}
@@ -426,23 +431,27 @@ void Server::new_connection()
 		Broadcast(Get_RPL_ERR(004, this, newUser, "", ""), this->m_sock_coming);
 		Forward_MOTD(this->m_sock_coming);
 
-		//add new socket to array of sockets
 
+		//	add new socket to the socket set/array
 
 		int		i = -1;
+
 		while (++i < MAX_CLIENTS)
 		{
-			//if position is empty
+			//	if position is 0 just like it was initialized
 
 			if ( !g_server_client_socket[i])
 			{
 				g_server_client_socket[i] = this->m_sock_coming;
+
 				break ;
 			}
 		}
 	}
 	else if (password_is_valid == true && nickname_is_valid == true && g_server_is_alive == true && username_is_valid == true)
+	{
 		Broadcast(Get_RPL_ERR(005, this, NULL, nick, ""), this->m_sock_coming);
+	}
 }
 
 int Server::new_socket()
@@ -460,6 +469,7 @@ int Server::new_socket()
 	{
 		throw std::runtime_error("Error while setting up socket.\n");
 	}
+
 	if (fcntl(sock, F_SETFL, O_NONBLOCK) == -1)
 	{
 		throw std::runtime_error("Error while setting socket NON-BLOCKING mode.\n");
@@ -473,6 +483,7 @@ int Server::new_socket()
 	{
 		throw std::runtime_error("Error binding socket.\n");
 	}
+
 	if (listen(sock, MAX_CLIENTS /* 10 */) < 0)
 	{
 		throw std::runtime_error("Error listening on socket.\n");
