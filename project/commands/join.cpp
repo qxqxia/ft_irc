@@ -48,6 +48,8 @@ void join(Server *serv, std::string buffer, int sd)
     {
         channel_list_str = buf.substr(i, ((j = buf.find_first_of(SEP_CHARSET, i)) - i));
     }
+
+    //  ERR :: No chanlist means empty params
     if (channel_list_str.empty())
     {
         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
@@ -62,6 +64,12 @@ void join(Server *serv, std::string buffer, int sd)
         j = buf.find_first_not_of(SEP_CHARSET, j);
         keys_for_chans = buf.substr(j, (buf.find_first_of(SEP_CHARSET, j) - j));
     }
+
+
+    //  ~~TODO~~ DBG To Delete on Submit
+    std::cout << CYAN "(dbg)(JOIN)(chan_list_str): " << channel_list_str << nlreset;
+    std::cout << YELLOW "(dbg)(JOIN)(keys_for_chan): " << keys_for_chans << nlreset;
+
 
     for (int _ = 0; _ < total_chans; _++)
     {
@@ -80,15 +88,19 @@ void join(Server *serv, std::string buffer, int sd)
             continue ;
         }
 
-        std::string key = keys_for_chans.substr(0, keys_for_chans.find(","));
+        std::string     key;
+        
+        key = keys_for_chans.substr(0, keys_for_chans.find(","));
         keys_for_chans.erase(0, keys_for_chans.find(",") + 1);
 
+        //  Create new channel if channame does not exist yet
         if (serv->get_channels().find(channel_name) == serv->get_channels().end())
         {
             Channel *chan = new Channel(channel_name);
             serv->get_channels(channel_name, chan);
         }
 
+        //  ERR if channel's ban mode is ON and User is banned
         if (FIND_CHANNEL(channel_name)->get_mode().find("b") != std::string::npos)
         {
             if (FIND_CHANNEL(channel_name)->is_banned(FIND_USER(sd)->get_nickname()) == true)
@@ -97,6 +109,7 @@ void join(Server *serv, std::string buffer, int sd)
                 continue ;
             }
         }
+
 
         ////    +/- k :: key    (draft)
         
@@ -107,14 +120,13 @@ void join(Server *serv, std::string buffer, int sd)
         //         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
         //         return ;
         //     }
-        //     // if (FIND_CHANNEL(channel_name)->get_key().compare(key) != 0)
         //     if (FIND_CHANNEL(channel_name)->get_key() != key)
         //     {
         //         Broadcast(Get_RPL_ERR(475, serv, FIND_USER(sd), channel_name, ""), sd);
         //         continue ;
         //     }
         // }
-        
+
         if (FIND_CHANNEL(channel_name)->get_mode().find("l") != std::string::npos)
         {
             if (FIND_CHANNEL(channel_name)->get_maximum_users() <= FIND_CHANNEL(channel_name)->get_user_number())
@@ -124,7 +136,8 @@ void join(Server *serv, std::string buffer, int sd)
             }
         }
 
-        //Adding client to server
+        //  add client to server
+
         if (FIND_CHANNEL(channel_name)->get_user_number() == 0)
         {
             FIND_CHANNEL(channel_name)->add_chanop(sd, FIND_USER(sd));
@@ -142,6 +155,7 @@ void join(Server *serv, std::string buffer, int sd)
 
         std::string user_answer = user_output(FIND_USER(sd));
         user_answer += "JOIN " + channel_name;
+
 
         ////    +/- a :: anonymous mode (draft)
 
@@ -171,9 +185,11 @@ void join(Server *serv, std::string buffer, int sd)
         //     Broadcast(Get_RPL_ERR(353, serv, FIND_USER(sd), channel_name, listOfUser), sd);
         //     Broadcast(Get_RPL_ERR(366, serv, FIND_USER(sd), channel_name, ""), sd);
         // }
+
         if (!FIND_CHANNEL(channel_name)->get_mode().empty())
         {
             Broadcast(Get_RPL_ERR(324, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_mode()), sd);
         }
+
     }
 }

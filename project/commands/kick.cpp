@@ -7,17 +7,19 @@ void kick(Server *serv, std::string buffer, int sd)
 {
     std::string buf(buffer);
 
-    int     total_kicks = std::count(buf.begin(), buf.end(), '\n');
-    int     total_chans;
-    
-    size_t  i, j;
-    int     key;
+    int         total_kicks = std::count(buf.begin(), buf.end(), '\n');
+    int         total_chans;
+    int         key; // int     key, l;
+    size_t      i, j;
 
-    // int     key, l;
+    std::string     channel_names_str = "";
 
-    std::string channel_names_str = "";
     if ((i = buf.find_first_not_of(SEP_CHARSET, 5)) != std::string::npos)
+    {
         channel_names_str = buf.substr(i, ((j = buf.find_first_of(SEP_CHARSET, i)) - i));
+    }
+
+    //  ERR :: No chanlist means empty params
     if (channel_names_str.empty())
     {
         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "KICK", ""), sd);
@@ -29,12 +31,14 @@ void kick(Server *serv, std::string buffer, int sd)
     j = buf.find_first_not_of(SEP_CHARSET, j);
     key = j;
 
-
     int     x = -1;
     while (++x < total_kicks)
     {
-        std::string user_nicks_str = buf.substr(key, (buf.find_first_of(SEP_CHARSET, key) - key));
-        int         total_users = 1 + std::count(user_nicks_str.begin(), user_nicks_str.end(), ',');
+        std::string     user_nicks_str;
+        int             total_users;
+
+        user_nicks_str = buf.substr(key, (buf.find_first_of(SEP_CHARSET, key) - key));
+        total_users = 1 + std::count(user_nicks_str.begin(), user_nicks_str.end(), ',');
 
         if (user_nicks_str.empty())
         {
@@ -46,15 +50,18 @@ void kick(Server *serv, std::string buffer, int sd)
         int     y = -1;
         while (++y < total_users)
         {
-            std::string userNick = user_nicks_str.substr(0, user_nicks_str.find(","));
+            std::string user_nick = user_nicks_str.substr(0, user_nicks_str.find(","));
             user_nicks_str.erase(0, user_nicks_str.find(",") + 1);
 
 
             int     z = -1;
             while (++z < total_chans)            
             {
-                std::string tmp = channel_names_str;
-                std::string channel_name = tmp.substr(0, tmp.find(","));
+                std::string     tmp;
+                std::string     channel_name;
+
+                tmp = channel_names_str;
+                channel_name = tmp.substr(0, tmp.find(","));
                 tmp.erase(0, tmp.find(",") + 1);
 
                 if (serv->get_channels().find(channel_name) == serv->get_channels().end())
@@ -63,21 +70,26 @@ void kick(Server *serv, std::string buffer, int sd)
                         Broadcast(Get_RPL_ERR(403, serv, FIND_USER(sd), channel_name, ""), sd);
                     continue ;
                 }
+
                 ////    +/- a :: anonymous mode (draft)
                 // if (FIND_CHANNEL(channel_name)->get_mode().find("a") != std::string::npos)
                 // {
                 //     continue ;
                 // }
+
+                //  ERR :: User (myself) not in room
                 if (FIND_CHANNEL(channel_name)->search_user_by_nickname(FIND_USER(sd)->get_nickname()) == -1)
                 {
                     Broadcast(Get_RPL_ERR(442, serv, FIND_USER(sd), channel_name, ""), sd);
                     continue ;
                 }
+                //  ERR :: connection is restricted
                 if (FIND_USER(sd)->get_mode().find('r') != std::string::npos)
                 {
                     Broadcast(Get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
                     continue ;
                 }
+                //  ERR :: User is not ChanOP
                 if ( !FIND_CHANNEL(channel_name)->is_chanop(sd))
                 {
                     Broadcast(Get_RPL_ERR(482, serv, FIND_USER(sd), channel_name, ""), sd);
@@ -86,9 +98,10 @@ void kick(Server *serv, std::string buffer, int sd)
 
                 int socket_fd_user_to_kick;
 
-                if ((socket_fd_user_to_kick = FIND_CHANNEL(channel_name)->search_user_by_nickname(userNick)) == -1)
+                //  ERR :: User(s) not in room (*user to kick, not myself) 
+                if ((socket_fd_user_to_kick = FIND_CHANNEL(channel_name)->search_user_by_nickname(user_nick)) == -1)
                 {
-                    Broadcast(Get_RPL_ERR(441, serv, FIND_USER(sd), userNick, channel_name), sd);
+                    Broadcast(Get_RPL_ERR(441, serv, FIND_USER(sd), user_nick, channel_name), sd);
                     continue ;
                 }
 

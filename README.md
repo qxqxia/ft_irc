@@ -1,7 +1,7 @@
 ![](https://img.shields.io/badge/C++-Internet&nbsp;Relay&nbsp;Chat-red.svg?style=flat&logo=c%2B%2B)
 
 
-# Todos:
+# Todos
 
 __Makefile__ :: add usage
 - [ ] Run server side:
@@ -20,19 +20,17 @@ __command__ :: `CAP LS`
 
 
 # User mode
+<kbd> {[+|-] |r|o} </kbd>
 
-USER         | client | syntax
-:----------- | :----: | :-
-&nbsp;       |
-~~__+/- i__~~|~~irssi~~| ~~toggle *invisible* a user~~ _deprecated_
-&nbsp;       |        | ~~`/mode user1 +i`~~
-&nbsp;       | &nbsp; | :red_circle: _modified, nothing happens_
-&nbsp;       |        | 
-__+/- r__    |        | restrict mode
-&nbsp;       | irssi  | `/mode user2 -r`
-&nbsp;       | 
-__+/- o__    |        | activate `a` mode
-&nbsp;       | 
+USER modes                | syntax
+------------------------: | :----
+&nbsp;                    |
+**r** - Restrict mode     |
+`irssi`                   | `/mode user2 -r`
+&nbsp;                    |
+**o** - Activate OP role  |
+`irssi`                   | `/oper user1 OPER_PASS`
+&nbsp;                    |
 
 
 ---
@@ -40,111 +38,95 @@ __+/- o__    |        | activate `a` mode
 
 # Channel mode
 
-CHANNEL      | client | syntax
-:----------- | :----: | :-
-&nbsp;
-__oper__     | irssi  | `oper user1 OPER_PASS`
-&nbsp;       |        | 
-__+/- m__    |        | channel moderation
-&nbsp;       | irssi  | `/mode #chan +m`
-&nbsp;       |        | `/say something` (user2 can't talk)
-&nbsp;       |        | 
-__+/- v__    |        | give someone a voice in a moderated room
-&nbsp;       | irssi  | `/mode #chan +v user`
-&nbsp;       |        | `/say something else` (now user2 can talk)
-&nbsp;       |        | 
-~~__+/- a__~~| irssi  | ~~anonymous mode (to be deprecated)~~
-&nbsp;       |        | ~~`/mode #channel +a`~~
-&nbsp;       |        | :red_circle: `-a` does not work
-&nbsp;       |        | 
-__+/- l__    | &nbsp; | set limit
-&nbsp;       | irssi  | `/mode #room +l 1`
-&nbsp;       |        |
-~~__+/- t__~~|~~irssi~~| ~~topic settable by channel operator only~~
-&nbsp;       |        | ~~`/mode #room +t`~~
-&nbsp;       | &nbsp; | bugs stated below in command session
-&nbsp;       | &nbsp; | _::: topic updated only at re-joining_
-&nbsp;       | &nbsp; | _::: topic unchanged at quiting_
-&nbsp;       |        | 
-__+/- o__    |        | grand operator role to someone 
-&nbsp;       | irssi  | `/mode #chan +o user1`
-&nbsp;       |        | `/kick user2` (user1)
-&nbsp;       |        | 
-~~__+/- n__~~|        | (deprecated)
-&nbsp;       |        | 
-~~__+/- k__~~|~~irssi~~| ~~set token/key for room~~ _deprecated_
-&nbsp;       |        | ~~`/mode #room +k <key>`~~
-&nbsp;       | &nbsp; | :green_circle: works fine w/ a key
-&nbsp;       | &nbsp; | :red_circle: still available w/o a key
-&nbsp;       |
-__+/- b__    | &nbsp; | ban someone (#room cannot send to channel)
-&nbsp;       | irssi  | `/mode #room +b user1`
-&nbsp;       |
-
+CHANNEL modes             | syntax
+------------------------: | :----
+&nbsp;                    |
+__m mode__                | channel moderation
+`irssi`                   | `/mode #chan +m`
+&nbsp;                    | `/say something` (user2 can't talk)
+&nbsp;                    |
+__v mode__                | voice in +m room 
+`irssi`                   | `/mode #chan +v user`
+&nbsp;                    | `/say something else` (now user2 can talk)
+&nbsp;                    |
+__b mode__                | activate banlist
+`irssi`                   | `/mode #room +b user1`
+&nbsp;                    | will display `#room cannot send to channel` to user banned
+&nbsp;                    |
+__l mode__                | set limit
+`irssi`                   |
+&nbsp;                    |`/mode #room +l 1`
+&nbsp;                    |
+__o mode__                | promote user to +o
+`irssi`                   | `/mode #chan +o user1`
+&nbsp;                    |`/kick user2` (user1)
+&nbsp;                    |
 
 ---
 
 
 # Commands
 
-COMMAND      | client | syntax
-:----------- | :----: | :-
-&nbsp;
-Login        | nc     | `$ nc e1r2p3 6677`
-&nbsp;       |        | `PASS password`
-&nbsp;       |        | `NICK nick`
-&nbsp;       |        | `USER usr * * Usr`
-&nbsp;       |        | 
-__/DCC__     | irssi  | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
-&nbsp;       |        | `/dcc <list\|get>`
-&nbsp;       |        | 
-__/kill__    | irssi  | `/oper user1 OPER_PASS`, `/kill someone`
-&nbsp;       | &nbsp; | ::: in channel: _user still in server_
-&nbsp;       | &nbsp; | ::: out of channel: _user disconnected_
-&nbsp;       |        |
-__/kick__    | &nbsp; | _must be done inside a channel_
-&nbsp;       | irssi  | `/oper user1 OPER_PASS` 
-&nbsp;       |        | `/kick user2`
-&nbsp;       |        | `user2`: only allowed to `/quit` `/exit` once kicked
-&nbsp;       |        | cannot `/part`
-&nbsp;       | nc     | `OPER user1 OPER_PASS`
-&nbsp;       |        | `KICK #room nuo misbehaving`
-&nbsp;       | 
-__/mode__    | &nbsp; | _channel mode_
-&nbsp;       | irssi  | `/oper user1 OPER_PASS`
-&nbsp;       |        | `/mode #room +o user1`
-&nbsp;       |        | `/kick user2` (user1)
-&nbsp;       |
-__/part__    | irssi  | `/part <#room>`
-&nbsp;       |        |
-~~__/topic__~~|       | ~~`/topic`~~ | ~~`topic <topic>`~~
-&nbsp;       | &nbsp; | :red_circle: _Not working_
-&nbsp;       | &nbsp; | _::: topic updated only at re-joining_
-&nbsp;       | &nbsp; | _::: topic unchanged at quiting_
-&nbsp;       | ~~nc~~ | ~~`TOPIC #room :no`~~
-&nbsp;       |        | ~~`TOPIC #room :yes`~~
-&nbsp;       | 
-__/restart__ | irssi  | `/oper user1 OPER_PASS`
-&nbsp;       |        | `/restart`
-&nbsp;       | 
-__/notice__  | irssi  | `/notice @xqin hello, world`
-&nbsp;       |        | `/notice #room hello, world` :yellow_circle:
-&nbsp;       | &nbsp; | _::: by default a private msg to oneself ..._
-&nbsp;       | &nbsp; | _::: and not to the entire channel (to prevent flooding)_
-&nbsp;       | nc     | `PRIVMSG #room <msg>`
-&nbsp;       | 
-__CAP LS__   | nc     | _list the capabilities supported by server_ 
-&nbsp;       | 
-__/say__     | &nbsp; | (IRSSI built-in)
-&nbsp;       | irssi  | `/say something`
-&nbsp;       | 
-__/names__   | &nbsp; | (IRSSI built-in)
-&nbsp;       | irssi  | `/n` or `/name`
-&nbsp;       | nc     | no `NAME #room` for nc :yellow_circle:
-&nbsp;       | 
-PRIVMSG      | nc     | `PRIVMSG #room hello world`
-&nbsp;       |        | `PRIVMSG nuo hi, how r u？`
-&nbsp;       | 
+
+Commands                  | syntax
+------------------------: | :----
+Login                     | login
+`nc`                      | `$ nc e1r2p3 6677`
+&nbsp;                    | `PASS password`
+&nbsp;                    | `NICK nick`
+&nbsp;                    | `USER usr * * Usr`
+&nbsp;                    |
+__/DCC__                  | send files
+`irssi`                   | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
+&nbsp;                    | `/dcc <list\|get>`
+&nbsp;                    |
+__/kill__                 | make someone leave Channel or Server
+`irssi`                   | `/oper user1 OPER_PASS`, `/kill someone`
+&nbsp;                    | ___in___ channel: _user parts chan, but will stay in server_
+&nbsp;                    | ___ex___ channel: _user disconnected_
+&nbsp;                    |
+__/kick__                 | ___kicking___ must be done inside a room
+`irssi`                   | `/oper user1 OPER_PASS` 
+&nbsp;                    | `/kick user2`
+&nbsp;                    | `user2`: only allowed to `/quit` `/exit` once kicked
+&nbsp;                    | cannot `/part`
+`nc`                      | `OPER user1 OPER_PASS`
+&nbsp;                    | `KICK #room nuo misbehaving`
+&nbsp;                    |
+__/mode__                 | enbale channel mode 
+`irssi`                   | `/oper user1 OPER_PASS`
+&nbsp;                    | `/mode #room +o user1`
+&nbsp;                    | `/kick user2` (user1)
+&nbsp;                    |
+__/part__                 |
+`irssi`                   | `/part <#room>`
+&nbsp;                    |
+__/restart__              | 
+`irssi`                   | `/oper user1 OPER_PASS`
+&nbsp;                    | `/restart`
+&nbsp;                    |
+__/notice__               | 
+`irssi`                   | `/notice @xqin hello, world`
+&nbsp;                    | `/notice #room hello, world` :yellow_circle:
+&nbsp;                    | _::: by default a private msg to oneself ..._
+&nbsp;                    | _::: and not to the entire channel (to prevent flooding)_
+`nc`                      | `PRIVMSG #room <msg>`
+&nbsp;                    |
+__CAP LS__                | _list the capabilities supported by server_ 
+`nc`                      | 
+&nbsp;                    |
+__/say__                  | (IRSSI built-in)
+`irssi`                   | `/say something`
+&nbsp;                    |
+__/names__                | (IRSSI built-in)
+&nbsp;                    | 
+`irssi`                   | `/n` or `/name`
+&nbsp;                    | no `NAME #room` for nc :yellow_circle:
+&nbsp;                    |
+__PRIVMSG__               |
+`nc`                      | `PRIVMSG #room hello world`
+&nbsp;                    | `PRIVMSG nuo hi, how r u？`
+&nbsp;                    |
 
 
 ---
