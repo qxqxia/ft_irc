@@ -3,12 +3,22 @@
 
 # Todos
 
+
+__moderated room__ :: to retry m mode 
+- (todo)
+
+
+__a tiny bot__ :: to try with partner
+- (todo)
+
+
 __Makefile__ :: add usage
 - [ ] Run server side:
   - `$ ./ircserv <port> <pass>`
 - [ ] Run client side:
   - Irssi - `$ ./irssi` then `/connect <host> <port> <pass>`
-  - Netcat - `$ nc <hostip> <port> <pass>`
+  - Netcat - `$ nc <hostip> <port>` `PASS _`
+
 
 __command__ :: `CAP LS` 
 - [ ] using nc
@@ -99,7 +109,11 @@ __/mode__                 | enbale channel mode
 &nbsp;                    | `/kick user2` (user1)
 &nbsp;                    |
 __/part__                 |
-`irssi`                   | `/part <#room>`
+`irssi` :heavy_check_mark:| `/part #room` . the <kbd>#</kbd> is indispensable
+&nbsp;                    | `/part #42,#43,#44,#45`
+&nbsp;                    |
+`nc` :heavy_check_mark:   | `PART #42,#43,#44`
+&nbsp;                    | > `:nuo!nuo@* PART #42` `...#43` `...#44`
 &nbsp;                    |
 __/restart__              | 
 `irssi`                   | `/oper user1 OPER_PASS`

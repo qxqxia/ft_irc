@@ -42,7 +42,7 @@
 # define OPER_PASS "1007"
 
 # define USER_MODE \
-				"ro" // "roi"
+				"roi" // "roi"
 # define CHANNEL_MODE \
 				"mvblo"
 # define FIND_CHANNEL(channel_name) \
