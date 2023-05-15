@@ -147,11 +147,11 @@ std::string Get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std
 
 //484
 # define ERR_RESTRICTED \
-    (": Your connection is restricted!")
+    (" :Your connection is restricted!")
 
 //501
 # define ERR_UMODEUNKNOWNFLAG \
-    (": Unknown MODE flag")
+    (" :Unknown MODE flag")
     
 
 // #endif
