@@ -99,10 +99,10 @@ __/mode__                 | enbale channel mode
 &nbsp;                    | `/kick user2` (user1)
 &nbsp;                    |
 __/part__                 |
-`irssi`                   | `/part #room` . the <kbd>#</kbd> is indispensable
+`irssi` :heavy_check_mark:| `/part #room` . the <kbd>#</kbd> is indispensable
 &nbsp;                    | `/part #42,#43,#44,#45`
 &nbsp;                    |
-`nc`                      | `PART #42,#43,#44`
+`nc` :heavy_check_mark:   | `PART #42,#43,#44`
 &nbsp;                    | > `:nuo!nuo@* PART #42` `...#43` `...#44`
 &nbsp;                    |
 __/restart__              | 
