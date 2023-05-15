@@ -1,10 +1,10 @@
 #include "Freenode.hpp"
 
 //  /quit [message]
-//  Disconnects you from IRC and will give the optional message as the reason for your departure
-//  (this message only appears to people who are on the same channels as you)
+//      - Disconnects you from IRC and will give the optional message as the reason for your departure
+//          (this message only appears to people who are on the same channels as you)
 
-extern int g_server_client_socket[MAX_CLIENTS];
+extern int      g_server_client_socket[MAX_CLIENTS];
 
 void disconnect_user(Server* serv, int sd)
 {
@@ -50,12 +50,22 @@ void quit(Server *serv, std::string buffer, int sd)
     std::string message;
 
     if ((i = buf.find_first_not_of(SEP_CHARSET, 5)) != std::string::npos)
+    {
         message = buf.substr(i, (buf.find_first_of(SEP_CHARSET, i) - i));
+    }
+
     std::string user_answer;
+
     if (!message.empty())
+    {
         user_answer = user_output(FIND_USER(sd)) + buffer;
+    }
     else
-        user_answer = user_output(FIND_USER(sd)) + "QUIT :leaving";
+    {
+        user_answer = user_output(FIND_USER(sd)) + "QUIT : leaving";
+    }
+
     disconnect_user(serv, sd);
     send_everyone(user_answer, serv->get_users());
+
 }

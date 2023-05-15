@@ -63,7 +63,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
         {
             Broadcast(Get_RPL_ERR(404, serv, FIND_USER(sd), msgtarget, ""), sd);
         }
-        /// Added following session for bot
+        ///     Added following session for bot
         else if ( is_bot_command(buffer))
         {
             std::string command = buffer.substr(buffer.find('!') + 1, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - (buffer.find('!') + 1) : buffer.length() - 1 - (buffer.find('!') + 1));
