@@ -12,9 +12,6 @@ void oper(Server *serv, std::string buffer, int sd)
 
     if ((i = buf.find_first_not_of(SEP_CHARSET, 5)) != std::string::npos)
     {
-        //  first of charset gives the END
-        //  END - i = length
-        //  get substr(Start i, Length)
         user = buf.substr(i, ((j = buf.find_first_of(SEP_CHARSET, i)) - i));
     }
     if (user == "")

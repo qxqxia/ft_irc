@@ -42,7 +42,7 @@ int	main(int c, char **v)
 
 // helper
 
-int is_valid_pass(char *pass_str)
+int is_valid_pass(char * pass_str)
 {
 	int		i;
 

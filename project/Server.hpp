@@ -11,10 +11,10 @@ public:
 
 private:
 	int	m_server_socket;
-	int	m_socket_incoming;
+	int	m_sock_coming;
 
 	Bot		*m_bot; // Added
-	// Bot		*is_bot_in_channel() const ; // Added // should be public
+	// Bot		*get_bot() const ; // Added // should be public
 
 	const std::string	m_port;
 	const std::string	m_pass;
@@ -28,7 +28,7 @@ private:
 
 	int		new_socket();
 	void	new_connection();
-	bool	m_is_restarting;
+	bool	m_server_is_restarting;
 	// void    handle_sigint(int signum);
 
 
@@ -49,9 +49,9 @@ public:
 
 	void	get_channels(std::string channel_name, Channel *);
 	void	set_users(int sd, User *);
-	void	toggle_is_restarting();
+	void	set_is_restarting();
 
-	Bot		*is_bot_in_channel() const ; /// Added
+	Bot		*get_bot() const ; /// Added
 
 	int		search_user_by_nickname(std::string);
 
