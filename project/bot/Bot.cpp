@@ -2,12 +2,16 @@
 
 Bot::Bot() : m_name("Chat")
 {
+    this->m_command_handler.insert(
+        std::pair<std::string, command>("help", & help)
+    );
+
 	this->m_command_handler.insert(
-        std::pair<std::string, command>("wakeup", & summon)
+        std::pair<std::string, command>("summon", & summon)
     );
 
     this->m_command_handler.insert(
-        std::pair<std::string, command>("help", & help)
+        std::pair<std::string, command>("dismiss", & dismiss)
     );
 
     this->m_command_handler.insert(
@@ -16,10 +20,6 @@ Bot::Bot() : m_name("Chat")
 
     this->m_command_handler.insert(
         std::pair<std::string, command>("time", & tell_time)
-    );
-
-    this->m_command_handler.insert(
-        std::pair<std::string, command>("sleep", & dismiss)
     );
 }
 
@@ -50,7 +50,7 @@ void summon(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
-        if (chan && chan->get_bot() == false)
+        if (chan && chan->is_bot_in_channel() == false)
         {
             chan->set_bot();
             send_everyone_in_channel(":" + serv->get_bot()->get_name() + " JOIN " + chan->get_channelname(), chan);
@@ -66,7 +66,7 @@ void dismiss(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
-        if (chan && chan->get_bot() == true)
+        if (chan && chan->is_bot_in_channel() == true)
         {
             chan->set_bot();
             send_everyone_in_channel(":" + serv->get_bot()->get_name() + " PART " + chan->get_channelname(), chan);
@@ -82,7 +82,7 @@ void dismiss(Server *serv, Channel *chan, int socket_fd)
 
 void tell_time(Server *serv, Channel *chan, int socket_fd)
 {
-    if (chan && chan->get_bot() == true)
+    if (chan && chan->is_bot_in_channel() == true)
     {
         std::time_t t = std::time(0);
         std::tm* now = std::localtime(&t);
@@ -99,14 +99,21 @@ void tell_time(Server *serv, Channel *chan, int socket_fd)
 
 void tell_date(Server *serv, Channel *chan, int socket_fd)
 {
-    if (chan && chan->get_bot() == true)
+    if (chan && chan->is_bot_in_channel() == true)
     {
-        std::string months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-        std::time_t t = std::time(0);
-        std::tm* now = std::localtime(&t);
+        std::string     months[12] = {
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        };
+
+        std::time_t     t = std::time(0);
+        std::tm         *now = std::localtime(&t);
+
         std::stringstream ssyear;
         ssyear << now->tm_year + 1900;
+
         std::stringstream ssmday;
+
         if (now->tm_mday == 1)
             ssmday << now->tm_mday << "st";
         else if (now->tm_mday == 2)
@@ -126,7 +133,7 @@ void tell_date(Server *serv, Channel *chan, int socket_fd)
 
 void help(Server *serv, Channel *chan, int socket_fd)
 {
-    std::string line = "!wakeup  - Connect the bot to the channel.";
+    std::string line = "!summon  - Connect the bot to the channel.";
 
     Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
 
@@ -136,7 +143,7 @@ void help(Server *serv, Channel *chan, int socket_fd)
     line = "!time    - Give the current local time.";
     Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
 
-    line = "!sleep   - Disconnect the bot.";
+    line = "!dismiss   - Disconnect the bot.";
     Broadcast(":" + serv->get_bot()->get_name() + " PRIVMSG " + chan->get_channelname() + " :" + line, socket_fd);
 }
 
@@ -144,7 +151,7 @@ void help(Server *serv, Channel *chan, int socket_fd)
 Channel *is_user_with_bot_in_chan(Server *serv, User *user)
 {
     for (std::set<std::string>::iterator it = user->get_channels().begin(); it != user->get_channels().end(); it++)
-        if (FIND_CHANNEL(*it)->get_bot() == true)
+        if (FIND_CHANNEL(*it)->is_bot_in_channel() == true)
             return FIND_CHANNEL(*it);
     return NULL;
 }

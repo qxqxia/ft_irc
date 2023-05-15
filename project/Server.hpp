@@ -56,7 +56,7 @@ public:
 	int		search_user_by_nickname(std::string);
 
 	// from what i make out, these cannot be const 
-	// bc fn array dictates this->*
+	// 	bc fn array dictates this->*
 
 	void	Forward_MOTD(int);
 	void	Forward_MOTD_Slant_Relief(int);
