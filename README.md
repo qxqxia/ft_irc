@@ -8,7 +8,7 @@ __Makefile__ :: add usage
   - `$ ./ircserv <port> <pass>`
 - [ ] Run client side:
   - Irssi - `$ ./irssi` then `/connect <host> <port> <pass>`
-  - Netcat - `$ nc <hostip> <port> <pass>`
+  - Netcat - `$ nc <hostip> <port>` `PASS _`
 
 __command__ :: `CAP LS` 
 - [ ] using nc
@@ -99,7 +99,8 @@ __/mode__                 | enbale channel mode
 &nbsp;                    | `/kick user2` (user1)
 &nbsp;                    |
 __/part__                 |
-`irssi`                   | `/part <#room>`
+`irssi`                   | `/part #room` . the <kbd>#</kbd> is indispensable
+&nbsp;                    | `/part #42,#43,#44,#45`
 &nbsp;                    |
 __/restart__              | 
 `irssi`                   | `/oper user1 OPER_PASS`
