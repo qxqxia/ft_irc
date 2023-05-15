@@ -67,8 +67,8 @@ void join(Server *serv, std::string buffer, int sd)
 
 
     //  ~~TODO~~ DBG To Delete on Submit
-    std::cout << CYAN "(dbg)(JOIN)(chan_list_str): " << channel_list_str << nlreset;
-    std::cout << YELLOW "(dbg)(JOIN)(keys_for_chan): " << keys_for_chans << nlreset;
+    // std::cout << CYAN "(dbg)(JOIN)(chan_list_str): " << channel_list_str << nlreset;
+    // std::cout << YELLOW "(dbg)(JOIN)(keys_for_chan): " << keys_for_chans << nlreset;
 
 
     for (int _ = 0; _ < total_chans; _++)

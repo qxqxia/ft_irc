@@ -10,13 +10,13 @@ User::User(
 	m_username(username),
 	m_hostname(hostname),
 	m_realname(realname) {
-		std::cout
-		<< GREEN "(dbg)(Create user):" RESET nl
-		<< "nck :: " << get_nickname() << nl
-		<< "usr :: " << get_username() << nl
-		<< "hst :: " << get_hostname() << nl
-		<< "rln :: " << get_realname() << nl2
-		;
+		// std::cout
+		// << GREEN "(dbg)(Create user):" RESET nl
+		// << "nck :: " << get_nickname() << nl
+		// << "usr :: " << get_username() << nl
+		// << "hst :: " << get_hostname() << nl
+		// << "rln :: " << get_realname() << nl2
+		// ;
 }
 
 User::~User()
@@ -72,11 +72,11 @@ void	User::add_channel(std::string channel_name)
 
 void	User::set_nick(std::string new_nick)
 {
-	std::cout
-		<< GREEN "(dbg)(Modify nick):" RESET nl
-		<< "(from): " << this->m_nickname << nl
-		<< "( to ): " << new_nick << nl2;
-		;
+	// std::cout
+	// 	<< GREEN "(dbg)(Modify nick):" RESET nl
+	// 	<< "(from): " << this->m_nickname << nl
+	// 	<< "( to ): " << new_nick << nl2;
+	// 	;
 	this->m_nickname = new_nick;
 }
 
