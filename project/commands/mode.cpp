@@ -252,13 +252,13 @@ void mode_l(Server *serv, Channel *channel, std::string mode, std::string buffer
         }
     }
     std::string name = buffer.substr(i, buffer.find('\r') != std::string::npos ? buffer.length() - 2 - i : buffer.length() - 1 - i);
-    int maxUser = std::strtoul(name.c_str(), NULL, 0);
-    if (maxUser < 0)
+    int max_user_key = std::strtoul(name.c_str(), NULL, 0);
+    if (max_user_key < 0)
     {
 	    Broadcast("Max user key must be superior to 0.", sd);
 	    return ;
     }
-    channel->set_maximum_users(maxUser);
+    channel->set_maximum_users(max_user_key);
 }
 
 bool available_modes(char c, std::string available_modes)

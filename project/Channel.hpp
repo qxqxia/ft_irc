@@ -65,7 +65,7 @@ public:
 	void	left_user_of_what_use(int sd);
 	int	search_user_by_nickname(std::string nick);
 
-	bool	get_bot() const ;
+	bool	is_bot_in_channel() const ;
 	void	set_bot();
 
 };
