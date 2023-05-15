@@ -102,6 +102,9 @@ __/part__                 |
 `irssi`                   | `/part #room` . the <kbd>#</kbd> is indispensable
 &nbsp;                    | `/part #42,#43,#44,#45`
 &nbsp;                    |
+`nc`                      | `PART #42,#43,#44`
+&nbsp;                    | > `:nuo!nuo@* PART #42` `...#43` `...#44`
+&nbsp;                    |
 __/restart__              | 
 `irssi`                   | `/oper user1 OPER_PASS`
 &nbsp;                    | `/restart`
