@@ -446,33 +446,56 @@ void mode(Server *serv, std::string buffer, int sd)
         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "MODE", ""), sd);
         return ;
     }
-    std::string idOfChannel = "#&+";
-    j = buf.find_first_not_of(SEP_CHARSET, j);
-    std::string mode = "";
+
+    std::string     channel_prefixes = "#&+";
+    std::string     mode = "";
+
+    j = buf.find_first_not_of(SEP_CHARSET, j);    
+
     if (buf.find_first_of(SEP_CHARSET, j) != std::string::npos)
+    {
         mode = buf.substr(j, (buf.find_first_of(SEP_CHARSET, j) - j));
-    if (!msgtarget.empty() && idOfChannel.find(msgtarget[0]) != std::string::npos)
+    }
+
+    if (!msgtarget.empty() && channel_prefixes.find(msgtarget[0]) != std::string::npos)
     {
         if (serv->get_channels().find(msgtarget) == serv->get_channels().end())
+        {
             Broadcast(Get_RPL_ERR(403, serv, FIND_USER(sd), msgtarget, ""), sd);
+        }
         else if (FIND_USER(sd)->get_mode().find('r') != std::string::npos)
+        {
             Broadcast(Get_RPL_ERR(484, serv, FIND_USER(sd), "", ""), sd);
+        }
         else if (FIND_CHANNEL(msgtarget)->get_chanops().find(sd) == FIND_CHANNEL(msgtarget)->get_chanops().end())
+        {
             Broadcast(Get_RPL_ERR(482, serv, FIND_USER(sd), msgtarget, ""), sd);
+        }
         else
+        {
             channel_mode(serv, FIND_CHANNEL(msgtarget), mode, sd, buffer);
+        }
     }
     else
     {
-        int user_socket_fd;
+        int     user_socket_fd;
+
         if ((user_socket_fd = serv->search_user_by_nickname(msgtarget)) == -1)
+        {
             Broadcast(Get_RPL_ERR(401, serv, FIND_USER(sd), msgtarget, ""), sd);
+        }
         else if (mode.empty() && !FIND_USER(user_socket_fd)->get_mode().empty())
+        {
             Broadcast(Get_RPL_ERR(221, serv, FIND_USER(user_socket_fd), '+' + FIND_USER(user_socket_fd)->get_mode(), ""), sd);
+        }
         else if (mode.empty() && FIND_USER(user_socket_fd)->get_mode().empty())
+        {
             Broadcast("This user don't have any modes!", sd);
+        }
         else
+        {
             userMode(serv, FIND_USER(user_socket_fd), mode, sd);
+        }
     }
     
 }
