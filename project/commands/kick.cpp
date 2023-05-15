@@ -1,7 +1,7 @@
 #include "Freenode.hpp"
 
 //  /kick #channel nickname
-//  Kicks a nickname off a channel that you are on
+//      - Kicks a nickname off a channel that you are on
 
 void kick(Server *serv, std::string buffer, int sd)
 {
