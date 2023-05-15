@@ -158,7 +158,8 @@ void Server::connect_to_server()
 					buf = get_input_from_client_sfd(socket_fd);
 					if ( ! buf.empty())
 					{
-						// TODO :: Delete the following DBG
+
+            // TODO :: Delete the following DBG
 						
 						/*
 						std::cout << CYAN "(dgb)(input):\t" RESET << buf;
