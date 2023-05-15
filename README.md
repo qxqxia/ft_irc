@@ -82,8 +82,8 @@ __/DCC__                  | send files
 &nbsp;                    |
 __/kill__                 | 
 `irssi`                   | `/oper user1 OPER_PASS`, `/kill someone`
-&nbsp;                    | ::: done ___inside___ channel: _user parts chan, but will stay in server_
-&nbsp;                    | ::: done ___out of___ channel: _user disconnected_
+&nbsp;                    | ___in___ channel: _user parts chan, but will stay in server_
+&nbsp;                    | ___ex___ channel: _user disconnected_
 &nbsp;                    |
 __/kick__                 | ___kicking___ must be done inside a room
 `irssi`                   | `/oper user1 OPER_PASS` 
