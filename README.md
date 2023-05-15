@@ -80,7 +80,7 @@ __/DCC__                  | send files
 `irssi`                   | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;                    | `/dcc <list\|get>`
 &nbsp;                    |
-__/kill__                 | 
+__/kill__                 | make someone leave Channel or Server
 `irssi`                   | `/oper user1 OPER_PASS`, `/kill someone`
 &nbsp;                    | ___in___ channel: _user parts chan, but will stay in server_
 &nbsp;                    | ___ex___ channel: _user disconnected_
