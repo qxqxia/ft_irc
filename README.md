@@ -41,23 +41,23 @@ USER modes                | syntax
 CHANNEL modes             | syntax
 ------------------------: | :----
 &nbsp;                    |
-__m__ - channel moderation|
+__m mode__                | channel moderation
 `irssi`                   | `/mode #chan +m`
 &nbsp;                    | `/say something` (user2 can't talk)
 &nbsp;                    |
-__v__ - voice in +m room  |
+__v mode__                | voice in +m room 
 `irssi`                   | `/mode #chan +v user`
 &nbsp;                    | `/say something else` (now user2 can talk)
 &nbsp;                    |
-__b__ - activate banlist  |
+__b mode__                | activate banlist
 `irssi`                   | `/mode #room +b user1`
 &nbsp;                    | will display `#room cannot send to channel` to user banned
 &nbsp;                    |
-__l__ - set limit         |
+__l mode__                | set limit
 `irssi`                   |
 &nbsp;                    |`/mode #room +l 1`
 &nbsp;                    |
-__o__ - promote user to +o| 
+__o mode__                | promote user to +o
 `irssi`                   | `/mode #chan +o user1`
 &nbsp;                    |`/kick user2` (user1)
 &nbsp;                    |
@@ -70,22 +70,22 @@ __o__ - promote user to +o|
 
 Commands                  | syntax
 ------------------------: | :----
-Login                     |
+Login                     | login
 `nc`                      | `$ nc e1r2p3 6677`
 &nbsp;                    | `PASS password`
 &nbsp;                    | `NICK nick`
 &nbsp;                    | `USER usr * * Usr`
 &nbsp;                    |
-__/DCC__     
+__/DCC__                  | send files
 `irssi`                   | `/dcc send <~@~user> /mnt/nfs/homes/USR/DIR/log1`
 &nbsp;                    | `/dcc <list\|get>`
 &nbsp;                    |
-__/kill__                 |
+__/kill__                 | 
 `irssi`                   | `/oper user1 OPER_PASS`, `/kill someone`
-&nbsp;                    | ::: in channel: _user still in server_
-&nbsp;                    | ::: out of channel: _user disconnected_
+&nbsp;                    | ::: done ___inside___ channel: _user parts chan, but will stay in server_
+&nbsp;                    | ::: done ___out of___ channel: _user disconnected_
 &nbsp;                    |
-__/kick__ (in a room)     |
+__/kick__                 | ___kicking___ must be done inside a room
 `irssi`                   | `/oper user1 OPER_PASS` 
 &nbsp;                    | `/kick user2`
 &nbsp;                    | `user2`: only allowed to `/quit` `/exit` once kicked
@@ -93,7 +93,7 @@ __/kick__ (in a room)     |
 `nc`                      | `OPER user1 OPER_PASS`
 &nbsp;                    | `KICK #room nuo misbehaving`
 &nbsp;                    |
-__/mode__ - channel mode  |
+__/mode__                 | enbale channel mode 
 `irssi`                   | `/oper user1 OPER_PASS`
 &nbsp;                    | `/mode #room +o user1`
 &nbsp;                    | `/kick user2` (user1)
@@ -112,13 +112,13 @@ __/notice__               |
 &nbsp;                    | _::: and not to the entire channel (to prevent flooding)_
 `nc`                      | `PRIVMSG #room <msg>`
 &nbsp;                    |
-__CAP LS__                |
-`nc`                      | _list the capabilities supported by server_ 
+__CAP LS__                | _list the capabilities supported by server_ 
+`nc`                      | 
 &nbsp;                    |
-__/say__ (IRSSI built-in) |
+__/say__                  | (IRSSI built-in)
 `irssi`                   | `/say something`
 &nbsp;                    |
-__/names__ IRSSI built-in)|
+__/names__                | (IRSSI built-in)
 &nbsp;                    | 
 `irssi`                   | `/n` or `/name`
 &nbsp;                    | no `NAME #room` for nc :yellow_circle:
