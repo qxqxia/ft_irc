@@ -8,7 +8,7 @@ __moderated room__ :: to retry m mode
 - (todo)
 
 
-__bot__ :: to try with partner
+__a tiny bot__ :: to try with partner
 - (todo)
 
 
