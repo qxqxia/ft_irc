@@ -4,21 +4,16 @@
 
 # include "Freenode.hpp"
 
-
 class	Server;
-
 
 void	privmsg(Server *, std::string, int);
 
 void	nick(Server *, std::string, int);
 void	join(Server *, std::string, int);
 void	ping(Server *, std::string, int);
-
-// void	pong(Server *, std::string, int); // deprecated
-
 void	part(Server *, std::string, int);
 
-// void	topic(Server *, std::string, int); // draft
+// void	topic(Server *, std::string, int);
 
 void	kick(Server *, std::string, int);
 void	mode(Server *, std::string, int);
