@@ -3,12 +3,22 @@
 
 # Todos
 
+
+__moderated room__ :: to retry m mode 
+- (todo)
+
+
+__bot__ :: to try with partner
+- (todo)
+
+
 __Makefile__ :: add usage
 - [ ] Run server side:
   - `$ ./ircserv <port> <pass>`
 - [ ] Run client side:
   - Irssi - `$ ./irssi` then `/connect <host> <port> <pass>`
   - Netcat - `$ nc <hostip> <port>` `PASS _`
+
 
 __command__ :: `CAP LS` 
 - [ ] using nc
