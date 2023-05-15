@@ -156,7 +156,13 @@ void Server::connect_to_server()
 					//	+ try to read next incoming message
 
 					buf = get_input_from_client_sfd(socket_fd);
-					if ( ! buf.empty())
+					if (
+						!buf.empty() &&
+						buf[0] != '\n' &&
+						buf[0] != '\r' && 
+						buf[0] != ' ' && 
+						buf[0] != '\t'
+					)
 					{
 
             // TODO :: Delete the following DBG
@@ -213,6 +219,10 @@ void Server::connect_to_server()
 							 // break ; // Greatest bug of all time (line 1/2)
 						//} // Greatest bug of all time (line 2/2)
 						break ; // BUG FIX : re-added 
+					}
+					else
+					{
+						continue ;
 					}
 				}
 			}
