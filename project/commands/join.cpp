@@ -1,7 +1,7 @@
 #include "Freenode.hpp"
 
 //  /join #channel
-//  Joins the specified channel
+//      - Joins the specified channel
 
 bool is_invalid_character(char c)
 {

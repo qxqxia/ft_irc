@@ -1,7 +1,7 @@
 #include "Freenode.hpp"
 
 //  /nick nickname
-//  Changes your nickname to a new nickname
+//      - Changes your nickname to a new nickname
 
 bool nickname_is_validated(std::string nick)
 {

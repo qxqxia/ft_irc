@@ -1,8 +1,8 @@
 #include "Freenode.hpp"
 
 // /mode #channel|nickname [[+|-]modechars [parameters]]
-//  This is a powerful command that gives channel 
-//  operators control of a channel and the users on it
+//      -   This is a powerful command that gives channel 
+//      - operators control of a channel and the users on it
 
 /*
 

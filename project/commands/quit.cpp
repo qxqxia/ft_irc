@@ -10,7 +10,7 @@ void disconnect_user(Server* serv, int sd)
 {
     std::set<std::string> user_channels = FIND_USER(sd)->get_channels();
 
-    // erase user from each channel;
+    // Erase user from each channel;
 
     std::set<std::string>::iterator     it;
     it = user_channels.begin();
