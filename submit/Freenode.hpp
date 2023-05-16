@@ -51,14 +51,7 @@
 # define FIND_USER(sd) \
 		serv->get_users().find(sd)->second
 
-/*
-# define CHECKUSERMODE(sd, mode) \
-	FIND_USER(sd)->get_mode().find(mode) == std::string::npos ? true : false
-*/
-/*
-# define CHECK_CHANNEL_MODE(channel_name, mode) \
-	FIND_CHANNEL(channel_name)->get_mode().find(mode) == std::string::npos ? true : false
-*/
+
 
 # define BUFFER_ENDS std::string("\r\n")
 # define SEP_CHARSET std::string(" \t\r\n")

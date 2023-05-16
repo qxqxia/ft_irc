@@ -280,8 +280,24 @@ void Server::new_connection()
 	std::string		pass = "";
 
 	ret = this->get_input_from_client_sfd(this->m_sock_coming);
-	if (((ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos) || (ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos && ret.find("NICK ") != std::string::npos)) && ret.find("USER ") == std::string::npos)
+
+	// CAP LS ---> part of the IRCv3 protocol
+	//	Irssi may send CAP LS to the server on initial connection
+	// ...
+	//		(Sample response from server)
+	//		`:irc.example.com CAP * LS :multi-prefix account-notify extended-join
+	//			mult prefx ---> e.g., @ and + for channel operators
+
+	if (
+		(
+			(ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos) || (
+				ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos && 
+				ret.find("NICK ") != std::string::npos)
+		) && ret.find("USER ") == std::string::npos
+	)
+	{
 		ret = this->get_input_from_client_sfd(this->m_sock_coming);
+	}
 	if ((occ = ret.find("PASS ")) != std::string::npos)
 	{
 		if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
@@ -291,8 +307,8 @@ void Server::new_connection()
 		}
 		else
 		{
-
 			int		i = 0;
+
 			while (ret[first_occurrence + i] && SEP_CHARSET.find(ret[first_occurrence + i]) == std::string::npos)			
 			{
 				pass += ret[first_occurrence + i];
@@ -309,7 +325,9 @@ void Server::new_connection()
 				close(this->m_sock_coming);
 			}
 			else
+			{
 				password_is_valid = true;
+			}
 		}
 	}
 	else

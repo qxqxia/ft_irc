@@ -248,10 +248,10 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
 		        std::string stringMode(1, mode[i]);
                 Broadcast(Get_RPL_ERR(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
 	        }
-            else if (available_modes(mode[i], "vblo"/*"ovbkl"*/) == true)
+            else if (available_modes(mode[i], "vblo") == true)
 	        {
 		        handle_mode[mode[i]](serv, channel, mode, buffer, sd);
-	    	    if (/*mode[i] == 'k' || */ mode[i] == 'l')
+	    	    if (mode[i] == 'l')
 			        deleted_mode += mode[i];
 	        }
 	        else if (channel_mode.find(mode[i]) != std::string::npos)
