@@ -18,7 +18,6 @@ n                external /MSGs to channel are not allowed
 o <nickname>        makes <nickname> a channel operator
 p                channel is private
 s                channel is secret
-t                topic limited, only chanops may change it
 k <key>                set secret key for a channel
 
 */

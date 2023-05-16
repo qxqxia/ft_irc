@@ -13,7 +13,6 @@ void	join(Server *, std::string, int);
 void	ping(Server *, std::string, int);
 void	part(Server *, std::string, int);
 
-// void	topic(Server *, std::string, int);
 
 void	kick(Server *, std::string, int);
 void	mode(Server *, std::string, int);

@@ -19,7 +19,6 @@ Server::Server(const std::string & port, const std::string & password)
 	this->m_commands["NOTICE"] = & privmsg;
 	this->m_commands["PING"] = & ping;
 	this->m_commands["PART"] = & part;
-	// this->m_commands["TOPIC"] = & topic;
 	this->m_commands["KICK"] = & kick;
 	this->m_commands["MODE"] = & mode;
 	this->m_commands["OPER"] = & oper;
@@ -423,12 +422,15 @@ void Server::new_connection()
 	{
 		this->m_server_name = server_name;
 		User *newUser = new User(nick, user, host, real_name);
+
 		this->set_users(this->m_sock_coming, newUser);
 		std::cout << "Number of user connected on the server: " << this->m_users.size() << std::endl;
+
 		Broadcast(Get_RPL_ERR(001, this, newUser, "", ""), this->m_sock_coming);
 		Broadcast(Get_RPL_ERR(002, this, newUser, "", ""), this->m_sock_coming);
 		Broadcast(Get_RPL_ERR(003, this, newUser, "", ""), this->m_sock_coming);
 		Broadcast(Get_RPL_ERR(004, this, newUser, "", ""), this->m_sock_coming);
+
 		Forward_MOTD(this->m_sock_coming);
 
 

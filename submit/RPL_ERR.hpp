@@ -164,15 +164,7 @@ std::string Get_RPL_ERR(int code, Server *serv, User *user, std::string arg, std
 #endif
 
 
-//	Topic draft :: related RPL
 
-// //331
-// # define RPL_NOTOPIC(channel) \
-//     (channel + " :No topic is set")
-
-// //332
-// # define RPL_TOPIC(channel, topic) \
-//     (channel + " :" + topic)
 
 
 // ================================================================= //
@@ -221,13 +213,7 @@ std::string Get_RPL_ERR(int code, Server *serv, User *user, std::string args, st
 # define RPL_CHANNELMODEIS(channel, modes) \
     (channel + " " + modes)
 
-//331
-# define RPL_NOTOPIC(channel) \
-    (channel + " :No topic is set")
 
-//332
-# define RPL_TOPIC(channel, topic) \
-    (channel + " :" + topic)
 
 //353
 # define RPL_NAMREPLY(channel, listOfUsers) \

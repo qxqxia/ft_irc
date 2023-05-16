@@ -43,12 +43,6 @@ std::string Get_RPL_ERR(int code, Server *serv, User *user, std::string arg1, st
         case 324:
             res += RPL_CHANNELMODEIS(arg1, arg2);
 			break ;
-        // case 331:
-        //     res += RPL_NOTOPIC(arg1);
-		// 	break ;
-        // case 332:
-        //     res += RPL_TOPIC(arg1, arg2);
-		// 	break ;
         case 353:
             res += RPL_NAMREPLY(arg1, arg2);
 			break ;
