@@ -59,7 +59,7 @@ void privmsg(Server *serv, std::string buffer, int sd)
         {
             Broadcast(Get_RPL_ERR(404, serv, FIND_USER(sd), msgtarget, ""), sd);
         }
-        else if (FIND_CHANNEL(msgtarget)->is_banned(FIND_USER(sd)->get_nickname()) == true)
+        else if (FIND_CHANNEL(msgtarget)->is_banned(FIND_USER(sd)->get_nickname()))
         {
             Broadcast(Get_RPL_ERR(404, serv, FIND_USER(sd), msgtarget, ""), sd);
         }

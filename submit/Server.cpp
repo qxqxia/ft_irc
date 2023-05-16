@@ -69,7 +69,7 @@ void Server::connect_to_server()
 
 	std::cout << "listening..." << std::endl;
 
-	while (this->m_server_is_restarting == false && g_server_is_alive == true)
+	while (this->m_server_is_restarting == false && g_server_is_alive)
 	{
 		// Can we make a separate handler function?
 
@@ -236,7 +236,7 @@ void Server::connect_to_server()
 		}
 	}
 	close(this->m_server_socket);
-	if (this->m_server_is_restarting == true && g_server_is_alive == true)
+	if (this->m_server_is_restarting && g_server_is_alive)
 	{
 		this->m_server_is_restarting = false;
 		std::cout << "SERVER RESTARTING..." << std::endl;
@@ -355,7 +355,7 @@ void Server::new_connection()
 			Broadcast("You have to enter a nickname\nUsage: NICK [nickname]", this->m_sock_coming);
 			close(this->m_sock_coming);
 		}
-		if (username_is_valid == false && nickname_is_valid == true)
+		if (username_is_valid && nickname_is_valid )
 		{
 			if (ret.find("USER ") == std::string::npos)
 				ret = this->get_input_from_client_sfd(this->m_sock_coming);
@@ -415,10 +415,10 @@ void Server::new_connection()
 	// if (password_is_valid == true && m_users.size() < 10 && nickname_is_valid == true && username_is_valid == true && g_server_is_alive == true)
 	// if (password_is_valid == true && m_users.size() < 4 && nickname_is_valid == true && username_is_valid == true && g_server_is_alive == true)
 	if (
-		password_is_valid == true && 
-		m_users.size() < 4 && nickname_is_valid == true && 
-		username_is_valid == true && 
-		g_server_is_alive == true
+		password_is_valid && 
+		m_users.size() < 4 && nickname_is_valid && 
+		username_is_valid && 
+		g_server_is_alive
 	)
 	{
 		this->m_server_name = server_name;
@@ -448,7 +448,7 @@ void Server::new_connection()
 			}
 		}
 	}
-	else if (password_is_valid == true && nickname_is_valid == true && g_server_is_alive == true && username_is_valid == true)
+	else if (password_is_valid && nickname_is_valid && g_server_is_alive && username_is_valid)
 	{
 		Broadcast(Get_RPL_ERR(005, this, NULL, nick, ""), this->m_sock_coming);
 	}
