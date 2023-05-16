@@ -15,20 +15,21 @@ Server::Server(const std::string & port, const std::string & password)
  {
 	this->m_commands["NICK"] = & nick;
 	this->m_commands["JOIN"] = & join;
+	this->m_commands["restart"] = & restart;
+	this->m_commands["kill"] = & kill;
+
 	this->m_commands["PRIVMSG"] = & privmsg;
 	this->m_commands["NOTICE"] = & privmsg;
+
 	this->m_commands["PING"] = & ping;
 	this->m_commands["PART"] = & part;
 	this->m_commands["KICK"] = & kick;
 	this->m_commands["MODE"] = & mode;
 	this->m_commands["OPER"] = & oper;
 	this->m_commands["QUIT"] = & quit;
-
-	this->m_commands["kill"] = & kill;
 	this->m_commands["KILL"] = & kill;
-
 	this->m_commands["RESTART"] = & restart;
-	this->m_commands["restart"] = & restart;
+	
 
 	this->m_bot = new Bot; ///	Added
 
