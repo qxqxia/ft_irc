@@ -18,7 +18,6 @@ n                external /MSGs to channel are not allowed
 o <nickname>        makes <nickname> a channel operator
 p                channel is private
 s                channel is secret
-k <key>                set secret key for a channel
 
 */
 
@@ -185,49 +184,6 @@ void mode_b(Server *serv, Channel *channel, std::string mode, std::string buffer
 	}
 }
 
-/*
-void mode_k(Server *serv, Channel *channel, std::string mode, std::string buffer, int sd)
-{
-    (void)  mode;
-    (void)  serv;
-
-    if (mode[0] == '-')
-    {
-        channel->set_key("");
-	    return ;
-    }
-
-    int i = -1, j = 0;
-    while (buffer[++i] && j < 3)
-    {
-        if (buffer[i] == ' ' || buffer[i] == '\t')
-        {
-            while (buffer[i] == ' ' || buffer[i] == '\t')
-            {
-                i++;
-            }
-            j++;
-            i--;
-        }
-    }
-    std::string key = buffer.substr(i, (buffer.find_first_of(SEP_CHARSET, i) - i));
-
-    if (key == "x")
-    {
-        Broadcast(Get_RPL_ERR(467, serv, FIND_USER(sd), channel->get_key(), ""), sd);
-    }
-    else
-    {
-        if (!key.empty())
-            channel->set_key(key);
-        else
-        {
-            std::string truc = user_output(FIND_USER(sd));
-            Broadcast(truc + ": Wrong key!", sd);
-        }
-    }
-}
-*/
 
 void mode_l(Server *serv, Channel *channel, std::string mode, std::string buffer, int sd)
 {
