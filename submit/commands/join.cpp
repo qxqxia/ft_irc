@@ -72,7 +72,7 @@ void join(Server *serv, std::string buffer, int sd)
         std::string channel_name = channel_list_str.substr(0, channel_list_str.find(","));
         channel_list_str.erase(0, channel_list_str.find(",") + 1);
 
-        if (!(FIND_USER(sd)->get_channels_size() < MAX_CLIENTS))
+        if (!(FIND_USER(sd)->get_channels_size() < MAX_CLIENTS /* 10*/ ))
         {
             Broadcast(Get_RPL_ERR(405, serv, FIND_USER(sd), channel_name, ""), sd);
             break ;

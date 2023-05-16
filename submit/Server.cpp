@@ -1,6 +1,6 @@
 #include "Freenode.hpp"
 
-int		g_server_client_socket[ MAX_CLIENTS ];
+int		g_server_client_socket[ MAX_CLIENTS /* 10 */ ];
 bool	g_server_is_alive = true;
 
 void    handle_sigint(int signum)
@@ -61,7 +61,7 @@ void Server::connect_to_server()
 	int		i = -1;
 
 
-	while (++i < MAX_CLIENTS)
+	while (++i < MAX_CLIENTS /* 10 */)
     {
 		g_server_client_socket[i] = 0;
 	}
@@ -95,7 +95,7 @@ void Server::connect_to_server()
         ///		add child sockets to set
 
 		i = -1;
-		while (++i < MAX_CLIENTS)
+		while (++i < MAX_CLIENTS /* 10 */)
         {
             //		socket descriptor
 
@@ -145,7 +145,7 @@ void Server::connect_to_server()
 		{
 
 			i = -1;
-			while (++i < MAX_CLIENTS)
+			while (++i < MAX_CLIENTS /* 10 */)
 			{
 				socket_fd = g_server_client_socket[i];
 
@@ -226,7 +226,7 @@ void Server::connect_to_server()
 	clear_all();
 	
 	i = -1;
-	while (++i < MAX_CLIENTS)
+	while (++i < MAX_CLIENTS /* 10 */)
 	{
 		if (g_server_client_socket[i] != 0)
 		{
@@ -456,7 +456,7 @@ void Server::new_connection()
 
 		int		i = -1;
 
-		while (++i < MAX_CLIENTS)
+		while (++i < MAX_CLIENTS /* 10 */)
 		{
 			//	if position is 0 just like it was initialized
 
@@ -504,7 +504,7 @@ int Server::new_socket()
 		throw std::runtime_error("Error binding socket.\n");
 	}
 
-	if (listen(sock, MAX_CLIENTS /* 10 */) < 0)
+	if (listen(sock, MAX_CLIENTS /* 10 */ /*10*/) < 0)
 	{
 		throw std::runtime_error("Error listening on socket.\n");
 	}
