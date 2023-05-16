@@ -12,11 +12,11 @@ User::User(
 	m_realname(realname)
 {
 	// std::cout
-	// << GREEN "(dbg)(Create user):" RESET nl
-	// << "nck :: " << get_nickname() << nl
-	// << "usr :: " << get_username() << nl
-	// << "hst :: " << get_hostname() << nl
-	// << "rln :: " << get_realname() << nl2
+	// 	<< GREEN "(dbg)(Create user):" RESET nl
+	// 	<< "nck :: " << get_nickname() << nl
+	// 	<< "usr :: " << get_username() << nl
+	// 	<< "hst :: " << get_hostname() << nl
+	// 	<< "rln :: " << get_realname() << nl2
 	// ;
 }
 
