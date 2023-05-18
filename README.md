@@ -20,10 +20,6 @@ __Makefile__ :: add usage
   - Netcat - `$ nc <hostip> <port>` `PASS _`
 
 
-__command__ :: `CAP LS` 
-- [ ] using nc
-- [ ] using irssi
-
 
 
 ---
