@@ -18,8 +18,6 @@ n                external /MSGs to channel are not allowed
 o <nickname>        makes <nickname> a channel operator
 p                channel is private
 s                channel is secret
-t                topic limited, only chanops may change it
-k <key>                set secret key for a channel
 
 */
 
@@ -186,49 +184,6 @@ void mode_b(Server *serv, Channel *channel, std::string mode, std::string buffer
 	}
 }
 
-/*
-void mode_k(Server *serv, Channel *channel, std::string mode, std::string buffer, int sd)
-{
-    (void)  mode;
-    (void)  serv;
-
-    if (mode[0] == '-')
-    {
-        channel->set_key("");
-	    return ;
-    }
-
-    int i = -1, j = 0;
-    while (buffer[++i] && j < 3)
-    {
-        if (buffer[i] == ' ' || buffer[i] == '\t')
-        {
-            while (buffer[i] == ' ' || buffer[i] == '\t')
-            {
-                i++;
-            }
-            j++;
-            i--;
-        }
-    }
-    std::string key = buffer.substr(i, (buffer.find_first_of(SEP_CHARSET, i) - i));
-
-    if (key == "x")
-    {
-        Broadcast(Get_RPL_ERR(467, serv, FIND_USER(sd), channel->get_key(), ""), sd);
-    }
-    else
-    {
-        if (!key.empty())
-            channel->set_key(key);
-        else
-        {
-            std::string truc = user_output(FIND_USER(sd));
-            Broadcast(truc + ": Wrong key!", sd);
-        }
-    }
-}
-*/
 
 void mode_l(Server *serv, Channel *channel, std::string mode, std::string buffer, int sd)
 {
@@ -293,10 +248,10 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
 		        std::string stringMode(1, mode[i]);
                 Broadcast(Get_RPL_ERR(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
 	        }
-            else if (available_modes(mode[i], "vblo"/*"ovbkl"*/) == true)
+            else if (available_modes(mode[i], "vblo") == true)
 	        {
 		        handle_mode[mode[i]](serv, channel, mode, buffer, sd);
-	    	    if (/*mode[i] == 'k' || */ mode[i] == 'l')
+	    	    if (mode[i] == 'l')
 			        deleted_mode += mode[i];
 	        }
 	        else if (channel_mode.find(mode[i]) != std::string::npos)
@@ -307,8 +262,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
         }
         channel->set_mode(channel_mode);
         std::string user_answer = user_output(FIND_USER(sd));
-        // if (channel->get_mode().find("a") != std::string::npos)
-        //     user_answer = anonymous_output();
+
         if (!deleted_mode.empty())
             user_answer += "MODE " + channel->get_channelname() + " -" + deleted_mode;
         if (user_answer.find("MODE") != std::string::npos)
@@ -327,10 +281,10 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
                 std::string stringMode(1, mode[i]);
                 Broadcast(Get_RPL_ERR(472, serv, FIND_USER(sd), stringMode, channel->get_channelname()), sd);
             }
-            else if (available_modes(mode[i],  "vblo"/*"ovbkl"*/) == true)
+            else if (available_modes(mode[i],  "vblo") == true)
             {
                 handle_mode[mode[i]](serv, channel, mode, buffer, sd);
-                if (/*(mode[i] == 'k' && channel->get_key() != "") || */ mode[i] == 'l')
+                if (mode[i] == 'l')
                     added_mode += mode[i];
             }
             else if (channel_mode.find(mode[i]) == std::string::npos)
@@ -338,8 +292,7 @@ void channel_mode(Server *serv, Channel *channel, std::string mode, int sd, std:
         }
         channel->set_mode(channel_mode + added_mode);
         std::string user_answer = user_output(FIND_USER(sd));
-        // if (channel->get_mode().find("a") != std::string::npos)
-        //     user_answer = anonymous_output();
+
         if (!added_mode.empty())
             user_answer += "MODE " + channel->get_channelname() + " +" + added_mode;
         if (user_answer.find("MODE") != std::string::npos)

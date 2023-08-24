@@ -15,9 +15,7 @@ private:
 	std::map<int, User*>	m_chanops;
 	std::map<int, User*>	m_voices;
 	std::string		m_channelname;
-	// std::string		m_topic;
 	std::string		m_mode;
-	// std::string		m_key;
 
 	std::map<std::string, std::string>	m_banlist;
 
@@ -37,10 +35,8 @@ public:
 	std::map<int, User*>	& get_chanops();
 	std::map<int, User*>	& get_voices();
 
-	// std::string	get_topic() const;
 	std::string	get_channelname() const;
 	std::string	get_mode() const;
-	// std::string	get_key() const;
 
 	std::string get_list_of_users_in_channel();
 	std::string get_list_of_users_banned();
@@ -53,9 +49,7 @@ public:
 	bool	is_voice(int sd);
 	bool	is_banned(std::string nick);
 
-	// void	set_topic(std::string top);
 	void	set_mode(std::string mod);
-	// void	set_key(std::string key);
 	void	set_maximum_users(int max);
 
 	void	add_user(int sd, User *u);

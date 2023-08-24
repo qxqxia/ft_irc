@@ -72,7 +72,7 @@ void join(Server *serv, std::string buffer, int sd)
         std::string channel_name = channel_list_str.substr(0, channel_list_str.find(","));
         channel_list_str.erase(0, channel_list_str.find(",") + 1);
 
-        if (!(FIND_USER(sd)->get_channels_size() < MAX_CLIENTS /* 10 */))
+        if (!(FIND_USER(sd)->get_channels_size() < MAX_CLIENTS /* 10*/ ))
         {
             Broadcast(Get_RPL_ERR(405, serv, FIND_USER(sd), channel_name, ""), sd);
             break ;
@@ -84,7 +84,9 @@ void join(Server *serv, std::string buffer, int sd)
             continue ;
         }
 
-        std::string key = keys_for_chans.substr(0, keys_for_chans.find(","));
+        std::string     key;
+        
+        key = keys_for_chans.substr(0, keys_for_chans.find(","));
         keys_for_chans.erase(0, keys_for_chans.find(",") + 1);
 
         if (serv->get_channels().find(channel_name) == serv->get_channels().end())
@@ -101,21 +103,7 @@ void join(Server *serv, std::string buffer, int sd)
                 continue ;
             }
         }
-        ////    +/- k :: key    (draft)
-        // if (FIND_CHANNEL(channel_name)->get_mode().find("k") != std::string::npos)
-        // {
-        //     if (key.empty())
-        //     {
-        //         Broadcast(Get_RPL_ERR(461, serv, FIND_USER(sd), "JOIN", ""), sd);
-        //         return ;
-        //     }
-        //     // if (FIND_CHANNEL(channel_name)->get_key().compare(key) != 0)
-        //     if (FIND_CHANNEL(channel_name)->get_key() != key)
-        //     {
-        //         Broadcast(Get_RPL_ERR(475, serv, FIND_USER(sd), channel_name, ""), sd);
-        //         continue ;
-        //     }
-        // }
+
         if (FIND_CHANNEL(channel_name)->get_mode().find("l") != std::string::npos)
         {
             if (FIND_CHANNEL(channel_name)->get_maximum_users() <= FIND_CHANNEL(channel_name)->get_user_number())
@@ -148,14 +136,6 @@ void join(Server *serv, std::string buffer, int sd)
         {
             send_everyone_in_channel(user_answer, FIND_CHANNEL(channel_name));
         }
-        // if (FIND_CHANNEL(channel_name)->get_topic() == "")
-        // {
-        //     Broadcast(Get_RPL_ERR(331, serv, FIND_USER(sd), channel_name, ""), sd);
-        // }
-        // else
-        // {
-        //     Broadcast(Get_RPL_ERR(332, serv, FIND_USER(sd), channel_name, FIND_CHANNEL(channel_name)->get_topic()), sd);
-        // }
 
         std::string list_of_users = FIND_CHANNEL(channel_name)->get_list_of_users_in_channel();
 

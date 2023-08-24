@@ -4,7 +4,7 @@
 //      - Disconnects you from IRC and will give the optional message as the reason for your departure
 //          (this message only appears to people who are on the same channels as you)
 
-extern int      g_server_client_socket[MAX_CLIENTS];
+extern int      g_server_client_socket[MAX_CLIENTS /* 10 */ ];
 
 void disconnect_user(Server* serv, int sd)
 {
@@ -35,7 +35,7 @@ void disconnect_user(Server* serv, int sd)
     std::cout << "Host disconnected , ip " << inet_ntoa(serv->get_server().sin_addr) << " , port " << ntohs(serv->get_server().sin_port) << " , number of users: " <<  serv->get_users().size() << std::endl;
 
     int i = -1;
-    while (++i < MAX_CLIENTS)
+    while (++i < MAX_CLIENTS /* 10 */)
     {
         if (g_server_client_socket[i] == sd)
             g_server_client_socket[i] = 0;

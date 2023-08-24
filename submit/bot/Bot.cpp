@@ -66,7 +66,7 @@ void dismiss(Server *serv, Channel *chan, int socket_fd)
 {
     if (chan->is_chanop(socket_fd))
     {
-        if (chan && chan->is_bot_in_channel() == true)
+        if (chan && chan->is_bot_in_channel())
         {
             chan->set_bot();
             send_everyone_in_channel(":" + serv->get_bot()->get_name() + " PART " + chan->get_channelname(), chan);
@@ -82,7 +82,7 @@ void dismiss(Server *serv, Channel *chan, int socket_fd)
 
 void tell_time(Server *serv, Channel *chan, int socket_fd)
 {
-    if (chan && chan->is_bot_in_channel() == true)
+    if (chan && chan->is_bot_in_channel())
     {
         std::time_t t = std::time(0);
         std::tm* now = std::localtime(&t);
@@ -97,9 +97,10 @@ void tell_time(Server *serv, Channel *chan, int socket_fd)
 
 }
 
+
 void tell_date(Server *serv, Channel *chan, int socket_fd)
 {
-    if (chan && chan->is_bot_in_channel() == true)
+    if (chan && chan->is_bot_in_channel())
     {
         std::string     months[12] = {
             "January", "February", "March", "April", "May", "June",
@@ -151,8 +152,13 @@ void help(Server *serv, Channel *chan, int socket_fd)
 Channel *is_user_with_bot_in_chan(Server *serv, User *user)
 {
     for (std::set<std::string>::iterator it = user->get_channels().begin(); it != user->get_channels().end(); it++)
-        if (FIND_CHANNEL(*it)->is_bot_in_channel() == true)
-            return FIND_CHANNEL(*it);
-    return NULL;
+    {
+        if (FIND_CHANNEL(*it)->is_bot_in_channel())
+        {
+            return (FIND_CHANNEL(*it));
+        }
+    }
+
+    return (NULL);
 }
 

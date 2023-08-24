@@ -1,6 +1,6 @@
 #include "Freenode.hpp"
 
-int		g_server_client_socket[ MAX_CLIENTS ];
+int		g_server_client_socket[ MAX_CLIENTS /* 10 */ ];
 bool	g_server_is_alive = true;
 
 void    handle_sigint(int signum)
@@ -15,21 +15,21 @@ Server::Server(const std::string & port, const std::string & password)
  {
 	this->m_commands["NICK"] = & nick;
 	this->m_commands["JOIN"] = & join;
+	this->m_commands["restart"] = & restart;
+	this->m_commands["kill"] = & kill;
+
 	this->m_commands["PRIVMSG"] = & privmsg;
 	this->m_commands["NOTICE"] = & privmsg;
+
 	this->m_commands["PING"] = & ping;
 	this->m_commands["PART"] = & part;
-	// this->m_commands["TOPIC"] = & topic;
 	this->m_commands["KICK"] = & kick;
 	this->m_commands["MODE"] = & mode;
 	this->m_commands["OPER"] = & oper;
 	this->m_commands["QUIT"] = & quit;
-
-	this->m_commands["kill"] = & kill;
 	this->m_commands["KILL"] = & kill;
-
 	this->m_commands["RESTART"] = & restart;
-	this->m_commands["restart"] = & restart;
+	
 
 	this->m_bot = new Bot; ///	Added
 
@@ -62,14 +62,14 @@ void Server::connect_to_server()
 	int		i = -1;
 
 
-	while (++i < MAX_CLIENTS)
+	while (++i < MAX_CLIENTS /* 10 */)
     {
 		g_server_client_socket[i] = 0;
 	}
 
 	std::cout << "listening..." << std::endl;
 
-	while (this->m_server_is_restarting == false && g_server_is_alive == true)
+	while (this->m_server_is_restarting == false && g_server_is_alive)
 	{
 		// Can we make a separate handler function?
 
@@ -96,7 +96,7 @@ void Server::connect_to_server()
         ///		add child sockets to set
 
 		i = -1;
-		while (++i < MAX_CLIENTS)
+		while (++i < MAX_CLIENTS /* 10 */)
         {
             //		socket descriptor
 
@@ -146,7 +146,7 @@ void Server::connect_to_server()
 		{
 
 			i = -1;
-			while (++i < MAX_CLIENTS)
+			while (++i < MAX_CLIENTS /* 10 */)
 			{
 				socket_fd = g_server_client_socket[i];
 
@@ -227,7 +227,7 @@ void Server::connect_to_server()
 	clear_all();
 	
 	i = -1;
-	while (++i < MAX_CLIENTS)
+	while (++i < MAX_CLIENTS /* 10 */)
 	{
 		if (g_server_client_socket[i] != 0)
 		{
@@ -236,7 +236,7 @@ void Server::connect_to_server()
 		}
 	}
 	close(this->m_server_socket);
-	if (this->m_server_is_restarting == true && g_server_is_alive == true)
+	if (this->m_server_is_restarting && g_server_is_alive)
 	{
 		this->m_server_is_restarting = false;
 		std::cout << "SERVER RESTARTING..." << std::endl;
@@ -281,8 +281,24 @@ void Server::new_connection()
 	std::string		pass = "";
 
 	ret = this->get_input_from_client_sfd(this->m_sock_coming);
-	if (((ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos) || (ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos && ret.find("NICK ") != std::string::npos)) && ret.find("USER ") == std::string::npos)
+
+	// CAP LS ---> part of the IRCv3 protocol
+	//	Irssi may send CAP LS to the server on initial connection
+	// ...
+	//		(Sample response from server)
+	//		`:irc.example.com CAP * LS :multi-prefix account-notify extended-join
+	//			mult prefx ---> e.g., @ and + for channel operators
+
+	if (
+		(
+			(ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos) || (
+				ret.find("CAP LS") != std::string::npos && ret.find("PASS ") == std::string::npos && 
+				ret.find("NICK ") != std::string::npos)
+		) && ret.find("USER ") == std::string::npos
+	)
+	{
 		ret = this->get_input_from_client_sfd(this->m_sock_coming);
+	}
 	if ((occ = ret.find("PASS ")) != std::string::npos)
 	{
 		if ((first_occurrence = ret.find_first_not_of(SEP_CHARSET, occ + 5)) == std::string::npos)
@@ -292,8 +308,8 @@ void Server::new_connection()
 		}
 		else
 		{
-
 			int		i = 0;
+
 			while (ret[first_occurrence + i] && SEP_CHARSET.find(ret[first_occurrence + i]) == std::string::npos)			
 			{
 				pass += ret[first_occurrence + i];
@@ -310,7 +326,9 @@ void Server::new_connection()
 				close(this->m_sock_coming);
 			}
 			else
+			{
 				password_is_valid = true;
+			}
 		}
 	}
 	else
@@ -355,7 +373,7 @@ void Server::new_connection()
 			Broadcast("You have to enter a nickname\nUsage: NICK [nickname]", this->m_sock_coming);
 			close(this->m_sock_coming);
 		}
-		if (username_is_valid == false && nickname_is_valid == true)
+		if (username_is_valid && nickname_is_valid )
 		{
 			if (ret.find("USER ") == std::string::npos)
 				ret = this->get_input_from_client_sfd(this->m_sock_coming);
@@ -415,20 +433,23 @@ void Server::new_connection()
 	// if (password_is_valid == true && m_users.size() < 10 && nickname_is_valid == true && username_is_valid == true && g_server_is_alive == true)
 	// if (password_is_valid == true && m_users.size() < 4 && nickname_is_valid == true && username_is_valid == true && g_server_is_alive == true)
 	if (
-		password_is_valid == true && 
-		m_users.size() < 4 && nickname_is_valid == true && 
-		username_is_valid == true && 
-		g_server_is_alive == true
+		password_is_valid && 
+		m_users.size() < 4 && nickname_is_valid && 
+		username_is_valid && 
+		g_server_is_alive
 	)
 	{
 		this->m_server_name = server_name;
 		User *newUser = new User(nick, user, host, real_name);
+
 		this->set_users(this->m_sock_coming, newUser);
 		std::cout << "Number of user connected on the server: " << this->m_users.size() << std::endl;
+
 		Broadcast(Get_RPL_ERR(001, this, newUser, "", ""), this->m_sock_coming);
 		Broadcast(Get_RPL_ERR(002, this, newUser, "", ""), this->m_sock_coming);
 		Broadcast(Get_RPL_ERR(003, this, newUser, "", ""), this->m_sock_coming);
 		Broadcast(Get_RPL_ERR(004, this, newUser, "", ""), this->m_sock_coming);
+
 		Forward_MOTD(this->m_sock_coming);
 
 
@@ -436,7 +457,7 @@ void Server::new_connection()
 
 		int		i = -1;
 
-		while (++i < MAX_CLIENTS)
+		while (++i < MAX_CLIENTS /* 10 */)
 		{
 			//	if position is 0 just like it was initialized
 
@@ -448,7 +469,7 @@ void Server::new_connection()
 			}
 		}
 	}
-	else if (password_is_valid == true && nickname_is_valid == true && g_server_is_alive == true && username_is_valid == true)
+	else if (password_is_valid && nickname_is_valid && g_server_is_alive && username_is_valid)
 	{
 		Broadcast(Get_RPL_ERR(005, this, NULL, nick, ""), this->m_sock_coming);
 	}
@@ -484,7 +505,7 @@ int Server::new_socket()
 		throw std::runtime_error("Error binding socket.\n");
 	}
 
-	if (listen(sock, MAX_CLIENTS /* 10 */) < 0)
+	if (listen(sock, MAX_CLIENTS /* 10 */ /*10*/) < 0)
 	{
 		throw std::runtime_error("Error listening on socket.\n");
 	}
